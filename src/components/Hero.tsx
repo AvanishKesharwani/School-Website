@@ -36,7 +36,7 @@ export default function Hero({ title, subtitle }: HeroProps) {
         <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/80 via-brand-navy/60 to-brand-navy/90 z-10" />
         <div 
           className="w-full h-full bg-cover bg-center bg-no-repeat opacity-50"
-          style={{ backgroundImage: 'url("/campus1.jpg")' }}
+          style={{ backgroundImage: 'url("/hero-bg.jpg")' }}
         />
       </motion.div>
       
