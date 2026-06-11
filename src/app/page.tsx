@@ -1,65 +1,87 @@
-import Image from "next/image";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import Hero from "@/components/Hero";
+import About from "@/components/About";
+import HallOfFame from "@/components/HallOfFame";
+import Academics from "@/components/Academics";
+import WhyChooseUs from "@/components/WhyChooseUs";
+import StudentLife from "@/components/StudentLife";
+import Achievements from "@/components/Achievements";
+import Testimonials from "@/components/Testimonials";
+import Contact from "@/components/Contact";
+import { getSectionContentVisual } from "@/lib/visual-cms-actions";
+import { auth } from "@/auth";
 
-export default function Home() {
+export default async function Home() {
+  const session = await auth();
+  const isAdmin = session?.user?.role === "ADMIN" || session?.user?.role === "SUPER_ADMIN" || session?.user?.role === "CONTENT_MANAGER";
+
+  const heroContentStr = await getSectionContentVisual("homepage-hero", JSON.stringify({
+    title: "Building Futures.<br />Inspiring Excellence.",
+    subtitle: "Empowering students with knowledge, character, creativity, and confidence."
+  }), isAdmin);
+  
+  let heroContent = { title: "", subtitle: "" };
+  try {
+    heroContent = JSON.parse(heroContentStr);
+  } catch (e) {
+    // fallback if parsing fails
+  }
+
+  const contactContentStr = await getSectionContentVisual("contact-header", JSON.stringify({
+    title: "Let's Start a Conversation",
+    description: "Whether you have questions about admissions, want to schedule a campus tour, or just want to say hello, our team is ready to help."
+  }), isAdmin);
+  
+  let contactContent = undefined;
+  try { contactContent = JSON.parse(contactContentStr); } catch (e) {}
+
+  const aboutContentStr = await getSectionContentVisual("about-section", JSON.stringify({
+    title: "Nurturing Leaders of Tomorrow",
+    description: "Manka Public School is a premier educational institution committed to providing holistic education. We believe in creating an environment where curiosity is encouraged, creativity is nurtured, and character is built.",
+    vision: "To be a center of excellence in education that empowers students to reach their full potential and contribute positively to society.",
+    mission: "To provide a dynamic and inclusive learning environment that fosters intellectual, social, and emotional growth through innovative teaching methodologies."
+  }), isAdmin);
+  let aboutContent = undefined;
+  try { aboutContent = JSON.parse(aboutContentStr); } catch (e) {}
+
+  const hallOfFameContentStr = await getSectionContentVisual("hall-of-fame-section", "{}", isAdmin);
+  let hallOfFameContent = undefined; try { hallOfFameContent = JSON.parse(hallOfFameContentStr); } catch (e) {}
+
+  const academicsContentStr = await getSectionContentVisual("academics-section", "{}", isAdmin);
+  let academicsContent = undefined; try { academicsContent = JSON.parse(academicsContentStr); } catch (e) {}
+
+  const whyChooseUsContentStr = await getSectionContentVisual("why-choose-us-section", "{}", isAdmin);
+  let whyChooseUsContent = undefined; try { whyChooseUsContent = JSON.parse(whyChooseUsContentStr); } catch (e) {}
+
+  const studentLifeContentStr = await getSectionContentVisual("student-life-section", "{}", isAdmin);
+  let studentLifeContent = undefined; try { studentLifeContent = JSON.parse(studentLifeContentStr); } catch (e) {}
+
+  const achievementsContentStr = await getSectionContentVisual("achievements-section", "{}", isAdmin);
+  let achievementsContent = undefined; try { achievementsContent = JSON.parse(achievementsContentStr); } catch (e) {}
+
+  const testimonialsContentStr = await getSectionContentVisual("testimonials-section", "{}", isAdmin);
+  let testimonialsContent = undefined; try { testimonialsContent = JSON.parse(testimonialsContentStr); } catch (e) {}
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <main className="flex flex-col min-h-screen">
+      <Navbar />
+      
+      <Hero title={heroContent.title} subtitle={heroContent.subtitle} />
+
+      {/* Main Content Area */}
+      <div className="flex-grow">
+        <About content={aboutContent} />
+        <HallOfFame content={hallOfFameContent} />
+        <Academics content={academicsContent} />
+        <WhyChooseUs content={whyChooseUsContent} />
+        <StudentLife content={studentLifeContent} />
+        <Achievements content={achievementsContent} />
+        <Testimonials content={testimonialsContent} />
+        <Contact content={contactContent} />
+      </div>
+
+      <Footer />
+    </main>
   );
 }

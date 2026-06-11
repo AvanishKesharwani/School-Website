@@ -1,0 +1,132 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model AdminUser {
+  id           String     @id @default(cuid())
+  username     String     @unique
+  email        String     @unique
+  passwordHash String
+  role         String     @default("ADMIN") // SUPER_ADMIN, ADMIN, CONTENT_MANAGER
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  auditLogs    AuditLog[]
+}
+
+model ContactInfo {
+  id             String   @id @default(cuid())
+  schoolName     String
+  address        String
+  phone          String
+  alternatePhone String?
+  email          String
+  website        String?
+  officeHours    String?
+  googleMapsLink String?
+  updatedAt      DateTime @updatedAt
+}
+
+model Admission {
+  id                String    @id @default(cuid())
+  academicYear      String
+  admissionOpen     Boolean   @default(false)
+  classesAvailable  String
+  admissionStart    DateTime?
+  admissionEnd      DateTime?
+  admissionProcess  String
+  requiredDocuments String
+  feesStructure     String?
+  brochureUrl       String?
+  updatedAt         DateTime  @updatedAt
+}
+
+model WebsiteSection {
+  id           String           @id @default(cuid())
+  slug         String           @unique
+  name         String
+  content      String
+  draftContent String?
+  isPublished  Boolean          @default(false)
+  updatedAt    DateTime         @updatedAt
+  versions     ContentVersion[]
+}
+
+model ContentVersion {
+  id          String         @id @default(cuid())
+  sectionId   String
+  section     WebsiteSection @relation(fields: [sectionId], references: [id], onDelete: Cascade)
+  content     String
+  createdBy   String
+  createdAt   DateTime       @default(now())
+}
+
+model AuditLog {
+  id        String    @id @default(cuid())
+  adminId   String
+  admin     AdminUser @relation(fields: [adminId], references: [id], onDelete: Cascade)
+  action    String
+  section   String?
+  details   String?
+  createdAt DateTime  @default(now())
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  firstName String
+  lastName  String
+  email     String
+  subject   String
+  message   String
+  createdAt DateTime @default(now())
+}
+
+model GalleryImage {
+  id        String   @id @default(cuid())
+  category  String
+  src       String
+  aspect    String   @default("aspect-square")
+  isDraft   Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model Faculty {
+  id        String   @id @default(cuid())
+  name      String
+  role      String
+  image     String?
+  bio       String?
+  isDraft   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  title       String
+  date        DateTime
+  description String
+  image       String?
+  isDraft     Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Notice {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  date      DateTime @default(now())
+  isDraft   Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
