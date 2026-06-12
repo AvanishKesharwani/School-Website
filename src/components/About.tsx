@@ -66,7 +66,7 @@ export default function About({ content }: { content?: any }) {
           >
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand-yellow/10 via-transparent to-transparent opacity-50" />
             <img 
-              src="/logo.png" 
+              src="/logo_enhanced.png" 
               alt="Manka Public School Logo" 
               className="relative z-10 w-full h-full max-h-[85%] object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-700"
             />
