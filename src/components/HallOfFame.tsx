@@ -50,14 +50,17 @@ export default function HallOfFame({ content }: { content?: any }) {
   };
   const c = content || defaultContent;
 
-  const [duration10, setDuration10] = useState(30);
+  const [duration10, setDuration10] = useState(65);
+  const [duration12, setDuration12] = useState(55);
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) {
-        setDuration10(55); // Slower speed on mobile
+        setDuration10(90); // Slower on mobile
+        setDuration12(80); // Slower on mobile
       } else {
-        setDuration10(30); // Default speed on desktop
+        setDuration10(65); // Slower on desktop
+        setDuration12(55); // Slower on desktop
       }
     };
     handleResize();
@@ -101,20 +104,59 @@ export default function HallOfFame({ content }: { content?: any }) {
               animate={{ x: ["0%", "-50%"] }}
               transition={{ repeat: Infinity, ease: "linear", duration: duration10 }}
             >
-              {[...class10Toppers, ...class10Toppers].map((topper, index) => (
-                <div key={index} className="w-44 md:w-64 flex-shrink-0 bg-white rounded-[1.5rem] md:rounded-[2rem] p-4 md:p-6 shadow-xl border border-gray-100 flex flex-col items-center transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
-                  <div className="w-20 h-24 md:w-28 md:h-32 rounded-xl md:rounded-2xl mb-3 md:mb-4 shadow-md overflow-hidden flex items-center justify-center bg-white flex-shrink-0 border-2 md:border-[3px] border-[#0F2747]">
-                    <img 
-                      src={topper.photo} 
-                      alt={topper.name} 
-                      className="w-full h-full object-cover"
-                    />
+              {[...class10Toppers, ...class10Toppers].map((topper, index) => {
+                const originalIndex = index % class10Toppers.length;
+                const isRank1 = originalIndex === 0;
+                const isRank2 = originalIndex === 1;
+                const isRank3 = originalIndex === 2;
+
+                return (
+                  <div 
+                    key={index} 
+                    className={`w-44 md:w-64 flex-shrink-0 bg-white rounded-[1.5rem] md:rounded-[2rem] p-4 md:p-6 shadow-xl flex flex-col items-center transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl relative ${
+                      isRank1 ? "border-[3.5px] border-[#F2C230] shadow-[#F2C230]/10" :
+                      isRank2 ? "border-[3.5px] border-slate-300 shadow-slate-300/10" :
+                      isRank3 ? "border-[3.5px] border-[#CD7F32] shadow-[#CD7F32]/10" :
+                      "border border-gray-100"
+                    }`}
+                  >
+                    {isRank1 && (
+                      <div className="absolute -top-3 -right-2 bg-gradient-to-r from-[#F2C230] to-[#E5A91A] text-[#0F2747] font-black text-[9px] md:text-[11px] px-2.5 py-1 rounded-full shadow-md tracking-wider uppercase border border-white/20 z-10 flex items-center gap-1 animate-pulse">
+                        <span>1st Rank</span>
+                        <span>👑</span>
+                      </div>
+                    )}
+                    {isRank2 && (
+                      <div className="absolute -top-3 -right-2 bg-gradient-to-r from-slate-200 to-slate-400 text-[#0F2747] font-black text-[9px] md:text-[11px] px-2.5 py-1 rounded-full shadow-md tracking-wider uppercase border border-white/20 z-10 flex items-center gap-1">
+                        <span>2nd Rank</span>
+                        <span>🥈</span>
+                      </div>
+                    )}
+                    {isRank3 && (
+                      <div className="absolute -top-3 -right-2 bg-gradient-to-r from-[#D27D2D] to-[#B5651D] text-white font-black text-[9px] md:text-[11px] px-2.5 py-1 rounded-full shadow-md tracking-wider uppercase border border-white/20 z-10 flex items-center gap-1">
+                        <span>3rd Rank</span>
+                        <span>🥉</span>
+                      </div>
+                    )}
+
+                    <div className={`w-20 h-24 md:w-28 md:h-32 rounded-xl md:rounded-2xl mb-3 md:mb-4 shadow-md overflow-hidden flex items-center justify-center bg-white flex-shrink-0 border-2 md:border-[3px] ${
+                      isRank1 ? "border-[#F2C230]" :
+                      isRank2 ? "border-slate-300" :
+                      isRank3 ? "border-[#CD7F32]" :
+                      "border-[#0F2747]"
+                    }`}>
+                      <img 
+                        src={topper.photo} 
+                        alt={topper.name} 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <h5 className="text-sm md:text-lg font-bold text-[#0F2747] text-center h-10 md:h-14 flex items-center justify-center leading-tight w-full px-1">{topper.name}</h5>
+                    <p className="text-[#E85D22] font-extrabold text-2xl md:text-3xl mt-1 md:mt-2 drop-shadow-sm">{topper.percentage}</p>
+                    <p className="text-[10px] md:text-sm font-semibold text-gray-500 mt-0.5 md:mt-1 uppercase tracking-wider">Class 10th</p>
                   </div>
-                  <h5 className="text-sm md:text-lg font-bold text-[#0F2747] text-center h-10 md:h-14 flex items-center justify-center leading-tight w-full px-1">{topper.name}</h5>
-                  <p className="text-[#E85D22] font-extrabold text-2xl md:text-3xl mt-1 md:mt-2 drop-shadow-sm">{topper.percentage}</p>
-                  <p className="text-[10px] md:text-sm font-semibold text-gray-500 mt-0.5 md:mt-1 uppercase tracking-wider">Class 10th</p>
-                </div>
-              ))}
+                );
+              })}
             </motion.div>
           </div>
         </div>
@@ -129,18 +171,57 @@ export default function HallOfFame({ content }: { content?: any }) {
             <motion.div
               className="flex gap-4 md:gap-8 px-4 w-max"
               animate={{ x: ["-50%", "0%"] }}
-              transition={{ repeat: Infinity, ease: "linear", duration: 25 }}
+              transition={{ repeat: Infinity, ease: "linear", duration: duration12 }}
             >
-              {[...class12Toppers, ...class12Toppers].map((topper, index) => (
-                <div key={index} className="w-44 md:w-64 flex-shrink-0 bg-white rounded-[1.5rem] md:rounded-[2rem] p-4 md:p-6 shadow-xl border border-gray-100 flex flex-col items-center transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
-                  <div className="w-20 h-24 md:w-28 md:h-32 rounded-xl md:rounded-2xl mb-3 md:mb-4 shadow-md overflow-hidden flex items-center justify-center bg-white flex-shrink-0 border-2 md:border-[3px] border-[#0F2747]">
-                    <img src={topper.photo} alt={topper.name} className="w-full h-full object-cover" />
+              {[...class12Toppers, ...class12Toppers].map((topper, index) => {
+                const originalIndex = index % class12Toppers.length;
+                const isRank1 = originalIndex === 0;
+                const isRank2 = originalIndex === 1;
+                const isRank3 = originalIndex === 2;
+
+                return (
+                  <div 
+                    key={index} 
+                    className={`w-44 md:w-64 flex-shrink-0 bg-white rounded-[1.5rem] md:rounded-[2rem] p-4 md:p-6 shadow-xl flex flex-col items-center transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl relative ${
+                      isRank1 ? "border-[3.5px] border-[#F2C230] shadow-[#F2C230]/10" :
+                      isRank2 ? "border-[3.5px] border-slate-300 shadow-slate-300/10" :
+                      isRank3 ? "border-[3.5px] border-[#CD7F32] shadow-[#CD7F32]/10" :
+                      "border border-gray-100"
+                    }`}
+                  >
+                    {isRank1 && (
+                      <div className="absolute -top-3 -right-2 bg-gradient-to-r from-[#F2C230] to-[#E5A91A] text-[#0F2747] font-black text-[9px] md:text-[11px] px-2.5 py-1 rounded-full shadow-md tracking-wider uppercase border border-white/20 z-10 flex items-center gap-1 animate-pulse">
+                        <span>1st Rank</span>
+                        <span>👑</span>
+                      </div>
+                    )}
+                    {isRank2 && (
+                      <div className="absolute -top-3 -right-2 bg-gradient-to-r from-slate-200 to-slate-400 text-[#0F2747] font-black text-[9px] md:text-[11px] px-2.5 py-1 rounded-full shadow-md tracking-wider uppercase border border-white/20 z-10 flex items-center gap-1">
+                        <span>2nd Rank</span>
+                        <span>🥈</span>
+                      </div>
+                    )}
+                    {isRank3 && (
+                      <div className="absolute -top-3 -right-2 bg-gradient-to-r from-[#D27D2D] to-[#B5651D] text-white font-black text-[9px] md:text-[11px] px-2.5 py-1 rounded-full shadow-md tracking-wider uppercase border border-white/20 z-10 flex items-center gap-1">
+                        <span>3rd Rank</span>
+                        <span>🥉</span>
+                      </div>
+                    )}
+
+                    <div className={`w-20 h-24 md:w-28 md:h-32 rounded-xl md:rounded-2xl mb-3 md:mb-4 shadow-md overflow-hidden flex items-center justify-center bg-white flex-shrink-0 border-2 md:border-[3px] ${
+                      isRank1 ? "border-[#F2C230]" :
+                      isRank2 ? "border-slate-300" :
+                      isRank3 ? "border-[#CD7F32]" :
+                      "border-[#0F2747]"
+                    }`}>
+                      <img src={topper.photo} alt={topper.name} className="w-full h-full object-cover" />
+                    </div>
+                    <h5 className="text-sm md:text-lg font-bold text-[#0F2747] text-center h-10 md:h-14 flex items-center justify-center leading-tight w-full px-1">{topper.name}</h5>
+                    <p className="text-[#E85D22] font-extrabold text-2xl md:text-3xl mt-1 md:mt-2 drop-shadow-sm">{topper.percentage}</p>
+                    <p className="text-[10px] md:text-sm font-semibold text-gray-500 mt-0.5 md:mt-1 uppercase tracking-wider">{topper.stream}</p>
                   </div>
-                  <h5 className="text-sm md:text-lg font-bold text-[#0F2747] text-center h-10 md:h-14 flex items-center justify-center leading-tight w-full px-1">{topper.name}</h5>
-                  <p className="text-[#E85D22] font-extrabold text-2xl md:text-3xl mt-1 md:mt-2 drop-shadow-sm">{topper.percentage}</p>
-                  <p className="text-[10px] md:text-sm font-semibold text-gray-500 mt-0.5 md:mt-1 uppercase tracking-wider">{topper.stream}</p>
-                </div>
-              ))}
+                );
+              })}
             </motion.div>
           </div>
         </div>
