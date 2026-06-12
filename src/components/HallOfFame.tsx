@@ -101,7 +101,7 @@ export default function HallOfFame({ content }: { content?: any }) {
           <div className="relative w-full overflow-hidden flex py-4 group">
             <motion.div
               className="flex gap-4 md:gap-8 px-4 w-max"
-              animate={{ x: ["-32.6%", "-82.6%"] }}
+              animate={{ x: ["-30.43%", "-80.43%"] }}
               transition={{ repeat: Infinity, ease: "linear", duration: duration10 }}
             >
               {[...class10Toppers, ...class10Toppers].map((topper, index) => {
@@ -170,7 +170,7 @@ export default function HallOfFame({ content }: { content?: any }) {
           <div className="relative w-full overflow-hidden flex py-4 group">
             <motion.div
               className="flex gap-4 md:gap-8 px-4 w-max"
-              animate={{ x: ["-30%", "20%"] }}
+              animate={{ x: ["-25%", "25%"] }}
               transition={{ repeat: Infinity, ease: "linear", duration: duration12 }}
             >
               {[...class12Toppers, ...class12Toppers].map((topper, index) => {
