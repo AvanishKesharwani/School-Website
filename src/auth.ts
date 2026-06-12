@@ -61,6 +61,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           }
         } catch (error) {
           console.error("Database authentication error:", error);
+          throw new Error("Database connection failed");
         }
 
         return null;
