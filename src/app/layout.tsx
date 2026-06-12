@@ -5,6 +5,7 @@ import SmoothScroll from "@/components/SmoothScroll";
 import { auth } from "@/auth";
 import { EditModeProvider } from "@/components/cms/EditModeProvider";
 import CMSToolbar from "@/components/cms/CMSToolbar";
+import RouteLoadingIndicator from "@/components/RouteLoadingIndicator";
 
 const outfit = Outfit({
   variable: "--font-outfit",
@@ -33,6 +34,7 @@ export default async function RootLayout({
         <EditModeProvider initialIsAdmin={isAdmin}>
           <SmoothScroll>{children}</SmoothScroll>
           {isAdmin && <CMSToolbar />}
+          <RouteLoadingIndicator />
         </EditModeProvider>
       </body>
     </html>

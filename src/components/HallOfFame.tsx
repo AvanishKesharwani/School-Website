@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
 const class10Toppers = [
@@ -49,6 +50,21 @@ export default function HallOfFame({ content }: { content?: any }) {
   };
   const c = content || defaultContent;
 
+  const [duration10, setDuration10] = useState(30);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setDuration10(55); // Slower speed on mobile
+      } else {
+        setDuration10(30); // Default speed on desktop
+      }
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   return (
     <section className="py-20 bg-white overflow-hidden relative">
       <div className="container mx-auto px-6 md:px-12 mb-16 text-center">
@@ -83,7 +99,7 @@ export default function HallOfFame({ content }: { content?: any }) {
             <motion.div
               className="flex gap-4 md:gap-8 px-4 w-max"
               animate={{ x: ["0%", "-50%"] }}
-              transition={{ repeat: Infinity, ease: "linear", duration: 30 }}
+              transition={{ repeat: Infinity, ease: "linear", duration: duration10 }}
             >
               {[...class10Toppers, ...class10Toppers].map((topper, index) => (
                 <div key={index} className="w-44 md:w-64 flex-shrink-0 bg-white rounded-[1.5rem] md:rounded-[2rem] p-4 md:p-6 shadow-xl border border-gray-100 flex flex-col items-center transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
