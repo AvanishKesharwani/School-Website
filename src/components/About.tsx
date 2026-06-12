@@ -52,17 +52,17 @@ export default function About({ content }: { content?: any }) {
   ];
 
   return (
-    <section id="about" className="py-24 bg-brand-white text-brand-navy">
+    <section id="about" className="py-16 md:py-24 bg-brand-white text-brand-navy">
       <div className="container mx-auto px-6 md:px-12">
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Left: Image/Logo Box */}
           <motion.div 
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
-            className="relative h-[400px] md:h-[600px] rounded-3xl overflow-hidden shadow-2xl bg-white border border-gray-100 flex items-center justify-center p-12"
+            className="relative h-[280px] sm:h-[400px] md:h-[600px] rounded-3xl overflow-hidden shadow-2xl bg-white border border-gray-100 flex items-center justify-center p-8 sm:p-12"
           >
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand-yellow/10 via-transparent to-transparent opacity-50" />
             <img 
@@ -78,20 +78,20 @@ export default function About({ content }: { content?: any }) {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
-            className="space-y-8"
+            className="space-y-6 sm:space-y-8"
           >
             <div>
-              <h2 className="text-sm font-bold tracking-widest text-brand-yellow uppercase mb-4">About Us</h2>
+              <h2 className="text-sm font-bold tracking-widest text-brand-yellow uppercase mb-2 sm:mb-4">About Us</h2>
               <EditableText
                 as="h3"
-                className="text-5xl md:text-6xl font-bold mb-6"
+                className="text-3xl sm:text-4xl md:text-6xl font-bold mb-4 sm:mb-6"
                 sectionSlug="about-section"
                 field="title"
                 initialValue={c.title}
               />
               <EditableText
                 as="p"
-                className="text-brand-gray text-lg leading-relaxed"
+                className="text-brand-gray text-base sm:text-lg leading-relaxed"
                 sectionSlug="about-section"
                 field="description"
                 initialValue={c.description}
@@ -99,23 +99,23 @@ export default function About({ content }: { content?: any }) {
               />
             </div>
 
-            <div className="space-y-6">
-              <div className="p-6 bg-brand-blue/30 rounded-2xl border border-brand-blue/50">
-                <h4 className="text-xl font-bold mb-2">Our Vision</h4>
+            <div className="space-y-4 sm:space-y-6">
+              <div className="p-5 sm:p-6 bg-brand-blue/30 rounded-2xl border border-brand-blue/50">
+                <h4 className="text-lg sm:text-xl font-bold mb-1 sm:mb-2">Our Vision</h4>
                 <EditableText
                   as="p"
-                  className="text-brand-gray"
+                  className="text-brand-gray text-sm sm:text-base"
                   sectionSlug="about-section"
                   field="vision"
                   initialValue={c.vision}
                   multiline={true}
                 />
               </div>
-              <div className="p-6 bg-brand-yellow/10 rounded-2xl border border-brand-yellow/30">
-                <h4 className="text-xl font-bold mb-2">Our Mission</h4>
+              <div className="p-5 sm:p-6 bg-brand-yellow/10 rounded-2xl border border-brand-yellow/30">
+                <h4 className="text-lg sm:text-xl font-bold mb-1 sm:mb-2">Our Mission</h4>
                 <EditableText
                   as="p"
-                  className="text-brand-gray"
+                  className="text-brand-gray text-sm sm:text-base"
                   sectionSlug="about-section"
                   field="mission"
                   initialValue={c.mission}
@@ -125,13 +125,13 @@ export default function About({ content }: { content?: any }) {
             </div>
 
             {/* Stats */}
-            <div className="grid grid-cols-3 gap-6 pt-8 border-t border-brand-gray/20">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6 sm:pt-8 border-t border-brand-gray/20 text-center sm:text-left">
               {stats.map((stat, index) => (
-                <div key={index}>
-                  <div className="text-3xl md:text-4xl font-bold text-brand-navy mb-1">
+                <div key={index} className="flex flex-col sm:block">
+                  <div className="text-3xl md:text-4xl font-bold text-brand-navy mb-0.5 sm:mb-1">
                     <Counter from={0} to={stat.value} duration={2.5} suffix={stat.suffix} />
                   </div>
-                  <div className="text-sm text-brand-gray font-medium">{stat.label}</div>
+                  <div className="text-xs sm:text-sm text-brand-gray font-medium">{stat.label}</div>
                 </div>
               ))}
             </div>

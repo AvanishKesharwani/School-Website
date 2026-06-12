@@ -74,7 +74,7 @@ export default function Academics({ content }: { content?: any }) {
               >
                 {/* Top Half: Image on solid background */}
                 <div 
-                  className="w-full aspect-square md:aspect-[3/4] relative overflow-hidden"
+                  className="w-full aspect-[21/9] md:aspect-[3/4] relative overflow-hidden"
                   style={{ backgroundColor: program.color }}
                 >
                   <EditableImage
@@ -89,17 +89,17 @@ export default function Academics({ content }: { content?: any }) {
 
                 {/* Bottom Half: Content */}
                 <div 
-                  className="flex flex-col items-center justify-center p-8 md:p-10 h-[320px] transition-colors duration-300"
+                  className="flex flex-col items-center justify-center p-6 md:p-10 h-[200px] md:h-[320px] transition-colors duration-300"
                   style={{ backgroundColor: program.bgColor }}
                 >
                   <Icon 
-                    className="w-12 h-12 mb-8 stroke-[1.5]"
+                    className="w-10 h-10 md:w-12 md:h-12 mb-4 md:mb-8 stroke-[1.5]"
                     style={{ color: program.color }}
                   />
                   
                   <EditableText
                     as="h3"
-                    className="text-xl md:text-2xl font-extrabold text-center mb-8 whitespace-pre-line leading-tight"
+                    className="text-lg md:text-2xl font-extrabold text-center mb-2 md:mb-8 whitespace-pre-line leading-tight"
                     style={{ color: program.color }}
                     sectionSlug="academics-section"
                     field={`program_${index}_title`}

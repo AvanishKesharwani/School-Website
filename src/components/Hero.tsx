@@ -55,7 +55,7 @@ export default function Hero({ title, subtitle }: HeroProps) {
         >
           <EditableText
             as="h1"
-            className="text-6xl md:text-7xl lg:text-[5.5rem] font-extrabold text-white mb-6 tracking-tight drop-shadow-2xl leading-[1.1]"
+            className="text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-extrabold text-white mb-6 tracking-tight drop-shadow-2xl leading-[1.1]"
             sectionSlug="homepage-hero"
             field="title"
             initialValue={title || "Building Futures.<br />Inspiring Excellence."}
@@ -70,7 +70,7 @@ export default function Hero({ title, subtitle }: HeroProps) {
         >
           <EditableText
             as="p"
-            className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-12 drop-shadow-lg font-medium leading-relaxed"
+            className="text-lg sm:text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-8 md:mb-12 drop-shadow-lg font-medium leading-relaxed"
             sectionSlug="homepage-hero"
             field="subtitle"
             initialValue={subtitle || "Empowering students with knowledge, character, creativity, and confidence."}

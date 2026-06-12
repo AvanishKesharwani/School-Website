@@ -57,7 +57,7 @@ export default function HallOfFame({ content }: { content?: any }) {
         </h2>
         <EditableText
           as="h3"
-          className="text-5xl md:text-6xl font-extrabold text-[#0F2747]"
+          className="text-3xl sm:text-4xl md:text-6xl font-extrabold text-[#0F2747]"
           sectionSlug="hall-of-fame-section"
           field="title"
           initialValue={c.title}

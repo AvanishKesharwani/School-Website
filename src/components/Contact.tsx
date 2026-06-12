@@ -33,7 +33,7 @@ export default function Contact({ content }: { content?: any }) {
             </h2>
             <EditableText
               as="h3"
-              className="text-5xl md:text-6xl font-extrabold mb-6 leading-tight text-[#0F2747]"
+              className="text-3xl sm:text-4xl md:text-6xl font-extrabold mb-6 leading-tight text-[#0F2747]"
               sectionSlug="contact-header"
               field="title"
               initialValue={c.title}
