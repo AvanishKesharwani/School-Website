@@ -128,23 +128,23 @@ export default function Preloader() {
 
             {/* Custom Loading Progress Pill */}
             <div className="relative">
-              <div className="bg-[#06101E]/90 backdrop-blur-md px-10 py-3.5 rounded-full border border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.3)] min-w-[240px] md:min-w-[300px] flex items-center justify-center h-14 overflow-hidden relative">
+              <div className="bg-brand-yellow px-10 py-3.5 rounded-full border border-brand-navy/10 shadow-[0_8px_30px_rgb(0,0,0,0.25)] min-w-[240px] md:min-w-[300px] flex items-center justify-center h-14 overflow-hidden relative">
                 {/* Horizontal Progress Fill Line inside the pill */}
                 <div
-                  className="absolute left-0 bottom-0 top-0 bg-gradient-to-r from-[#E85D22]/20 to-[#F1B221]/20 transition-all duration-300 ease-out z-0"
+                  className="absolute left-0 bottom-0 top-0 bg-brand-navy/15 transition-all duration-300 ease-out z-0"
                   style={{ width: `${progress}%` }}
                 />
 
                 {/* Animated Inner Shadow Glow */}
-                <div className="absolute inset-0 rounded-full border border-[#E85D22]/10 pointer-events-none" />
+                <div className="absolute inset-0 rounded-full border border-brand-navy/5 pointer-events-none" />
 
                 {/* Text Indicator */}
-                <span className="text-white text-sm md:text-base font-bold tracking-[0.25em] md:tracking-[0.35em] uppercase relative z-10 flex items-center justify-center text-center">
+                <span className="text-brand-navy text-sm md:text-base font-bold tracking-[0.25em] md:tracking-[0.35em] uppercase relative z-10 flex items-center justify-center text-center">
                   {showWelcome ? (
                     <motion.span
                       initial={{ opacity: 0, scale: 0.9 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      className="text-[#F1B221] drop-shadow-[0_0_8px_rgba(241,178,33,0.3)] pl-[0.25em] md:pl-[0.35em]"
+                      className="text-brand-navy pl-[0.25em] md:pl-[0.35em]"
                     >
                       WELCOME
                     </motion.span>
