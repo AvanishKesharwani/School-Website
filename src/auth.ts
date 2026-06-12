@@ -59,9 +59,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           if (passwordsMatch) {
             return { id: user.id, name: user.username, email: user.email, role: user.role };
           }
-        } catch (error) {
+        } catch (error: any) {
           console.error("Database authentication error:", error);
-          throw new Error("Database connection failed");
+          throw new Error(`Database connection failed: ${error.message || error}`);
         }
 
         return null;
