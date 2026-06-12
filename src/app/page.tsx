@@ -16,11 +16,40 @@ export default async function Home() {
   const session = await auth();
   const isAdmin = session?.user?.role === "ADMIN" || session?.user?.role === "SUPER_ADMIN" || session?.user?.role === "CONTENT_MANAGER";
 
-  const heroContentStr = await getSectionContentVisual("homepage-hero", JSON.stringify({
-    title: "Building Futures.<br />Inspiring Excellence.",
-    subtitle: "Empowering students with knowledge, character, creativity, and confidence."
-  }), isAdmin);
-  
+  // Fetch all CMS section contents in parallel to avoid sequential database round-trips
+  const [
+    heroContentStr,
+    contactContentStr,
+    aboutContentStr,
+    hallOfFameContentStr,
+    academicsContentStr,
+    whyChooseUsContentStr,
+    studentLifeContentStr,
+    achievementsContentStr,
+    testimonialsContentStr
+  ] = await Promise.all([
+    getSectionContentVisual("homepage-hero", JSON.stringify({
+      title: "Building Futures.<br />Inspiring Excellence.",
+      subtitle: "Empowering students with knowledge, character, creativity, and confidence."
+    }), isAdmin),
+    getSectionContentVisual("contact-header", JSON.stringify({
+      title: "Let's Start a Conversation",
+      description: "Whether you have questions about admissions, want to schedule a campus tour, or just want to say hello, our team is ready to help."
+    }), isAdmin),
+    getSectionContentVisual("about-section", JSON.stringify({
+      title: "Nurturing Leaders of Tomorrow",
+      description: "Manka Public School is a premier educational institution committed to providing holistic education. We believe in creating an environment where curiosity is encouraged, creativity is nurtured, and character is built.",
+      vision: "To be a center of excellence in education that empowers students to reach their full potential and contribute positively to society.",
+      mission: "To provide a dynamic and inclusive learning environment that fosters intellectual, social, and emotional growth through innovative teaching methodologies."
+    }), isAdmin),
+    getSectionContentVisual("hall-of-fame-section", "{}", isAdmin),
+    getSectionContentVisual("academics-section", "{}", isAdmin),
+    getSectionContentVisual("why-choose-us-section", "{}", isAdmin),
+    getSectionContentVisual("student-life-section", "{}", isAdmin),
+    getSectionContentVisual("achievements-section", "{}", isAdmin),
+    getSectionContentVisual("testimonials-section", "{}", isAdmin)
+  ]);
+
   let heroContent = { title: "", subtitle: "" };
   try {
     heroContent = JSON.parse(heroContentStr);
@@ -28,40 +57,29 @@ export default async function Home() {
     // fallback if parsing fails
   }
 
-  const contactContentStr = await getSectionContentVisual("contact-header", JSON.stringify({
-    title: "Let's Start a Conversation",
-    description: "Whether you have questions about admissions, want to schedule a campus tour, or just want to say hello, our team is ready to help."
-  }), isAdmin);
-  
   let contactContent = undefined;
   try { contactContent = JSON.parse(contactContentStr); } catch (e) {}
 
-  const aboutContentStr = await getSectionContentVisual("about-section", JSON.stringify({
-    title: "Nurturing Leaders of Tomorrow",
-    description: "Manka Public School is a premier educational institution committed to providing holistic education. We believe in creating an environment where curiosity is encouraged, creativity is nurtured, and character is built.",
-    vision: "To be a center of excellence in education that empowers students to reach their full potential and contribute positively to society.",
-    mission: "To provide a dynamic and inclusive learning environment that fosters intellectual, social, and emotional growth through innovative teaching methodologies."
-  }), isAdmin);
   let aboutContent = undefined;
   try { aboutContent = JSON.parse(aboutContentStr); } catch (e) {}
 
-  const hallOfFameContentStr = await getSectionContentVisual("hall-of-fame-section", "{}", isAdmin);
-  let hallOfFameContent = undefined; try { hallOfFameContent = JSON.parse(hallOfFameContentStr); } catch (e) {}
+  let hallOfFameContent = undefined; 
+  try { hallOfFameContent = JSON.parse(hallOfFameContentStr); } catch (e) {}
 
-  const academicsContentStr = await getSectionContentVisual("academics-section", "{}", isAdmin);
-  let academicsContent = undefined; try { academicsContent = JSON.parse(academicsContentStr); } catch (e) {}
+  let academicsContent = undefined; 
+  try { academicsContent = JSON.parse(academicsContentStr); } catch (e) {}
 
-  const whyChooseUsContentStr = await getSectionContentVisual("why-choose-us-section", "{}", isAdmin);
-  let whyChooseUsContent = undefined; try { whyChooseUsContent = JSON.parse(whyChooseUsContentStr); } catch (e) {}
+  let whyChooseUsContent = undefined; 
+  try { whyChooseUsContent = JSON.parse(whyChooseUsContentStr); } catch (e) {}
 
-  const studentLifeContentStr = await getSectionContentVisual("student-life-section", "{}", isAdmin);
-  let studentLifeContent = undefined; try { studentLifeContent = JSON.parse(studentLifeContentStr); } catch (e) {}
+  let studentLifeContent = undefined; 
+  try { studentLifeContent = JSON.parse(studentLifeContentStr); } catch (e) {}
 
-  const achievementsContentStr = await getSectionContentVisual("achievements-section", "{}", isAdmin);
-  let achievementsContent = undefined; try { achievementsContent = JSON.parse(achievementsContentStr); } catch (e) {}
+  let achievementsContent = undefined; 
+  try { achievementsContent = JSON.parse(achievementsContentStr); } catch (e) {}
 
-  const testimonialsContentStr = await getSectionContentVisual("testimonials-section", "{}", isAdmin);
-  let testimonialsContent = undefined; try { testimonialsContent = JSON.parse(testimonialsContentStr); } catch (e) {}
+  let testimonialsContent = undefined; 
+  try { testimonialsContent = JSON.parse(testimonialsContentStr); } catch (e) {}
 
   return (
     <main className="flex flex-col min-h-screen">
