@@ -9,20 +9,14 @@ let isFirstMount = true;
 
 export default function Preloader() {
   const pathname = usePathname();
-  const [isMounted, setIsMounted] = useState(false);
   const [progress, setProgress] = useState(0);
   const [showWelcome, setShowWelcome] = useState(false);
   const [isAnimatingOut, setIsAnimatingOut] = useState(false);
   const [isVisible, setIsVisible] = useState(true);
 
-  // Prevent hydration mismatch: only render on client
-  useEffect(() => {
-    setIsMounted(true);
-  }, []);
-
   // Run progress counter on mount if it's the first mount and on the homepage
   useEffect(() => {
-    if (!isMounted || pathname !== "/" || !isFirstMount) {
+    if (pathname !== "/" || !isFirstMount) {
       setIsVisible(false);
       return;
     }
@@ -69,9 +63,9 @@ export default function Preloader() {
       clearInterval(timer);
       document.body.style.overflow = "";
     };
-  }, [isMounted, pathname]);
+  }, [pathname]);
 
-  if (!isMounted || pathname !== "/" || !isVisible) {
+  if (pathname !== "/" || !isVisible) {
     return null;
   }
 
