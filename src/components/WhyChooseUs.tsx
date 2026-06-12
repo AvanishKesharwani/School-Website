@@ -55,7 +55,7 @@ export default function WhyChooseUs({ content }: { content?: any }) {
         </div>
 
         {/* Feature Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-x-8 md:gap-y-12">
           {features.map((feature, index) => {
             const Icon = feature.icon;
             return (
@@ -65,30 +65,32 @@ export default function WhyChooseUs({ content }: { content?: any }) {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
-                className="group relative"
+                className="flex flex-row md:flex-col items-start gap-4 md:gap-0 group relative bg-white md:bg-transparent p-4 md:p-0 rounded-2xl border border-gray-50 md:border-none shadow-sm md:shadow-none"
               >
                 {/* Icon Container with Hover Animation */}
-                <div className="w-16 h-16 rounded-2xl bg-white border border-gray-100 shadow-sm flex items-center justify-center mb-6 relative overflow-hidden group-hover:-translate-y-1 transition-transform duration-300">
+                <div className="w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-white md:bg-white border border-gray-100 shadow-sm flex items-center justify-center shrink-0 mb-0 md:mb-6 relative overflow-hidden group-hover:-translate-y-1 transition-transform duration-300">
                   <div className="absolute inset-0 bg-gradient-to-br from-[#F6AE2D] to-[#E85D22] opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <Icon className="w-8 h-8 text-[#0F2747] relative z-10 group-hover:text-white transition-colors duration-300" />
+                  <Icon className="w-6 h-6 md:w-8 md:h-8 text-[#0F2747] relative z-10 group-hover:text-white transition-colors duration-300" />
                 </div>
                 
                 {/* Content */}
-                <EditableText
-                  as="h4"
-                  className="text-2xl font-bold mb-3 text-[#0F2747] group-hover:text-[#007BFF] transition-colors duration-300"
-                  sectionSlug="why-choose-us-section"
-                  field={`feature_${index}_title`}
-                  initialValue={c[`feature_${index}_title`] || feature.title}
-                />
-                <EditableText
-                  as="p"
-                  className="text-gray-600 leading-relaxed mb-6"
-                  sectionSlug="why-choose-us-section"
-                  field={`feature_${index}_desc`}
-                  initialValue={c[`feature_${index}_desc`] || feature.desc}
-                  multiline={true}
-                />
+                <div className="flex-grow flex flex-col">
+                  <EditableText
+                    as="h4"
+                    className="text-lg md:text-2xl font-bold mb-1 md:mb-3 text-[#0F2747] group-hover:text-[#007BFF] transition-colors duration-300"
+                    sectionSlug="why-choose-us-section"
+                    field={`feature_${index}_title`}
+                    initialValue={c[`feature_${index}_title`] || feature.title}
+                  />
+                  <EditableText
+                    as="p"
+                    className="text-sm md:text-base text-gray-600 leading-relaxed"
+                    sectionSlug="why-choose-us-section"
+                    field={`feature_${index}_desc`}
+                    initialValue={c[`feature_${index}_desc`] || feature.desc}
+                    multiline={true}
+                  />
+                </div>
 
               </motion.div>
             );

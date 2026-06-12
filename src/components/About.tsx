@@ -62,13 +62,13 @@ export default function About({ content }: { content?: any }) {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
-            className="relative h-[280px] sm:h-[400px] md:h-[600px] rounded-3xl overflow-hidden shadow-2xl bg-white border border-gray-100 flex items-center justify-center p-8 sm:p-12"
+            className="relative h-[200px] sm:h-[320px] md:h-[480px] lg:h-[600px] rounded-3xl overflow-hidden shadow-xl bg-gradient-to-br from-white to-[#F5FAFF] border border-gray-100 flex items-center justify-center p-6 sm:p-12"
           >
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-brand-yellow/10 via-transparent to-transparent opacity-50" />
             <img 
               src="/logo.png" 
               alt="Manka Public School Logo" 
-              className="relative z-10 w-full h-full object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-700"
+              className="relative z-10 w-full h-full max-h-[85%] object-contain drop-shadow-2xl hover:scale-105 transition-transform duration-700"
             />
           </motion.div>
 

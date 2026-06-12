@@ -64,17 +64,20 @@ export default function Academics({ content }: { content?: any }) {
         </div>
 
         {/* 5 Column Grid */}
-        <div className="flex flex-col md:flex-row w-full">
+        <div 
+          className="overflow-x-auto md:overflow-x-visible snap-x snap-mandatory flex flex-row w-full py-4 gap-4 px-6 md:px-0"
+          style={{ scrollbarWidth: 'none' }}
+        >
           {programs.map((program: any, index: number) => {
             const Icon = program.icon;
             return (
               <div 
                 key={program.id}
-                className="flex-1 flex flex-col group cursor-pointer"
+                className="w-[75vw] sm:w-[50vw] md:w-auto md:flex-1 flex flex-col group cursor-pointer snap-center shrink-0 rounded-2xl md:rounded-none overflow-hidden shadow-lg md:shadow-none"
               >
                 {/* Top Half: Image on solid background */}
                 <div 
-                  className="w-full aspect-[21/9] md:aspect-[3/4] relative overflow-hidden"
+                  className="w-full aspect-[16/9] md:aspect-[3/4] relative overflow-hidden"
                   style={{ backgroundColor: program.color }}
                 >
                   <EditableImage

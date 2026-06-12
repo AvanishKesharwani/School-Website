@@ -54,6 +54,17 @@ export default function Navbar() {
     { name: "Contact Us", href: "/#contact" },
   ];
 
+  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (href.startsWith("/#") && pathname === "/") {
+      const id = href.replace("/#", "");
+      const el = document.getElementById(id);
+      if (el) {
+        e.preventDefault();
+        el.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -80,6 +91,7 @@ export default function Navbar() {
             <Link
               key={link.name}
               href={link.href}
+              onClick={(e) => handleAnchorClick(e, link.href)}
               className={`font-medium transition-colors hover:text-brand-yellow whitespace-nowrap ${
                 navStyleActive ? "text-brand-gray" : "text-brand-white/90"
               }`}
@@ -132,11 +144,6 @@ export default function Navbar() {
                 Login
               </a>
             )}
-            
-            {/* Tooltip */}
-            <div className="absolute top-full right-0 mt-2 whitespace-nowrap bg-gray-900 text-white text-xs py-1.5 px-3 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-50 shadow-lg hidden md:block">
-              Hold Alt (Windows/Linux) or Option (Mac) for Admin Login
-            </div>
           </div>
         </nav>
 
@@ -168,7 +175,10 @@ export default function Navbar() {
                   key={link.name}
                   href={link.href}
                   className="text-brand-navy font-medium py-2 border-b border-brand-gray/10"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={(e) => {
+                    setIsMobileMenuOpen(false);
+                    handleAnchorClick(e, link.href);
+                  }}
                 >
                   {link.name}
                 </Link>

@@ -87,7 +87,17 @@ export default function Hero({ title, subtitle }: HeroProps) {
           <Link href="/admissions" className="px-8 py-4 bg-brand-yellow text-brand-navy rounded-full font-bold text-lg transition-transform hover:scale-105 shadow-xl inline-block text-center">
             Apply for Admission
           </Link>
-          <Link href="/#contact" className="px-8 py-4 bg-brand-white/10 text-brand-white border border-brand-white/30 backdrop-blur-md rounded-full font-bold text-lg transition-all hover:bg-brand-white/20 hover:scale-105 shadow-xl inline-block text-center">
+          <Link 
+            href="/#contact" 
+            onClick={(e) => {
+              const el = document.getElementById("contact");
+              if (el) {
+                e.preventDefault();
+                el.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+            className="px-8 py-4 bg-brand-white/10 text-brand-white border border-brand-white/30 backdrop-blur-md rounded-full font-bold text-lg transition-all hover:bg-brand-white/20 hover:scale-105 shadow-xl inline-block text-center"
+          >
             Get In Touch
           </Link>
         </motion.div>

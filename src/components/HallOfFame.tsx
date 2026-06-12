@@ -73,56 +73,56 @@ export default function HallOfFame({ content }: { content?: any }) {
       </div>
 
       <div className="space-y-16">
-        {/* Class 12th Section */}
+        {/* Class 10th Section */}
         <div>
           <div className="container mx-auto px-6 md:px-12 mb-6">
-            <h4 className="text-2xl font-bold text-[#0F2747] border-l-4 border-[#E85D22] pl-4">Class 12th Toppers</h4>
+            <h4 className="text-2xl font-bold text-[#0F2747] border-l-4 border-[#E85D22] pl-4">Class 10th Toppers</h4>
           </div>
           
           <div className="relative w-full overflow-hidden flex py-4 group">
             <motion.div
-              className="flex gap-8 px-4 w-max"
+              className="flex gap-4 md:gap-8 px-4 w-max"
               animate={{ x: ["0%", "-50%"] }}
-              transition={{ repeat: Infinity, ease: "linear", duration: 25 }}
+              transition={{ repeat: Infinity, ease: "linear", duration: 30 }}
             >
-              {[...class12Toppers, ...class12Toppers].map((topper, index) => (
-                <div key={index} className="w-64 flex-shrink-0 bg-white rounded-[2rem] p-6 shadow-xl border border-gray-100 flex flex-col items-center transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
-                  <div className="w-28 h-32 rounded-2xl mb-4 shadow-md overflow-hidden flex items-center justify-center bg-white flex-shrink-0 border-[3px] border-[#0F2747]">
+              {[...class10Toppers, ...class10Toppers].map((topper, index) => (
+                <div key={index} className="w-44 md:w-64 flex-shrink-0 bg-white rounded-[1.5rem] md:rounded-[2rem] p-4 md:p-6 shadow-xl border border-gray-100 flex flex-col items-center transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+                  <div className="w-20 h-24 md:w-28 md:h-32 rounded-xl md:rounded-2xl mb-3 md:mb-4 shadow-md overflow-hidden flex items-center justify-center bg-white flex-shrink-0 border-2 md:border-[3px] border-[#0F2747]">
                     <img 
                       src={topper.photo} 
                       alt={topper.name} 
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <h5 className="text-lg font-bold text-[#0F2747] text-center h-14 flex items-center justify-center leading-tight w-full px-2">{topper.name}</h5>
-                  <p className="text-[#E85D22] font-extrabold text-3xl mt-2 drop-shadow-sm">{topper.percentage}</p>
-                  <p className="text-sm font-semibold text-gray-500 mt-1 uppercase tracking-wider">{topper.stream}</p>
+                  <h5 className="text-sm md:text-lg font-bold text-[#0F2747] text-center h-10 md:h-14 flex items-center justify-center leading-tight w-full px-1">{topper.name}</h5>
+                  <p className="text-[#E85D22] font-extrabold text-2xl md:text-3xl mt-1 md:mt-2 drop-shadow-sm">{topper.percentage}</p>
+                  <p className="text-[10px] md:text-sm font-semibold text-gray-500 mt-0.5 md:mt-1 uppercase tracking-wider">Class 10th</p>
                 </div>
               ))}
             </motion.div>
           </div>
         </div>
 
-        {/* Class 10th Section */}
+        {/* Class 12th Section */}
         <div>
           <div className="container mx-auto px-6 md:px-12 mb-6 text-right">
-            <h4 className="text-2xl font-bold text-[#0F2747] border-r-4 border-[#E85D22] pr-4 inline-block">Class 10th Toppers</h4>
+            <h4 className="text-2xl font-bold text-[#0F2747] border-r-4 border-[#E85D22] pr-4 inline-block">Class 12th Toppers</h4>
           </div>
           
           <div className="relative w-full overflow-hidden flex py-4 group">
             <motion.div
-              className="flex gap-8 px-4 w-max"
+              className="flex gap-4 md:gap-8 px-4 w-max"
               animate={{ x: ["-50%", "0%"] }}
-              transition={{ repeat: Infinity, ease: "linear", duration: 60 }}
+              transition={{ repeat: Infinity, ease: "linear", duration: 25 }}
             >
-              {[...class10Toppers, ...class10Toppers].map((topper, index) => (
-                <div key={index} className="w-64 flex-shrink-0 bg-white rounded-[2rem] p-6 shadow-xl border border-gray-100 flex flex-col items-center transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
-                  <div className="w-28 h-32 rounded-2xl mb-4 shadow-md overflow-hidden flex items-center justify-center bg-white flex-shrink-0 border-[3px] border-[#0F2747]">
+              {[...class12Toppers, ...class12Toppers].map((topper, index) => (
+                <div key={index} className="w-44 md:w-64 flex-shrink-0 bg-white rounded-[1.5rem] md:rounded-[2rem] p-4 md:p-6 shadow-xl border border-gray-100 flex flex-col items-center transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+                  <div className="w-20 h-24 md:w-28 md:h-32 rounded-xl md:rounded-2xl mb-3 md:mb-4 shadow-md overflow-hidden flex items-center justify-center bg-white flex-shrink-0 border-2 md:border-[3px] border-[#0F2747]">
                     <img src={topper.photo} alt={topper.name} className="w-full h-full object-cover" />
                   </div>
-                  <h5 className="text-lg font-bold text-[#0F2747] text-center h-14 flex items-center justify-center leading-tight w-full px-2">{topper.name}</h5>
-                  <p className="text-[#E85D22] font-extrabold text-3xl mt-2 drop-shadow-sm">{topper.percentage}</p>
-                  <p className="text-sm font-semibold text-gray-500 mt-1 uppercase tracking-wider">Class 10th</p>
+                  <h5 className="text-sm md:text-lg font-bold text-[#0F2747] text-center h-10 md:h-14 flex items-center justify-center leading-tight w-full px-1">{topper.name}</h5>
+                  <p className="text-[#E85D22] font-extrabold text-2xl md:text-3xl mt-1 md:mt-2 drop-shadow-sm">{topper.percentage}</p>
+                  <p className="text-[10px] md:text-sm font-semibold text-gray-500 mt-0.5 md:mt-1 uppercase tracking-wider">{topper.stream}</p>
                 </div>
               ))}
             </motion.div>

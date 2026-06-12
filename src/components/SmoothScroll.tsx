@@ -10,6 +10,7 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (isAdminRoute) return;
+    if (window.innerWidth < 768) return;
 
     const lenis = new Lenis({
       duration: 1.2,

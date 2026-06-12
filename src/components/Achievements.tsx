@@ -101,7 +101,7 @@ export default function Achievements({ content }: { content?: any }) {
             whileInView={{ height: "100%" }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1.5, ease: "easeInOut" }}
-            className="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-[#0F2747]/10 transform md:-translate-x-1/2"
+            className="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-[#E85D22] via-[#F6AE2D] to-[#0F2747]/30 transform md:-translate-x-1/2"
           />
 
           <div className="space-y-12">
@@ -134,6 +134,11 @@ export default function Achievements({ content }: { content?: any }) {
                       {/* Arrow pointer for desktop */}
                       <div className={`hidden md:block absolute top-1/2 -translate-y-1/2 w-4 h-4 bg-white border-gray-100 transform rotate-45 ${isEven ? '-left-2 border-l border-b' : '-right-2 border-r border-t'}`} />
 
+                      {/* Year badge for mobile */}
+                      <div className="inline-block md:hidden bg-[#E85D22]/10 text-[#E85D22] text-xs font-bold px-3 py-1 rounded-full mb-2 uppercase tracking-wide">
+                        {c[`item_${index}_year`] || item.year}
+                      </div>
+
                       <div className={`flex items-center gap-3 mb-3 ${isEven ? 'md:justify-end' : ''}`}>
                         <div className={`p-2 rounded-lg bg-[#0F2747]/5 text-[#0F2747] ${isEven ? 'md:order-last' : ''}`}>
                           <Icon className="w-5 h-5" />
@@ -151,7 +156,7 @@ export default function Achievements({ content }: { content?: any }) {
                           field={`item_${index}_title`}
                           initialValue={c[`item_${index}_title`] || item.title}
                         />
-                        <span className="text-gray-400 text-lg">
+                        <span className="text-gray-400 text-lg hidden md:inline">
                           (<EditableText
                             as="span"
                             className="inline"
