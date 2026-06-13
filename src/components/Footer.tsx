@@ -83,17 +83,34 @@ export default function Footer() {
           <div>
             <h3 className="font-bold text-lg mb-6 text-brand-yellow">Contact Us</h3>
             <ul className="space-y-4">
-              <li className="flex gap-3 text-brand-white/70">
-                <MapPin className="w-5 h-5 shrink-0 text-brand-yellow" />
-                <span>Manka Public School,<br />Champa, Chhattisgarh</span>
+              <li>
+                <a 
+                  href="https://maps.app.goo.gl/jKrTcZmQikGgLvERA" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="flex gap-3 text-brand-white/70 hover:text-brand-white transition-colors"
+                >
+                  <MapPin className="w-5 h-5 shrink-0 text-brand-yellow" />
+                  <span>Manka Public School,<br />Champa, Chhattisgarh</span>
+                </a>
               </li>
-              <li className="flex gap-3 text-brand-white/70">
-                <Phone className="w-5 h-5 shrink-0 text-brand-yellow" />
-                <span>+91 99816 72985</span>
+              <li>
+                <a 
+                  href="tel:+919981672985" 
+                  className="flex gap-3 text-brand-white/70 hover:text-brand-white transition-colors"
+                >
+                  <Phone className="w-5 h-5 shrink-0 text-brand-yellow" />
+                  <span>+91 99816 72985</span>
+                </a>
               </li>
-              <li className="flex gap-3 text-brand-white/70">
-                <Mail className="w-5 h-5 shrink-0 text-brand-yellow" />
-                <span>mpscph2008@gmail.com</span>
+              <li>
+                <a 
+                  href="mailto:mpscph2008@gmail.com" 
+                  className="flex gap-3 text-brand-white/70 hover:text-brand-white transition-colors"
+                >
+                  <Mail className="w-5 h-5 shrink-0 text-brand-yellow" />
+                  <span>mpscph2008@gmail.com</span>
+                </a>
               </li>
             </ul>
           </div>

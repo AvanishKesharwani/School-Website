@@ -63,7 +63,7 @@ export default function Contact({ content }: { content?: any }) {
               <h3 className="text-3xl font-bold mb-8 text-white">Contact Info</h3>
               
               <div className="space-y-8">
-                <a href="https://maps.app.goo.gl/D8jQ8ebXdULu1UMZ6" target="_blank" rel="noopener noreferrer" className="flex items-start gap-5 group cursor-pointer hover:opacity-80 transition-opacity">
+                <a href="https://maps.app.goo.gl/jKrTcZmQikGgLvERA" target="_blank" rel="noopener noreferrer" className="flex items-start gap-5 group cursor-pointer hover:opacity-80 transition-opacity">
                   <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-[#E85D22] transition-colors duration-300">
                     <MapPin className="w-5 h-5 text-white" />
                   </div>
@@ -77,15 +77,24 @@ export default function Contact({ content }: { content?: any }) {
                   </div>
                 </a>
 
-                <a href="tel:+919981672985" className="flex items-start gap-5 group cursor-pointer hover:opacity-80 transition-opacity">
+                <div className="flex items-start gap-5 group">
                   <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-[#E85D22] transition-colors duration-300">
                     <Phone className="w-5 h-5 text-white" />
                   </div>
                   <div>
                     <h4 className="font-semibold text-lg mb-1">Call Us</h4>
-                    <p className="text-white/70 text-sm mb-1">+91 99816 72985</p>
+                    <p className="text-white/70 text-sm mb-1">
+                      <a href="tel:+917489039731" className="hover:text-[#E85D22] hover:underline transition-colors block">
+                        +91 74890 39731
+                      </a>
+                    </p>
+                    <p className="text-white/70 text-sm">
+                      <a href="tel:+919981672985" className="hover:text-[#E85D22] hover:underline transition-colors block">
+                        +91 99816 72985
+                      </a>
+                    </p>
                   </div>
-                </a>
+                </div>
 
                 <a href="mailto:mpscph2008@gmail.com" className="flex items-start gap-5 group cursor-pointer hover:opacity-80 transition-opacity">
                   <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center shrink-0 group-hover:bg-[#E85D22] transition-colors duration-300">
