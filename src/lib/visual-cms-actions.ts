@@ -161,9 +161,14 @@ export async function uploadImageToSupabase(formData: FormData) {
     const fileName = `${Math.random().toString(36).substring(2, 15)}_${Date.now()}.${fileExt}`;
     const filePath = `uploads/${fileName}`;
 
+    // Convert Web File object to Buffer for server-side Supabase upload compatibility
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
     const { data, error } = await supabase.storage
-      .from('images') // Assumes bucket named "images" exists
-      .upload(filePath, file, {
+      .from('images')
+      .upload(filePath, buffer, {
+        contentType: file.type,
         cacheControl: '3600',
         upsert: false
       });
