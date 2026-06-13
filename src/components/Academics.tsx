@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { ArrowRight, Sparkles, PencilRuler, Atom, Compass, Telescope } from "lucide-react";
 
 import EditableText from "./cms/EditableText";
@@ -70,10 +71,18 @@ export default function Academics({ content }: { content?: any }) {
         >
           {programs.map((program: any, index: number) => {
             const Icon = program.icon;
+            const routeMap: Record<string, string> = {
+              preschool: "/academics/pre-primary",
+              primary: "/academics/primary",
+              middle: "/academics/middle-school",
+              secondary: "/academics/secondary",
+              senior: "/academics/senior-secondary"
+            };
             return (
-              <div 
+              <Link 
                 key={program.id}
-                className="w-[75vw] sm:w-[50vw] md:w-auto md:flex-1 flex flex-col group cursor-pointer snap-center shrink-0 rounded-2xl md:rounded-none overflow-hidden shadow-lg md:shadow-none"
+                href={routeMap[program.id] || "#"}
+                className="w-[75vw] sm:w-[50vw] md:w-auto md:flex-1 flex flex-col group cursor-pointer snap-center shrink-0 rounded-2xl md:rounded-none overflow-hidden shadow-lg md:shadow-none font-sans"
               >
                 {/* Top Half: Image on solid background */}
                 <div 
@@ -111,7 +120,7 @@ export default function Academics({ content }: { content?: any }) {
                   />
 
                 </div>
-              </div>
+              </Link>
             );
           })}
         </div>
