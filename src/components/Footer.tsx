@@ -102,8 +102,8 @@ export default function Footer() {
         <div className="pt-8 border-t border-brand-white/10 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-brand-white/50">
           <p>&copy; {new Date().getFullYear()} Manka Public School. All rights reserved.</p>
           <div className="flex gap-6">
-            <Link href="#" className="hover:text-brand-white transition-colors">Privacy Policy</Link>
-            <Link href="#" className="hover:text-brand-white transition-colors">Terms of Service</Link>
+            <Link href="/privacy-policy" className="hover:text-brand-white transition-colors">Privacy Policy</Link>
+            <Link href="/privacy-policy" className="hover:text-brand-white transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>
