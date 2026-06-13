@@ -109,6 +109,11 @@ export default function Navbar() {
               return (
                 <div key={link.name} className="relative group py-2">
                   <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      e.stopPropagation();
+                    }}
                     className={`font-medium transition-colors hover:text-brand-yellow flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
                       navStyleActive ? "text-brand-gray" : "text-brand-white/90"
                     }`}
