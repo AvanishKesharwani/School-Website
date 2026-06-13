@@ -46,9 +46,9 @@ export default function About({ content }: { content?: any }) {
   const c = content || defaultContent;
 
   const stats = [
-    { label: "Students", value: 1000, suffix: "+" },
-    { label: "Teachers", value: 100, suffix: "+" },
-    { label: "Years of Excellence", value: 15, suffix: "+" },
+    { label: "Students", value: 1400, suffix: "+" },
+    { label: "Teachers", value: 60, suffix: "+" },
+    { label: "Years of Excellence", value: 18, suffix: "" },
   ];
 
   return (
