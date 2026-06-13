@@ -103,7 +103,7 @@ export default function Footer() {
           <p>&copy; {new Date().getFullYear()} Manka Public School. All rights reserved.</p>
           <div className="flex gap-6">
             <Link href="/privacy-policy" className="hover:text-brand-white transition-colors">Privacy Policy</Link>
-            <Link href="/privacy-policy" className="hover:text-brand-white transition-colors">Terms of Service</Link>
+            <Link href="/terms-of-service" className="hover:text-brand-white transition-colors">Terms of Service</Link>
           </div>
         </div>
       </div>
