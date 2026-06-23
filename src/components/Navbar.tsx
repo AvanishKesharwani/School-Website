@@ -11,6 +11,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileAcademicsOpen, setIsMobileAcademicsOpen] = useState(false);
+  const [isMobileMoreOpen, setIsMobileMoreOpen] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === "/";
   const navStyleActive = isScrolled || !isHome;
@@ -21,6 +22,7 @@ export default function Navbar() {
   useEffect(() => {
     if (!isMobileMenuOpen) {
       setIsMobileAcademicsOpen(false);
+      setIsMobileMoreOpen(false);
     }
   }, [isMobileMenuOpen]);
 
@@ -69,6 +71,21 @@ export default function Navbar() {
     { name: "Gallery", href: "/gallery" },
     { name: "Admissions", href: "/admissions" },
     { name: "Contact Us", href: "/#contact" },
+    {
+      name: "More",
+      dropdown: [
+        { name: "Teachers", href: "/teachers" },
+        { name: "Library", href: "/library" },
+        { name: "Science Lab", href: "/science-lab" },
+        { name: "Transport", href: "/transport" },
+        { name: "Sports", href: "/sports" },
+        { name: "Medical Facility", href: "/medical-facility" },
+        { name: "School Rules", href: "/school-rules" },
+        { name: "Beyond Academics", href: "/beyond-academics" },
+        { name: "Book List", href: "/book-list" },
+        { name: "Mandatory Disclosure", href: "/mandatory-disclosure" }
+      ]
+    }
   ];
 
   const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -125,8 +142,12 @@ export default function Navbar() {
                   </button>
                   
                   {/* Dropdown Menu */}
-                  <div className="absolute left-1/2 -translate-x-1/2 top-full pt-2 w-56 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 ease-out z-50">
-                    <div className="bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100 p-2.5 flex flex-col gap-1 text-left">
+                  <div className={`absolute left-1/2 -translate-x-1/2 top-full pt-2 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 ease-out z-50 ${
+                    link.name === "More" ? "w-[28rem]" : "w-56"
+                  }`}>
+                    <div className={`bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100 p-2.5 gap-1 text-left ${
+                      link.name === "More" ? "grid grid-cols-2 p-3.5" : "flex flex-col"
+                    }`}>
                       {link.dropdown.map((subLink) => (
                         <Link
                           key={subLink.name}
@@ -227,19 +248,27 @@ export default function Navbar() {
             <nav className="flex flex-col py-4 px-6 gap-4">
               {navLinks.map((link) => {
                 if (link.dropdown) {
+                  const isDropdownOpen = link.name === "Academics" ? isMobileAcademicsOpen : isMobileMoreOpen;
+                  const toggleDropdown = () => {
+                    if (link.name === "Academics") {
+                      setIsMobileAcademicsOpen(!isMobileAcademicsOpen);
+                    } else {
+                      setIsMobileMoreOpen(!isMobileMoreOpen);
+                    }
+                  };
                   return (
                     <div key={link.name} className="border-b border-brand-gray/10 py-1">
                       <button
-                        onClick={() => setIsMobileAcademicsOpen(!isMobileAcademicsOpen)}
+                        onClick={toggleDropdown}
                         className="w-full text-left text-brand-navy font-medium py-2 flex justify-between items-center cursor-pointer"
                       >
                         <span>{link.name}</span>
-                        <svg className={`w-4 h-4 transition-transform duration-250 ${isMobileAcademicsOpen ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg className={`w-4 h-4 transition-transform duration-250 ${isDropdownOpen ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
                         </svg>
                       </button>
                       <AnimatePresence>
-                        {isMobileAcademicsOpen && (
+                        {isDropdownOpen && (
                           <motion.div
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: "auto" }}
