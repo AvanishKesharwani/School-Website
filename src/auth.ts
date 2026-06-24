@@ -22,14 +22,22 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         if (!useDatabase) {
           // Mock Admin Login for when database is disconnected
+          const mockEmail = process.env.ADMIN_EMAIL;
+          const mockPassword = process.env.ADMIN_PASSWORD;
+
+          if (!mockEmail || !mockPassword) {
+            console.warn("Mock admin credentials are not configured in environment variables.");
+            return null;
+          }
+
           if (
-            credentials.email === "admin@mankapublicschool.edu" &&
-            credentials.password === "admin"
+            credentials.email === mockEmail &&
+            credentials.password === mockPassword
           ) {
             return {
               id: "mock-admin-id",
               name: "System Admin",
-              email: "admin@mankapublicschool.edu",
+              email: mockEmail,
               role: "SUPER_ADMIN",
             };
           }
