@@ -65,17 +65,6 @@ export default function Navbar() {
 
   const navLinks = [
     { 
-      name: "Academics", 
-      href: "/#academics",
-      dropdown: [
-        { name: "Pre Primary", href: "/academics/pre-primary" },
-        { name: "Primary", href: "/academics/primary" },
-        { name: "Middle School", href: "/academics/middle-school" },
-        { name: "Secondary", href: "/academics/secondary" },
-        { name: "Senior Secondary", href: "/academics/senior-secondary" }
-      ]
-    },
-    { 
       name: "School", 
       href: "/#school",
       dropdown: [
@@ -84,6 +73,17 @@ export default function Navbar() {
         { name: "Message", href: "/message" },
         { name: "Mandatory Disclosure", href: "/mandatory-disclosure" },
         { name: "Parents Corner", href: "/parents-corner" }
+      ]
+    },
+    { 
+      name: "Academics", 
+      href: "/#academics",
+      dropdown: [
+        { name: "Pre Primary", href: "/academics/pre-primary" },
+        { name: "Primary", href: "/academics/primary" },
+        { name: "Middle School", href: "/academics/middle-school" },
+        { name: "Secondary", href: "/academics/secondary" },
+        { name: "Senior Secondary", href: "/academics/senior-secondary" }
       ]
     },
     { name: "Gallery", href: "/gallery" },
