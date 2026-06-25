@@ -2,7 +2,7 @@
 
 import { useState, useActionState } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle, FileText, UserPlus, ClipboardCheck, Loader2 } from "lucide-react";
+import { CheckCircle, FileText, UserPlus, ClipboardCheck, Loader2, Phone } from "lucide-react";
 import { submitAdmissionInquiry } from "@/app/actions/contact";
 
 const steps = [
@@ -20,6 +20,27 @@ export default function Admission() {
     <section id="admissions" className="py-24 bg-brand-white text-brand-navy">
       <div className="container mx-auto px-6 md:px-12">
         <div className="text-center max-w-3xl mx-auto mb-16">
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mb-10 bg-brand-navy text-white px-6 py-4.5 rounded-2xl shadow-lg border border-brand-navy/10 flex flex-col md:flex-row items-center justify-between gap-4 font-semibold text-sm md:text-base relative overflow-hidden"
+          >
+            <div className="absolute top-0 right-0 w-24 h-24 bg-brand-yellow/10 rounded-full blur-xl pointer-events-none" />
+            <div className="flex items-center gap-2.5">
+              <Phone className="w-5 h-5 text-brand-yellow animate-pulse shrink-0" />
+              <span className="text-left leading-relaxed">
+                For admission enquiry call us on{" "}
+                <a href="tel:+918349239731" className="text-brand-yellow hover:underline">+91 8349239731</a>
+                ,{" "}
+                <a href="tel:+917489039731" className="text-brand-yellow hover:underline">+91 7489039731</a>
+              </span>
+            </div>
+            <div className="text-xs bg-white/10 px-3.5 py-1.5 rounded-full text-white/95 border border-white/5 font-bold shrink-0 tracking-wide">
+              CBSE Affiliation Number- 3330393
+            </div>
+          </motion.div>
+
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
