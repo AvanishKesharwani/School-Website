@@ -46,13 +46,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         // Database flow
         try {
-          const user = await prisma.adminUser.findFirst({
-            where: {
-              OR: [
-                { email: credentials.email as string },
-                { username: credentials.email as string }
-              ]
-            },
+          const user = await prisma.adminUser.findUnique({
+            where: { email: credentials.email as string },
           });
 
           if (!user || !user.passwordHash) {

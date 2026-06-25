@@ -46,7 +46,7 @@ export default function SignInPage() {
         <form action={dispatch} className="space-y-6">
           <div className="space-y-2">
             <label className="text-sm font-semibold text-[#0F2747]" htmlFor="email">
-              Admin Email or Username
+              Admin Email
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -54,9 +54,9 @@ export default function SignInPage() {
               </div>
               <input
                 id="email"
-                type="text"
+                type="email"
                 name="email"
-                placeholder="your.name@example.com"
+                placeholder="admin@mankapublicschool.edu"
                 required
                 className="w-full pl-11 pr-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#007BFF] focus:border-transparent transition-all"
               />
