@@ -73,7 +73,8 @@ export default function Navbar() {
         { name: "Our Mission and Vision", href: "/vision-mission" },
         { name: "Message", href: "/message" },
         { name: "Mandatory Disclosure", href: "/mandatory-disclosure" },
-        { name: "Parents Corner", href: "/parents-corner" }
+        { name: "Parents Corner", href: "/parents-corner" },
+        { name: "Careers", href: "/careers" }
       ]
     },
     { 
@@ -155,7 +156,7 @@ export default function Navbar() {
                       e.stopPropagation();
                       setOpenDropdown(openDropdown === link.name ? null : link.name);
                     }}
-                    className={`font-medium transition-colors hover:text-brand-yellow flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
+                    className={`text-sm font-bold transition-colors hover:text-brand-yellow flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
                       navStyleActive ? "text-brand-gray" : "text-brand-white/90"
                     }`}
                   >
@@ -200,7 +201,7 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 onClick={(e) => handleAnchorClick(e, link.href)}
-                className={`font-medium transition-colors hover:text-brand-yellow whitespace-nowrap py-2 ${
+                className={`text-sm font-bold transition-colors hover:text-brand-yellow whitespace-nowrap py-2 ${
                   navStyleActive ? "text-brand-gray" : "text-brand-white/90"
                 }`}
               >
@@ -216,7 +217,7 @@ export default function Navbar() {
                   e.preventDefault();
                   window.location.href = '/admin/signin';
                 }}
-                className={`px-6 py-2.5 rounded-full font-semibold transition-transform hover:scale-105 active:scale-95 inline-flex items-center gap-2 ${
+                className={`px-5 py-2 rounded-full text-sm font-bold transition-transform hover:scale-105 active:scale-95 inline-flex items-center gap-2 ${
                   navStyleActive
                     ? "bg-[#E85D22] text-[#0F2747] shadow-lg shadow-[#E85D22]/20"
                     : "bg-[#E85D22] text-[#0F2747] shadow-lg shadow-[#E85D22]/20"
@@ -231,7 +232,7 @@ export default function Navbar() {
             ) : isAdmin ? (
               <a
                 href="/admin"
-                className={`px-6 py-2.5 rounded-full font-semibold transition-transform hover:scale-105 active:scale-95 inline-block ${
+                className={`px-5 py-2 rounded-full text-sm font-bold transition-transform hover:scale-105 active:scale-95 inline-block ${
                   navStyleActive
                     ? "bg-[#E85D22] text-[#0F2747]"
                     : "bg-[#E85D22] text-[#0F2747] shadow-lg"
@@ -244,7 +245,7 @@ export default function Navbar() {
                 href="https://manka.nexterp.in/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`px-6 py-2.5 rounded-full font-semibold transition-transform hover:scale-105 active:scale-95 inline-block ${
+                className={`px-5 py-2 rounded-full text-sm font-bold transition-transform hover:scale-105 active:scale-95 inline-block ${
                   navStyleActive
                     ? "bg-brand-navy text-brand-white"
                     : "bg-brand-white/20 text-brand-white backdrop-blur-sm border border-brand-white/30"
