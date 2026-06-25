@@ -17,6 +17,7 @@ export default function Navbar() {
   const isHome = pathname === "/";
   const navStyleActive = isScrolled || !isHome;
 
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [isAdminShortcutActive, setIsAdminShortcutActive] = useState(false);
   const { isAdmin } = useEditMode();
 
@@ -44,15 +45,21 @@ export default function Navbar() {
     };
     const handleBlur = () => setIsAdminShortcutActive(false);
 
+    const handleDocumentClick = () => {
+      setOpenDropdown(null);
+    };
+
     window.addEventListener("keydown", handleKeyDown);
     window.addEventListener("keyup", handleKeyUp);
     window.addEventListener("blur", handleBlur);
+    document.addEventListener("click", handleDocumentClick);
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
       window.removeEventListener("blur", handleBlur);
+      document.removeEventListener("click", handleDocumentClick);
     };
   }, []);
 
@@ -123,7 +130,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-3 group">
            <img src="/logo.png" alt="Manka Public School Logo" className="h-12 w-auto" />
           <span
-            className={`font-bold text-xl md:text-2xl tracking-tight transition-colors ${
+            className={`font-bold text-xl md:text-2xl tracking-tight transition-colors whitespace-nowrap ${
               navStyleActive ? "text-brand-navy" : "text-brand-white"
             }`}
           >
@@ -132,16 +139,21 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden xl:flex items-center gap-8">
           {navLinks.map((link) => {
             if (link.dropdown) {
               return (
-                <div key={link.name} className="relative group py-2">
+                <div 
+                  key={link.name} 
+                  className="relative group py-2"
+                  onMouseLeave={() => setOpenDropdown(null)}
+                >
                   <button
                     type="button"
                     onClick={(e) => {
                       e.preventDefault();
                       e.stopPropagation();
+                      setOpenDropdown(openDropdown === link.name ? null : link.name);
                     }}
                     className={`font-medium transition-colors hover:text-brand-yellow flex items-center gap-1.5 whitespace-nowrap cursor-pointer ${
                       navStyleActive ? "text-brand-gray" : "text-brand-white/90"
@@ -154,7 +166,11 @@ export default function Navbar() {
                   </button>
                   
                   {/* Dropdown Menu */}
-                  <div className={`absolute left-1/2 -translate-x-1/2 top-full pt-2 opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto transition-all duration-300 ease-out z-50 ${
+                  <div className={`absolute left-1/2 -translate-x-1/2 top-full pt-2 transition-all duration-300 ease-out z-50 ${
+                    openDropdown === link.name
+                      ? "opacity-100 translate-y-0 pointer-events-auto"
+                      : "opacity-0 translate-y-2 pointer-events-none group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto"
+                  } ${
                     link.name === "More" ? "w-[28rem]" : "w-56"
                   }`}>
                     <div className={`bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100 p-2.5 gap-1 text-left ${
@@ -242,7 +258,7 @@ export default function Navbar() {
 
         {/* Mobile Toggle */}
         <button
-          className="md:hidden p-2"
+          className="xl:hidden p-2"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
         >
           {isMobileMenuOpen ? (
@@ -260,7 +276,7 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            className="md:hidden bg-brand-white border-t border-brand-gray/10"
+            className="xl:hidden bg-brand-white border-t border-brand-gray/10 max-h-[calc(100vh-80px)] overflow-y-auto"
           >
             <nav className="flex flex-col py-4 px-6 gap-4">
               {navLinks.map((link) => {
