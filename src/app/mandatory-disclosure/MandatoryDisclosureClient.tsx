@@ -229,33 +229,33 @@ export default function MandatoryDisclosureClient() {
         <h2 className="text-3xl font-extrabold text-brand-navy">APPENDIX – IX</h2>
         <p className="text-[#E85D22] text-sm md:text-base font-bold uppercase tracking-wider mt-1.5">Mandatory Public Disclosure</p>
       </div>
-
+      
       {/* Main Tables Container */}
       <section className="pb-24">
         <div className="container mx-auto px-6 md:px-12 max-w-5xl">
           <div className="space-y-12">
             
             {/* Section A: GENERAL INFORMATION */}
-            <div className="bg-white rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-6 md:p-8 overflow-hidden">
-              <h3 className="text-lg md:text-xl font-bold text-brand-navy mb-6 pb-2 border-b border-gray-100 flex items-center gap-2">
+            <div className="bg-white border border-gray-300 p-6 md:p-8">
+              <h3 className="text-lg md:text-xl font-bold text-brand-navy mb-6 pb-2 border-b border-gray-200 flex items-center gap-2">
                 <span className="w-1.5 h-5 bg-brand-yellow rounded-full inline-block"></span>
                 A. GENERAL INFORMATION
               </h3>
-              <div className="overflow-x-auto border border-gray-100 rounded-2xl">
-                <table className="w-full text-left border-collapse min-w-[600px]">
+              <div className="overflow-x-auto border border-gray-300">
+                <table className="w-full text-left border-collapse border border-gray-300 min-w-[600px]">
                   <thead>
-                    <tr className="bg-brand-navy text-white text-xs font-bold uppercase tracking-wider">
-                      <th className="py-4 px-6 w-[12%] border-r border-white/10">SL.NO.</th>
-                      <th className="py-4 px-6 w-[38%] border-r border-white/10">INFORMATION</th>
-                      <th className="py-4 px-6 w-[50%]">DETAILS</th>
+                    <tr className="bg-gray-100 text-brand-navy text-xs font-bold uppercase tracking-wider">
+                      <th className="py-3 px-4 w-[12%] border border-gray-300 text-center">SL.NO.</th>
+                      <th className="py-3 px-4 w-[38%] border border-gray-300">INFORMATION</th>
+                      <th className="py-3 px-4 w-[50%] border border-gray-300">DETAILS</th>
                     </tr>
                   </thead>
                   <tbody className="text-sm text-brand-gray font-medium">
                     {generalInfo.map((info, idx) => (
-                      <tr key={info.label} className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
-                        <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">{idx + 1}</td>
-                        <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold">{info.label}</td>
-                        <td className="py-4 px-6 text-brand-gray">
+                      <tr key={info.label} className="hover:bg-brand-navy/5 transition-colors">
+                        <td className="py-3 px-4 border border-gray-300 text-brand-navy font-bold text-center">{idx + 1}</td>
+                        <td className="py-3 px-4 border border-gray-300 text-brand-navy font-semibold">{info.label}</td>
+                        <td className="py-3 px-4 border border-gray-300 text-brand-gray">
                           {info.highlight ? (
                             <span className="inline-block px-3 py-1 bg-brand-yellow/15 text-brand-navy font-bold rounded-lg border border-brand-yellow/20">
                               {info.value}
@@ -272,26 +272,26 @@ export default function MandatoryDisclosureClient() {
             </div>
 
             {/* Section B: DOCUMENTS AND INFORMATION */}
-            <div className="bg-white rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-6 md:p-8 overflow-hidden">
-              <h3 className="text-lg md:text-xl font-bold text-brand-navy mb-6 pb-2 border-b border-gray-100 flex items-center gap-2">
+            <div className="bg-white border border-gray-300 p-6 md:p-8">
+              <h3 className="text-lg md:text-xl font-bold text-brand-navy mb-6 pb-2 border-b border-gray-200 flex items-center gap-2">
                 <span className="w-1.5 h-5 bg-brand-yellow rounded-full inline-block"></span>
                 B. DOCUMENTS AND INFORMATION
               </h3>
-              <div className="overflow-x-auto border border-gray-100 rounded-2xl">
-                <table className="w-full text-left border-collapse min-w-[600px]">
+              <div className="overflow-x-auto border border-gray-300">
+                <table className="w-full text-left border-collapse border border-gray-300 min-w-[600px]">
                   <thead>
-                    <tr className="bg-brand-navy text-white text-xs font-bold uppercase tracking-wider">
-                      <th className="py-4 px-6 w-[12%] border-r border-white/10">SL.NO.</th>
-                      <th className="py-4 px-6 w-[63%] border-r border-white/10">DOCUMENTS/INFORMATION</th>
-                      <th className="py-4 px-6 w-[25%]">UPLOAD DOCUMENTS</th>
+                    <tr className="bg-gray-100 text-brand-navy text-xs font-bold uppercase tracking-wider">
+                      <th className="py-3 px-4 w-[12%] border border-gray-300 text-center">SL.NO.</th>
+                      <th className="py-3 px-4 w-[63%] border-r border-gray-300">DOCUMENTS/INFORMATION</th>
+                      <th className="py-3 px-4 w-[25%] border border-gray-300">UPLOAD DOCUMENTS</th>
                     </tr>
                   </thead>
                   <tbody className="text-sm text-brand-gray font-medium">
                     {documents.map((doc, idx) => (
-                      <tr key={doc.id} className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
-                        <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">{idx + 1}</td>
-                        <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold leading-relaxed">{doc.title}</td>
-                        <td className="py-4 px-6">
+                      <tr key={doc.id} className="hover:bg-brand-navy/5 transition-colors">
+                        <td className="py-3 px-4 border border-gray-300 text-brand-navy font-bold text-center">{idx + 1}</td>
+                        <td className="py-3 px-4 border border-gray-300 text-brand-navy font-semibold leading-relaxed">{doc.title}</td>
+                        <td className="py-3 px-4 border border-gray-300">
                           <div className="flex flex-wrap gap-2">
                             {doc.links.map((link) => (
                               <a
@@ -299,7 +299,7 @@ export default function MandatoryDisclosureClient() {
                                 href={link.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-brand-navy text-white rounded-xl text-xs font-bold hover:bg-brand-yellow hover:text-brand-navy transition-all shadow-sm cursor-pointer whitespace-nowrap"
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#E85D22] text-white rounded-lg text-xs font-bold hover:bg-brand-navy hover:text-white transition-all shadow-sm cursor-pointer whitespace-nowrap"
                               >
                                 <FileText className="w-3.5 h-3.5" />
                                 <span>View</span>
@@ -316,26 +316,26 @@ export default function MandatoryDisclosureClient() {
             </div>
 
             {/* Section C: RESULT AND ACADEMICS */}
-            <div className="bg-white rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-6 md:p-8 overflow-hidden">
-              <h3 className="text-lg md:text-xl font-bold text-brand-navy mb-6 pb-2 border-b border-gray-100 flex items-center gap-2">
+            <div className="bg-white border border-gray-300 p-6 md:p-8">
+              <h3 className="text-lg md:text-xl font-bold text-brand-navy mb-6 pb-2 border-b border-gray-200 flex items-center gap-2">
                 <span className="w-1.5 h-5 bg-brand-yellow rounded-full inline-block"></span>
                 C. RESULT AND ACADEMICS
               </h3>
-              <div className="overflow-x-auto border border-gray-100 rounded-2xl mb-8">
-                <table className="w-full text-left border-collapse min-w-[600px]">
+              <div className="overflow-x-auto border border-gray-300 mb-8">
+                <table className="w-full text-left border-collapse border border-gray-300 min-w-[600px]">
                   <thead>
-                    <tr className="bg-brand-navy text-white text-xs font-bold uppercase tracking-wider">
-                      <th className="py-4 px-6 w-[12%] border-r border-white/10">SL.NO.</th>
-                      <th className="py-4 px-6 w-[43%] border-r border-white/10">DOCUMENTS/INFORMATION</th>
-                      <th className="py-4 px-6 w-[45%]">LINKS OF UPLOADED DOCUMENTS ON YOUR SCHOOL'S WEBSITE</th>
+                    <tr className="bg-gray-100 text-brand-navy text-xs font-bold uppercase tracking-wider">
+                      <th className="py-3 px-4 w-[12%] border border-gray-300 text-center">SL.NO.</th>
+                      <th className="py-3 px-4 w-[43%] border-r border-gray-300">DOCUMENTS/INFORMATION</th>
+                      <th className="py-3 px-4 w-[45%] border border-gray-300">LINKS OF UPLOADED DOCUMENTS ON YOUR SCHOOL'S WEBSITE</th>
                     </tr>
                   </thead>
                   <tbody className="text-sm text-brand-gray font-medium">
                     {academics.map((item, idx) => (
-                      <tr key={item.id} className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
-                        <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">{idx + 1}</td>
-                        <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold">{item.title}</td>
-                        <td className="py-4 px-6">
+                      <tr key={item.id} className="hover:bg-brand-navy/5 transition-colors">
+                        <td className="py-3 px-4 border border-gray-300 text-brand-navy font-bold text-center">{idx + 1}</td>
+                        <td className="py-3 px-4 border border-gray-300 text-brand-navy font-semibold">{item.title}</td>
+                        <td className="py-3 px-4 border border-gray-300">
                           <div className="flex flex-col gap-2">
                             {item.links.map((link) => (
                               <a
@@ -363,31 +363,31 @@ export default function MandatoryDisclosureClient() {
                 <span className="w-1.5 h-4 bg-[#E85D22] rounded-full"></span>
                 RESULT CLASS: X
               </h4>
-              <div className="overflow-x-auto border border-gray-100 rounded-2xl mb-8">
-                <table className="w-full text-left border-collapse min-w-[600px]">
+              <div className="overflow-x-auto border border-gray-300 mb-8">
+                <table className="w-full text-left border-collapse border border-gray-300 min-w-[600px]">
                   <thead>
-                    <tr className="bg-brand-navy text-white text-xs font-bold uppercase tracking-wider">
-                      <th className="py-4 px-6 border-r border-white/10">S.NO.</th>
-                      <th className="py-4 px-6 border-r border-white/10">YEAR</th>
-                      <th className="py-4 px-6 border-r border-white/10">NO. OF REGISTERED STUDENTS</th>
-                      <th className="py-4 px-6 border-r border-white/10">NO. OF STUDENTS PASSED</th>
-                      <th className="py-4 px-6 border-r border-white/10">PASS PERCENTAGE</th>
-                      <th className="py-4 px-6">REMARKS</th>
+                    <tr className="bg-gray-100 text-brand-navy text-xs font-bold uppercase tracking-wider">
+                      <th className="py-3 px-4 border border-gray-300 text-center">S.NO.</th>
+                      <th className="py-3 px-4 border border-gray-300">YEAR</th>
+                      <th className="py-3 px-4 border border-gray-300">NO. OF REGISTERED STUDENTS</th>
+                      <th className="py-3 px-4 border border-gray-300">NO. OF STUDENTS PASSED</th>
+                      <th className="py-3 px-4 border border-gray-300">PASS PERCENTAGE</th>
+                      <th className="py-3 px-4 border border-gray-300">REMARKS</th>
                     </tr>
                   </thead>
                   <tbody className="text-sm text-brand-gray font-medium">
                     {classXResults.map((res, idx) => (
-                      <tr key={res.year} className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
-                        <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">{idx + 1}</td>
-                        <td className="py-4 px-6 border-r border-gray-100">{res.year}</td>
-                        <td className="py-4 px-6 border-r border-gray-100">{res.registered}</td>
-                        <td className="py-4 px-6 border-r border-gray-100">{res.passed}</td>
-                        <td className="py-4 px-6 border-r border-gray-100">
+                      <tr key={res.year} className="hover:bg-brand-navy/5 transition-colors">
+                        <td className="py-3 px-4 border border-gray-300 text-brand-navy font-bold text-center">{idx + 1}</td>
+                        <td className="py-3 px-4 border border-gray-300">{res.year}</td>
+                        <td className="py-3 px-4 border border-gray-300">{res.registered}</td>
+                        <td className="py-3 px-4 border border-gray-300">{res.passed}</td>
+                        <td className="py-3 px-4 border border-gray-300">
                           <span className="inline-block px-2.5 py-1 bg-green-50 text-green-700 font-bold rounded-lg border border-green-100">
                             {res.percentage}
                           </span>
                         </td>
-                        <td className="py-4 px-6 text-xs text-brand-gray">CBSE Board ({res.remarks})</td>
+                        <td className="py-3 px-4 border border-gray-300 text-xs text-brand-gray">CBSE Board ({res.remarks})</td>
                       </tr>
                     ))}
                   </tbody>
@@ -399,31 +399,31 @@ export default function MandatoryDisclosureClient() {
                 <span className="w-1.5 h-4 bg-[#E85D22] rounded-full"></span>
                 RESULT CLASS: XII
               </h4>
-              <div className="overflow-x-auto border border-gray-100 rounded-2xl">
-                <table className="w-full text-left border-collapse min-w-[600px]">
+              <div className="overflow-x-auto border border-gray-300">
+                <table className="w-full text-left border-collapse border border-gray-300 min-w-[600px]">
                   <thead>
-                    <tr className="bg-brand-navy text-white text-xs font-bold uppercase tracking-wider">
-                      <th className="py-4 px-6 border-r border-white/10">S.NO.</th>
-                      <th className="py-4 px-6 border-r border-white/10">YEAR</th>
-                      <th className="py-4 px-6 border-r border-white/10">NO. OF REGISTERED STUDENTS</th>
-                      <th className="py-4 px-6 border-r border-white/10">NO. OF STUDENTS PASSED</th>
-                      <th className="py-4 px-6 border-r border-white/10">PASS PERCENTAGE</th>
-                      <th className="py-4 px-6">REMARKS</th>
+                    <tr className="bg-gray-100 text-brand-navy text-xs font-bold uppercase tracking-wider">
+                      <th className="py-3 px-4 border border-gray-300 text-center">S.NO.</th>
+                      <th className="py-3 px-4 border border-gray-300">YEAR</th>
+                      <th className="py-3 px-4 border border-gray-300">NO. OF REGISTERED STUDENTS</th>
+                      <th className="py-3 px-4 border border-gray-300">NO. OF STUDENTS PASSED</th>
+                      <th className="py-3 px-4 border border-gray-300">PASS PERCENTAGE</th>
+                      <th className="py-3 px-4 border border-gray-300">REMARKS</th>
                     </tr>
                   </thead>
                   <tbody className="text-sm text-brand-gray font-medium">
                     {classXIILesults.map((res, idx) => (
-                      <tr key={res.year} className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
-                        <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">{idx + 1}</td>
-                        <td className="py-4 px-6 border-r border-gray-100">{res.year}</td>
-                        <td className="py-4 px-6 border-r border-gray-100">{res.registered}</td>
-                        <td className="py-4 px-6 border-r border-gray-100">{res.passed}</td>
-                        <td className="py-4 px-6 border-r border-gray-100">
+                      <tr key={res.year} className="hover:bg-brand-navy/5 transition-colors">
+                        <td className="py-3 px-4 border border-gray-300 text-brand-navy font-bold text-center">{idx + 1}</td>
+                        <td className="py-3 px-4 border border-gray-300">{res.year}</td>
+                        <td className="py-3 px-4 border border-gray-300">{res.registered}</td>
+                        <td className="py-3 px-4 border border-gray-300">{res.passed}</td>
+                        <td className="py-3 px-4 border border-gray-300">
                           <span className="inline-block px-2.5 py-1 bg-green-50 text-green-700 font-bold rounded-lg border border-green-100">
                             {res.percentage}
                           </span>
                         </td>
-                        <td className="py-4 px-6 text-xs text-brand-gray">CBSE Board ({res.remarks})</td>
+                        <td className="py-3 px-4 border border-gray-300 text-xs text-brand-gray">CBSE Board ({res.remarks})</td>
                       </tr>
                     ))}
                   </tbody>
@@ -432,51 +432,51 @@ export default function MandatoryDisclosureClient() {
             </div>
 
             {/* Section D: STAFF (TEACHING) */}
-            <div className="bg-white rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-6 md:p-8 overflow-hidden">
-              <h3 className="text-lg md:text-xl font-bold text-brand-navy mb-6 pb-2 border-b border-gray-100 flex items-center gap-2">
+            <div className="bg-white border border-gray-300 p-6 md:p-8">
+              <h3 className="text-lg md:text-xl font-bold text-brand-navy mb-6 pb-2 border-b border-gray-200 flex items-center gap-2">
                 <span className="w-1.5 h-5 bg-brand-yellow rounded-full inline-block"></span>
                 D. STAFF (TEACHING)
               </h3>
-              <div className="overflow-x-auto border border-gray-100 rounded-2xl">
-                <table className="w-full text-left border-collapse min-w-[600px]">
+              <div className="overflow-x-auto border border-gray-300">
+                <table className="w-full text-left border-collapse border border-gray-300 min-w-[600px]">
                   <thead>
-                    <tr className="bg-brand-navy text-white text-xs font-bold uppercase tracking-wider">
-                      <th className="py-4 px-6 w-[12%] border-r border-white/10">S.NO.</th>
-                      <th className="py-4 px-6 w-[38%] border-r border-white/10">INFORMATION</th>
-                      <th className="py-4 px-6 w-[15%] border-r border-white/10">DETAILS</th>
-                      <th className="py-4 px-6 w-[35%]">NAME AND QUALIFICATIONS</th>
+                    <tr className="bg-gray-100 text-brand-navy text-xs font-bold uppercase tracking-wider">
+                      <th className="py-3 px-4 w-[12%] border border-gray-300 text-center">S.NO.</th>
+                      <th className="py-3 px-4 w-[38%] border border-gray-300">INFORMATION</th>
+                      <th className="py-3 px-4 w-[15%] border border-gray-300">DETAILS</th>
+                      <th className="py-3 px-4 w-[35%] border border-gray-300">NAME AND QUALIFICATIONS</th>
                     </tr>
                   </thead>
                   <tbody className="text-sm text-brand-gray font-medium">
-                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">1</td>
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold">PRINCIPAL</td>
-                      <td className="py-4 px-6 border-r border-gray-100">01</td>
-                      <td className="py-4 px-6 text-brand-gray">AVINASH KESHARWANI (M.Sc., B.Ed.)</td>
+                    <tr className="hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-bold text-center">1</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-semibold">PRINCIPAL</td>
+                      <td className="py-3 px-4 border border-gray-300">01</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-gray">AVINASH KESHARWANI (M.Sc., B.Ed.)</td>
                     </tr>
-                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">2</td>
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold">VICE PRINCIPAL</td>
-                      <td className="py-4 px-6 border-r border-gray-100">01</td>
-                      <td className="py-4 px-6 text-brand-gray">L.N.DHIMAR (MA, B.Ed.)</td>
+                    <tr className="hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-bold text-center">2</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-semibold">VICE PRINCIPAL</td>
+                      <td className="py-3 px-4 border border-gray-300">01</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-gray">L.N.DHIMAR (MA, B.Ed.)</td>
                     </tr>
-                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">3</td>
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold">HEADMISTRESS/HEADMASTER</td>
-                      <td className="py-4 px-6 border-r border-gray-100">01</td>
-                      <td className="py-4 px-6 text-brand-gray">MONA KESHARWANI (M.Sc., B.Ed.)</td>
+                    <tr className="hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-bold text-center">3</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-semibold">HEADMISTRESS/HEADMASTER</td>
+                      <td className="py-3 px-4 border border-gray-300">01</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-gray">MONA KESHARWANI (M.Sc., B.Ed.)</td>
                     </tr>
-                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold" rowSpan={5}>4</td>
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold">TOTAL NO. OF TEACHERS</td>
-                      <td className="py-4 px-6 border-r border-gray-100">72</td>
-                      <td className="py-4 px-6 text-brand-gray"></td>
+                    <tr className="hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-bold text-center" rowSpan={5}>4</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-semibold">TOTAL NO. OF TEACHERS</td>
+                      <td className="py-3 px-4 border border-gray-300">72</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-gray"></td>
                     </tr>
                     {staffDetails.breakdown.map((item) => (
-                      <tr key={item.role} className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
-                        <td className="py-3 px-6 border-r border-gray-100 text-brand-navy pl-8 font-medium">* {item.role.split(' ')[0]}</td>
-                        <td className="py-3 px-6 border-r border-gray-100">{item.count < 10 ? `0${item.count}` : item.count}</td>
-                        <td className="py-3 px-6">
+                      <tr key={item.role} className="hover:bg-brand-navy/5 transition-colors">
+                        <td className="py-2.5 px-4 border border-gray-300 text-brand-navy pl-8 font-medium">* {item.role.split(' ')[0]}</td>
+                        <td className="py-2.5 px-4 border border-gray-300">{item.count < 10 ? `0${item.count}` : item.count}</td>
+                        <td className="py-2.5 px-4 border border-gray-300">
                           <a
                             href={item.link}
                             target="_blank"
@@ -489,23 +489,23 @@ export default function MandatoryDisclosureClient() {
                         </td>
                       </tr>
                     ))}
-                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">5</td>
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold">TEACHERS SECTION RATIO</td>
-                      <td className="py-4 px-6 border-r border-gray-100">01:01:05</td>
-                      <td className="py-4 px-6 text-brand-gray">NA</td>
+                    <tr className="hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-bold text-center">5</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-semibold">TEACHERS SECTION RATIO</td>
+                      <td className="py-3 px-4 border border-gray-300">01:01:05</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-gray">NA</td>
                     </tr>
-                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">6</td>
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold">DETAILS OF SPECIAL EDUCATOR</td>
-                      <td className="py-4 px-6 border-r border-gray-100">01</td>
-                      <td className="py-4 px-6 text-brand-gray">GEETU KESHARWANI (BA, B.Ed. in Special Education)</td>
+                    <tr className="hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-bold text-center">6</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-semibold">DETAILS OF SPECIAL EDUCATOR</td>
+                      <td className="py-3 px-4 border border-gray-300">01</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-gray">GEETU KESHARWANI (BA, B.Ed. in Special Education)</td>
                     </tr>
-                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">7</td>
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold">DETAILS OF COUNSELLOR AND WELLNESS TEACHER</td>
-                      <td className="py-4 px-6 border-r border-gray-100">01</td>
-                      <td className="py-4 px-6 text-brand-gray">SHIVANI PANDA (M.A. Psychology)</td>
+                    <tr className="hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-bold text-center">7</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-semibold">DETAILS OF COUNSELLOR AND WELLNESS TEACHER</td>
+                      <td className="py-3 px-4 border border-gray-300">01</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-gray">SHIVANI PANDA (M.A. Psychology)</td>
                     </tr>
                   </tbody>
                 </table>
@@ -513,70 +513,70 @@ export default function MandatoryDisclosureClient() {
             </div>
 
             {/* Section E: SCHOOL INFRASTRUCTURE */}
-            <div className="bg-white rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-6 md:p-8 overflow-hidden">
-              <h3 className="text-lg md:text-xl font-bold text-brand-navy mb-6 pb-2 border-b border-gray-100 flex items-center gap-2">
+            <div className="bg-white border border-gray-300 p-6 md:p-8">
+              <h3 className="text-lg md:text-xl font-bold text-brand-navy mb-6 pb-2 border-b border-gray-200 flex items-center gap-2">
                 <span className="w-1.5 h-5 bg-brand-yellow rounded-full inline-block"></span>
                 E. SCHOOL INFRASTRUCTURE
               </h3>
-              <div className="overflow-x-auto border border-gray-100 rounded-2xl">
-                <table className="w-full text-left border-collapse min-w-[600px]">
+              <div className="overflow-x-auto border border-gray-300">
+                <table className="w-full text-left border-collapse border border-gray-300 min-w-[600px]">
                   <thead>
-                    <tr className="bg-brand-navy text-white text-xs font-bold uppercase tracking-wider">
-                      <th className="py-4 px-6 w-[12%] border-r border-white/10">S.NO.</th>
-                      <th className="py-4 px-6 w-[53%] border-r border-white/10">INFORMATION</th>
-                      <th className="py-4 px-6 w-[35%]">DETAILS</th>
+                    <tr className="bg-gray-100 text-brand-navy text-xs font-bold uppercase tracking-wider">
+                      <th className="py-3 px-4 w-[12%] border border-gray-300 text-center">S.NO.</th>
+                      <th className="py-3 px-4 w-[53%] border-r border-gray-300">INFORMATION</th>
+                      <th className="py-3 px-4 w-[35%] border-gray-300">DETAILS</th>
                     </tr>
                   </thead>
                   <tbody className="text-sm text-brand-gray font-medium">
-                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">1</td>
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold leading-relaxed">TOTAL CAMPUS AREA OF THE SCHOOL (IN SQUARE MTR)</td>
-                      <td className="py-4 px-6 text-brand-gray">8384 Sq. mtr</td>
+                    <tr className="hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-bold text-center">1</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-semibold leading-relaxed">TOTAL CAMPUS AREA OF THE SCHOOL (IN SQUARE MTR)</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-gray">8384 Sq. mtr</td>
                     </tr>
-                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">2</td>
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold leading-relaxed">NO. AND SIZE OF THE CLASS ROOM (IN SQUARE MTR)</td>
-                      <td className="py-4 px-6 text-brand-gray">46 Rooms, 46.5 Sq. mtr each</td>
+                    <tr className="hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-bold text-center">2</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-semibold leading-relaxed">NO. AND SIZE OF THE CLASS ROOM (IN SQUARE MTR)</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-gray">46 Rooms, 46.5 Sq. mtr each</td>
                     </tr>
-                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">3</td>
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold leading-relaxed">NO. AND SIZE OF LABORATORIES INCLUDING COMPUTER LABS (IN SQ MTR)</td>
-                      <td className="py-4 px-6 text-brand-gray">55.75 Sq. mtr each</td>
+                    <tr className="hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-bold text-center">3</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-semibold leading-relaxed">NO. AND SIZE OF LABORATORIES INCLUDING COMPUTER LABS (IN SQ MTR)</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-gray">55.75 Sq. mtr each</td>
                     </tr>
-                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">4</td>
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold leading-relaxed">NO. AND SIZE OF LIBRARY (IN SQR MTR)</td>
-                      <td className="py-4 px-6 text-brand-gray">01 (ONE) 111.48 Sq. mtr</td>
+                    <tr className="hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-bold text-center">4</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-semibold leading-relaxed">NO. AND SIZE OF LIBRARY (IN SQR MTR)</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-gray">01 (ONE) 111.48 Sq. mtr</td>
                     </tr>
-                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">5</td>
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold leading-relaxed">INTERNET FACILITY (Y/N)</td>
-                      <td className="py-4 px-6 text-brand-gray">Yes</td>
+                    <tr className="hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-bold text-center">5</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-semibold leading-relaxed">INTERNET FACILITY (Y/N)</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-gray">Yes</td>
                     </tr>
-                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">6</td>
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold leading-relaxed">NO. OF GIRLS TOILETS</td>
-                      <td className="py-4 px-6 text-brand-gray">20</td>
+                    <tr className="hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-bold text-center">6</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-semibold leading-relaxed">NO. OF GIRLS TOILETS</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-gray">20</td>
                     </tr>
-                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">7</td>
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold leading-relaxed">NO. OF BOYS TOILETS</td>
-                      <td className="py-4 px-6 text-brand-gray">20</td>
+                    <tr className="hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-bold text-center">7</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-semibold leading-relaxed">NO. OF BOYS TOILETS</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-gray">20</td>
                     </tr>
-                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">8</td>
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold leading-relaxed">NO. OF CWSN TOILETS</td>
-                      <td className="py-4 px-6 text-brand-gray">(01) GIRLS ; (01) BOYS</td>
+                    <tr className="hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-bold text-center">8</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-semibold leading-relaxed">NO. OF CWSN TOILETS</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-gray">(01) GIRLS ; (01) BOYS</td>
                     </tr>
-                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">9</td>
-                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold leading-relaxed">LINK OF YOUTUBE VIDEO OF THE INSPECTION OF SCHOOL COVERING THE INFRASTRUCTURE OF THE SCHOOL</td>
-                      <td className="py-4 px-6">
+                    <tr className="hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-bold text-center">9</td>
+                      <td className="py-3 px-4 border border-gray-300 text-brand-navy font-semibold leading-relaxed">LINK OF YOUTUBE VIDEO OF THE INSPECTION OF SCHOOL COVERING THE INFRASTRUCTURE OF THE SCHOOL</td>
+                      <td className="py-3 px-4 border border-gray-300">
                         <a
                           href="https://www.youtube.com/watch?v=MY-pnvbka28"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#E85D22] text-white rounded-xl text-xs font-bold hover:scale-[1.03] transition-transform shadow-sm cursor-pointer whitespace-nowrap"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#E85D22] text-white rounded-lg text-xs font-bold hover:scale-[1.03] transition-transform shadow-sm cursor-pointer whitespace-nowrap"
                         >
                           <Video className="w-3.5 h-3.5" />
                           <span>View Video</span>
