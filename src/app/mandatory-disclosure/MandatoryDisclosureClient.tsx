@@ -336,18 +336,18 @@ export default function MandatoryDisclosureClient() {
                         <td className="py-3 px-4 border border-gray-300 text-brand-navy font-bold text-center">{idx + 1}</td>
                         <td className="py-3 px-4 border border-gray-300 text-brand-navy font-semibold">{item.title}</td>
                         <td className="py-3 px-4 border border-gray-300">
-                          <div className="flex flex-col gap-2">
+                          <div className="flex flex-wrap gap-2">
                             {item.links.map((link) => (
                               <a
                                 key={link.label}
                                 href={link.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-xs text-brand-blue hover:text-[#E85D22] hover:underline transition-colors flex items-center gap-1 cursor-pointer"
+                                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#E85D22] text-white rounded-lg text-xs font-bold hover:bg-brand-navy hover:text-white transition-all shadow-sm cursor-pointer whitespace-nowrap"
                               >
-                                <FileText className="w-3.5 h-3.5 shrink-0 text-brand-yellow" />
-                                <span className="break-all">{link.url}</span>
-                                <ExternalLink className="w-3 h-3 shrink-0 opacity-60" />
+                                <FileText className="w-3.5 h-3.5" />
+                                <span>View</span>
+                                {item.links.length > 1 && <span className="text-[10px] opacity-75">({link.label})</span>}
                               </a>
                             ))}
                           </div>
