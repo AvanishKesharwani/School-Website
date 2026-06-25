@@ -11,6 +11,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileAcademicsOpen, setIsMobileAcademicsOpen] = useState(false);
+  const [isMobileSchoolOpen, setIsMobileSchoolOpen] = useState(false);
   const [isMobileMoreOpen, setIsMobileMoreOpen] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === "/";
@@ -22,6 +23,7 @@ export default function Navbar() {
   useEffect(() => {
     if (!isMobileMenuOpen) {
       setIsMobileAcademicsOpen(false);
+      setIsMobileSchoolOpen(false);
       setIsMobileMoreOpen(false);
     }
   }, [isMobileMenuOpen]);
@@ -67,7 +69,17 @@ export default function Navbar() {
         { name: "Senior Secondary", href: "/academics/senior-secondary" }
       ]
     },
-    { name: "Campus", href: "/#campus" },
+    { 
+      name: "School", 
+      href: "/#school",
+      dropdown: [
+        { name: "About Us", href: "/about" },
+        { name: "Our Mission and Vision", href: "/vision-mission" },
+        { name: "Message", href: "/message" },
+        { name: "Mandatory Disclosure", href: "/mandatory-disclosure" },
+        { name: "Parents Corner", href: "/parents-corner" }
+      ]
+    },
     { name: "Gallery", href: "/gallery" },
     { name: "Admissions", href: "/admissions" },
     { name: "Contact Us", href: "/#contact" },
@@ -82,8 +94,7 @@ export default function Navbar() {
         { name: "Medical Facility", href: "/medical-facility" },
         { name: "School Rules", href: "/school-rules" },
         { name: "Beyond Academics", href: "/beyond-academics" },
-        { name: "Book List", href: "/book-list" },
-        { name: "Mandatory Disclosure", href: "/mandatory-disclosure" }
+        { name: "Book List", href: "/book-list" }
       ]
     }
   ];
@@ -248,10 +259,15 @@ export default function Navbar() {
             <nav className="flex flex-col py-4 px-6 gap-4">
               {navLinks.map((link) => {
                 if (link.dropdown) {
-                  const isDropdownOpen = link.name === "Academics" ? isMobileAcademicsOpen : isMobileMoreOpen;
+                  const isDropdownOpen = 
+                    link.name === "Academics" ? isMobileAcademicsOpen :
+                    link.name === "School" ? isMobileSchoolOpen :
+                    isMobileMoreOpen;
                   const toggleDropdown = () => {
                     if (link.name === "Academics") {
                       setIsMobileAcademicsOpen(!isMobileAcademicsOpen);
+                    } else if (link.name === "School") {
+                      setIsMobileSchoolOpen(!isMobileSchoolOpen);
                     } else {
                       setIsMobileMoreOpen(!isMobileMoreOpen);
                     }

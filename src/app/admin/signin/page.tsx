@@ -56,7 +56,7 @@ export default function SignInPage() {
                 id="email"
                 type="email"
                 name="email"
-                placeholder="admin@mankapublicschool.edu"
+                placeholder="your.name@example.com"
                 required
                 className="w-full pl-11 pr-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#007BFF] focus:border-transparent transition-all"
               />
