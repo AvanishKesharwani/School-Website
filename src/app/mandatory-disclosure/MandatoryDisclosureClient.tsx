@@ -1,41 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { 
   FileText, 
   Download, 
   ExternalLink, 
-  Shield, 
-  Award, 
-  BookOpen, 
-  Users, 
-  Building2, 
-  Video, 
-  Info,
-  Calendar,
-  CheckCircle,
-  HelpCircle,
-  Phone,
-  Mail,
-  MapPin,
-  ChevronRight
+  Video
 } from "lucide-react";
 
-type TabId = "general" | "documents" | "academics" | "staff" | "infrastructure";
-
 export default function MandatoryDisclosureClient() {
-  const [activeTab, setActiveTab] = useState<TabId>("general");
-
-  const tabs = [
-    { id: "general" as TabId, label: "General Info", icon: Info },
-    { id: "documents" as TabId, label: "Documents & Certificates", icon: Shield },
-    { id: "academics" as TabId, label: "Results & Academics", icon: Award },
-    { id: "staff" as TabId, label: "Staff & Faculty", icon: Users },
-    { id: "infrastructure" as TabId, label: "Infrastructure", icon: Building2 },
-  ];
 
   const generalInfo = [
     { label: "NAME OF THE SCHOOL", value: "Manka Public School" },
@@ -227,470 +202,391 @@ export default function MandatoryDisclosureClient() {
         </div>
       </section>
 
-      {/* Affiliation & Code Quick Display Cards */}
-      <section className="relative z-20 -mt-8">
-        <div className="container mx-auto px-6 md:px-12">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            
-            <motion.div 
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="bg-white p-6 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.05)] border border-gray-100 flex items-center gap-5"
+      {/* Top Center SARAS Link */}
+      <section className="py-10 bg-white border-b border-gray-100 relative z-20">
+        <div className="container mx-auto px-6 text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            <a
+              href="https://mankapublicschool.com/mandatory-public-disclousre.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-3 px-8 py-4.5 bg-[#E85D22] text-white font-extrabold rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 text-lg md:text-xl tracking-wide uppercase border border-[#E85D22] cursor-pointer"
             >
-              <div className="p-4 rounded-xl bg-brand-blue/20 text-brand-navy">
-                <Shield className="w-8 h-8" />
-              </div>
-              <div>
-                <span className="text-xs text-brand-gray uppercase tracking-wider block font-semibold">CBSE Affiliation Number</span>
-                <span className="text-2xl font-bold text-brand-navy">3330393</span>
-              </div>
-            </motion.div>
-
-            <motion.div 
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="bg-white p-6 rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.05)] border border-gray-100 flex items-center gap-5"
-            >
-              <div className="p-4 rounded-xl bg-brand-yellow/10 text-brand-yellow">
-                <Award className="w-8 h-8" />
-              </div>
-              <div>
-                <span className="text-xs text-brand-gray uppercase tracking-wider block font-semibold">School Code</span>
-                <span className="text-2xl font-bold text-brand-navy">15943</span>
-              </div>
-            </motion.div>
-
-            <motion.div 
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="bg-[#E85D22] p-6 rounded-2xl shadow-[0_8px_30px_rgb(232,93,34,0.15)] flex items-center justify-between text-white"
-            >
-              <div className="flex items-center gap-4">
-                <div className="p-3.5 rounded-xl bg-white/20">
-                  <FileText className="w-7 h-7" />
-                </div>
-                <div>
-                  <span className="text-xs text-white/95 uppercase tracking-wider block font-bold">SARAS Report</span>
-                  <span className="text-sm font-semibold">CBSE Disclosure PDF</span>
-                </div>
-              </div>
-              <a 
-                href="https://mankapublicschool.com/mandatory-public-disclousre.pdf" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="p-3 bg-white text-[#E85D22] rounded-xl hover:scale-105 transition-transform duration-200 shadow-md flex items-center justify-center cursor-pointer"
-              >
-                <Download className="w-5 h-5" />
-              </a>
-            </motion.div>
-
-          </div>
+              <FileText className="w-6 h-6" />
+              <span>SARAS Mandatory Public Disclosure PDF</span>
+              <Download className="w-5 h-5 opacity-90" />
+            </a>
+          </motion.div>
         </div>
       </section>
 
-      {/* Main Content Area */}
-      <section className="py-16 md:py-24">
-        <div className="container mx-auto px-6 md:px-12">
-          <div className="flex flex-col lg:flex-row gap-8 items-start max-w-6xl mx-auto">
+      {/* Appendix IX Header */}
+      <div className="max-w-5xl mx-auto mt-16 mb-8 text-center px-4">
+        <h2 className="text-3xl font-extrabold text-brand-navy">APPENDIX – IX</h2>
+        <p className="text-[#E85D22] text-sm md:text-base font-bold uppercase tracking-wider mt-1.5">Mandatory Public Disclosure</p>
+      </div>
+
+      {/* Main Tables Container */}
+      <section className="pb-24">
+        <div className="container mx-auto px-6 md:px-12 max-w-5xl">
+          <div className="space-y-12">
             
-            {/* Left Column: Tab Controls */}
-            <div className="w-full lg:w-1/4 shrink-0 flex flex-row lg:flex-col overflow-x-auto lg:overflow-visible gap-2 bg-white/50 p-2.5 rounded-2xl border border-gray-100 backdrop-blur-sm scrollbar-none">
-              {tabs.map((tab) => {
-                const Icon = tab.icon;
-                const isActive = activeTab === tab.id;
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center gap-3 px-5 py-3.5 rounded-xl text-sm font-semibold transition-all duration-200 whitespace-nowrap cursor-pointer ${
-                      isActive 
-                        ? "bg-brand-navy text-white shadow-lg shadow-brand-navy/15 scale-[1.02]" 
-                        : "text-brand-gray hover:bg-brand-navy/5 hover:text-brand-navy"
-                    }`}
-                  >
-                    <Icon className="w-4.5 h-4.5 shrink-0" />
-                    <span>{tab.label}</span>
-                    <ChevronRight className={`ml-auto w-4 h-4 hidden lg:block transition-transform ${isActive ? "translate-x-1 opacity-100" : "opacity-0"}`} />
-                  </button>
-                );
-              })}
+            {/* Section A: GENERAL INFORMATION */}
+            <div className="bg-white rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-6 md:p-8 overflow-hidden">
+              <h3 className="text-lg md:text-xl font-bold text-brand-navy mb-6 pb-2 border-b border-gray-100 flex items-center gap-2">
+                <span className="w-1.5 h-5 bg-brand-yellow rounded-full inline-block"></span>
+                A. GENERAL INFORMATION
+              </h3>
+              <div className="overflow-x-auto border border-gray-100 rounded-2xl">
+                <table className="w-full text-left border-collapse min-w-[600px]">
+                  <thead>
+                    <tr className="bg-brand-navy text-white text-xs font-bold uppercase tracking-wider">
+                      <th className="py-4 px-6 w-[12%] border-r border-white/10">SL.NO.</th>
+                      <th className="py-4 px-6 w-[38%] border-r border-white/10">INFORMATION</th>
+                      <th className="py-4 px-6 w-[50%]">DETAILS</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-sm text-brand-gray font-medium">
+                    {generalInfo.map((info, idx) => (
+                      <tr key={info.label} className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
+                        <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">{idx + 1}</td>
+                        <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold">{info.label}</td>
+                        <td className="py-4 px-6 text-brand-gray">
+                          {info.highlight ? (
+                            <span className="inline-block px-3 py-1 bg-brand-yellow/15 text-brand-navy font-bold rounded-lg border border-brand-yellow/20">
+                              {info.value}
+                            </span>
+                          ) : (
+                            info.value
+                          )}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
 
-            {/* Right Column: Tab Contents with Framer Motion transitions */}
-            <div className="w-full lg:w-3/4 bg-white rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-6 md:p-10 relative min-h-[450px]">
-              
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={activeTab}
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
-                  transition={{ duration: 0.3 }}
-                >
-                  
-                  {/* General Info Tab */}
-                  {activeTab === "general" && (
-                    <div>
-                      <div className="border-b border-gray-100 pb-6 mb-8 flex justify-between items-center flex-wrap gap-4">
-                        <div>
-                          <h2 className="text-2xl font-extrabold text-brand-navy flex items-center gap-2">
-                            <Info className="w-6 h-6 text-brand-yellow" />
-                            General Information
-                          </h2>
-                          <p className="text-sm text-brand-gray mt-1">Section A: Primary affiliation and identity details.</p>
-                        </div>
-                      </div>
-                      
-                      <div className="overflow-hidden border border-gray-100 rounded-2xl bg-brand-white/20">
-                        <table className="w-full text-left border-collapse">
-                          <tbody>
-                            {generalInfo.map((info, idx) => (
-                              <tr 
-                                key={info.label}
-                                className={`border-b border-gray-100/80 transition-colors hover:bg-brand-navy/5 ${
-                                  idx % 2 === 0 ? "bg-white" : "bg-brand-white/10"
-                                }`}
+            {/* Section B: DOCUMENTS AND INFORMATION */}
+            <div className="bg-white rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-6 md:p-8 overflow-hidden">
+              <h3 className="text-lg md:text-xl font-bold text-brand-navy mb-6 pb-2 border-b border-gray-100 flex items-center gap-2">
+                <span className="w-1.5 h-5 bg-brand-yellow rounded-full inline-block"></span>
+                B. DOCUMENTS AND INFORMATION
+              </h3>
+              <div className="overflow-x-auto border border-gray-100 rounded-2xl">
+                <table className="w-full text-left border-collapse min-w-[600px]">
+                  <thead>
+                    <tr className="bg-brand-navy text-white text-xs font-bold uppercase tracking-wider">
+                      <th className="py-4 px-6 w-[12%] border-r border-white/10">SL.NO.</th>
+                      <th className="py-4 px-6 w-[63%] border-r border-white/10">DOCUMENTS/INFORMATION</th>
+                      <th className="py-4 px-6 w-[25%]">UPLOAD DOCUMENTS</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-sm text-brand-gray font-medium">
+                    {documents.map((doc, idx) => (
+                      <tr key={doc.id} className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
+                        <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">{idx + 1}</td>
+                        <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold leading-relaxed">{doc.title}</td>
+                        <td className="py-4 px-6">
+                          <div className="flex flex-wrap gap-2">
+                            {doc.links.map((link) => (
+                              <a
+                                key={link.label}
+                                href={link.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-brand-navy text-white rounded-xl text-xs font-bold hover:bg-brand-yellow hover:text-brand-navy transition-all shadow-sm cursor-pointer whitespace-nowrap"
                               >
-                                <td className="py-4.5 px-6 text-xs md:text-sm font-bold text-brand-navy w-1/3 border-r border-gray-100/50">
-                                  {info.label}
-                                </td>
-                                <td className="py-4.5 px-6 text-sm text-brand-gray font-medium">
-                                  {info.highlight ? (
-                                    <span className="inline-block px-3 py-1 bg-brand-yellow/15 text-brand-navy font-bold rounded-lg border border-brand-yellow/20">
-                                      {info.value}
-                                    </span>
-                                  ) : (
-                                    info.value
-                                  )}
-                                </td>
-                              </tr>
+                                <FileText className="w-3.5 h-3.5" />
+                                <span>View</span>
+                                {doc.links.length > 1 && <span className="text-[10px] opacity-75">({link.label})</span>}
+                              </a>
                             ))}
-                          </tbody>
-                        </table>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Documents & Certificates Tab */}
-                  {activeTab === "documents" && (
-                    <div>
-                      <div className="border-b border-gray-100 pb-6 mb-8">
-                        <h2 className="text-2xl font-extrabold text-brand-navy flex items-center gap-2">
-                          <Shield className="w-6 h-6 text-brand-yellow" />
-                          Documents & Information
-                        </h2>
-                        <p className="text-sm text-brand-gray mt-1">Section B: Certified legal, structural, and safety reports.</p>
-                      </div>
-
-                      <div className="space-y-4">
-                        {documents.map((doc, idx) => (
-                          <div 
-                            key={doc.id}
-                            className="p-5 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-shadow flex flex-col md:flex-row md:items-center justify-between gap-4"
-                          >
-                            <div className="flex gap-4">
-                              <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-blue/30 text-brand-navy font-bold text-sm shrink-0">
-                                {idx + 1}
-                              </span>
-                              <div>
-                                <h3 className="text-sm md:text-base font-bold text-brand-navy leading-snug">
-                                  {doc.title}
-                                </h3>
-                              </div>
-                            </div>
-                            
-                            <div className="flex flex-wrap gap-2 shrink-0 self-end md:self-auto">
-                              {doc.links.map((link) => (
-                                <a
-                                  key={link.label}
-                                  href={link.url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-2 px-4 py-2 bg-brand-navy text-white rounded-xl text-xs font-semibold hover:bg-brand-yellow hover:text-brand-navy transition-all shadow-sm cursor-pointer whitespace-nowrap"
-                                >
-                                  <FileText className="w-3.5 h-3.5" />
-                                  <span>{link.label}</span>
-                                  <ExternalLink className="w-3 h-3 opacity-60" />
-                                </a>
-                              ))}
-                            </div>
                           </div>
-                        ))}
-                      </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
-                      <div className="mt-8 p-5 bg-[#F5FAFF] border border-blue-100 rounded-2xl flex gap-3">
-                        <Info className="w-5 h-5 text-brand-navy shrink-0 mt-0.5" />
-                        <p className="text-xs text-brand-navy/80 leading-relaxed">
-                          <strong>Note:</strong> Manka Public School uploads copies of these regulatory documents verified by the Chairman, Manager, Secretary, and Principal in compliance with CBSE rules.
-                        </p>
-                      </div>
-                    </div>
-                  )}
-
-                  {/* Results & Academics Tab */}
-                  {activeTab === "academics" && (
-                    <div>
-                      <div className="border-b border-gray-100 pb-6 mb-8">
-                        <h2 className="text-2xl font-extrabold text-brand-navy flex items-center gap-2">
-                          <Award className="w-6 h-6 text-brand-yellow" />
-                          Results & Academics
-                        </h2>
-                        <p className="text-sm text-brand-gray mt-1">Section C: Fees, Academic calendars, and official Board results.</p>
-                      </div>
-
-                      {/* Documents Section */}
-                      <h3 className="text-lg font-bold text-brand-navy mb-4 flex items-center gap-2">
-                        <span className="w-1.5 h-4 bg-brand-yellow rounded-full"></span>
-                        Academic Materials
-                      </h3>
-                      <div className="space-y-4 mb-10">
-                        {academics.map((item, idx) => (
-                          <div 
-                            key={item.id}
-                            className="p-5 bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md transition-shadow flex flex-col md:flex-row md:items-center justify-between gap-4"
-                          >
-                            <div className="flex gap-4">
-                              <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-yellow/10 text-brand-yellow font-bold text-sm shrink-0">
-                                {idx + 1}
-                              </span>
-                              <div>
-                                <h4 className="text-sm md:text-base font-bold text-brand-navy leading-snug">
-                                  {item.title}
-                                </h4>
-                              </div>
-                            </div>
-                            
-                            <div className="flex flex-wrap gap-2 shrink-0 self-end md:self-auto">
-                              {item.links.map((link) => (
-                                <a
-                                  key={link.label}
-                                  href={link.url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center gap-2 px-4 py-2 bg-[#F5FAFF] border border-blue-100 text-brand-navy rounded-xl text-xs font-semibold hover:bg-brand-navy hover:text-white transition-all cursor-pointer whitespace-nowrap"
-                                >
-                                  <FileText className="w-3.5 h-3.5 text-brand-yellow" />
-                                  <span>{link.label}</span>
-                                  <ExternalLink className="w-3 h-3 opacity-60" />
-                                </a>
-                              ))}
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-
-                      {/* Class X Table */}
-                      <h3 className="text-lg font-bold text-brand-navy mb-4 flex items-center gap-2">
-                        <span className="w-1.5 h-4 bg-[#E85D22] rounded-full"></span>
-                        Board Examination Results: Class X
-                      </h3>
-                      <div className="overflow-x-auto border border-gray-100 rounded-2xl bg-brand-white/10 mb-10">
-                        <table className="w-full text-left border-collapse min-w-[500px]">
-                          <thead>
-                            <tr className="bg-brand-navy text-white text-xs font-bold uppercase tracking-wider">
-                              <th className="py-4 px-6">S.No.</th>
-                              <th className="py-4 px-6">Year</th>
-                              <th className="py-4 px-6">Registered Students</th>
-                              <th className="py-4 px-6">Passed Students</th>
-                              <th className="py-4 px-6">Pass Percentage</th>
-                              <th className="py-4 px-6">Remarks</th>
-                            </tr>
-                          </thead>
-                          <tbody className="text-sm font-medium text-brand-gray">
-                            {classXResults.map((res, idx) => (
-                              <tr key={res.year} className="border-b border-gray-100 bg-white hover:bg-brand-navy/5 transition-colors">
-                                <td className="py-4 px-6 text-brand-navy font-bold">{idx + 1}</td>
-                                <td className="py-4 px-6">{res.year}</td>
-                                <td className="py-4 px-6">{res.registered}</td>
-                                <td className="py-4 px-6">{res.passed}</td>
-                                <td className="py-4 px-6">
-                                  <span className="inline-block px-2.5 py-1 bg-green-50 text-green-700 font-bold rounded-lg border border-green-150">
-                                    {res.percentage}
-                                  </span>
-                                </td>
-                                <td className="py-4 px-6 text-xs">{res.remarks}</td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-
-                      {/* Class XII Table */}
-                      <h3 className="text-lg font-bold text-brand-navy mb-4 flex items-center gap-2">
-                        <span className="w-1.5 h-4 bg-[#E85D22] rounded-full"></span>
-                        Board Examination Results: Class XII
-                      </h3>
-                      <div className="overflow-x-auto border border-gray-100 rounded-2xl bg-brand-white/10">
-                        <table className="w-full text-left border-collapse min-w-[500px]">
-                          <thead>
-                            <tr className="bg-brand-navy text-white text-xs font-bold uppercase tracking-wider">
-                              <th className="py-4 px-6">S.No.</th>
-                              <th className="py-4 px-6">Year</th>
-                              <th className="py-4 px-6">Registered Students</th>
-                              <th className="py-4 px-6">Passed Students</th>
-                              <th className="py-4 px-6">Pass Percentage</th>
-                              <th className="py-4 px-6">Remarks</th>
-                            </tr>
-                          </thead>
-                          <tbody className="text-sm font-medium text-brand-gray">
-                            {classXIILesults.map((res, idx) => (
-                              <tr key={res.year} className="border-b border-gray-100 bg-white hover:bg-brand-navy/5 transition-colors">
-                                <td className="py-4 px-6 text-brand-navy font-bold">{idx + 1}</td>
-                                <td className="py-4 px-6">{res.year}</td>
-                                <td className="py-4 px-6">{res.registered}</td>
-                                <td className="py-4 px-6">{res.passed}</td>
-                                <td className="py-4 px-6">
-                                  <span className="inline-block px-2.5 py-1 bg-green-50 text-green-700 font-bold rounded-lg border border-green-150">
-                                    {res.percentage}
-                                  </span>
-                                </td>
-                                <td className="py-4 px-6 text-xs">{res.remarks}</td>
-                              </tr>
-                            ))}
-                          </tbody>
-                        </table>
-                      </div>
-
-                    </div>
-                  )}
-
-                  {/* Staff & Faculty Tab */}
-                  {activeTab === "staff" && (
-                    <div>
-                      <div className="border-b border-gray-100 pb-6 mb-8">
-                        <h2 className="text-2xl font-extrabold text-brand-navy flex items-center gap-2">
-                          <Users className="w-6 h-6 text-brand-yellow" />
-                          Teaching Staff Details
-                        </h2>
-                        <p className="text-sm text-brand-gray mt-1">Section D: Principal qualifications, teacher counts, and counselor details.</p>
-                      </div>
-
-                      {/* General Staff info table */}
-                      <div className="overflow-hidden border border-gray-100 rounded-2xl bg-brand-white/20 mb-8">
-                        <table className="w-full text-left border-collapse">
-                          <tbody>
-                            {staffDetails.summary.map((info, idx) => (
-                              <tr 
-                                key={info.label}
-                                className={`border-b border-gray-100/80 transition-colors hover:bg-brand-navy/5 ${
-                                  idx % 2 === 0 ? "bg-white" : "bg-brand-white/10"
-                                }`}
+            {/* Section C: RESULT AND ACADEMICS */}
+            <div className="bg-white rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-6 md:p-8 overflow-hidden">
+              <h3 className="text-lg md:text-xl font-bold text-brand-navy mb-6 pb-2 border-b border-gray-100 flex items-center gap-2">
+                <span className="w-1.5 h-5 bg-brand-yellow rounded-full inline-block"></span>
+                C. RESULT AND ACADEMICS
+              </h3>
+              <div className="overflow-x-auto border border-gray-100 rounded-2xl mb-8">
+                <table className="w-full text-left border-collapse min-w-[600px]">
+                  <thead>
+                    <tr className="bg-brand-navy text-white text-xs font-bold uppercase tracking-wider">
+                      <th className="py-4 px-6 w-[12%] border-r border-white/10">SL.NO.</th>
+                      <th className="py-4 px-6 w-[43%] border-r border-white/10">DOCUMENTS/INFORMATION</th>
+                      <th className="py-4 px-6 w-[45%]">LINKS OF UPLOADED DOCUMENTS ON YOUR SCHOOL'S WEBSITE</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-sm text-brand-gray font-medium">
+                    {academics.map((item, idx) => (
+                      <tr key={item.id} className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
+                        <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">{idx + 1}</td>
+                        <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold">{item.title}</td>
+                        <td className="py-4 px-6">
+                          <div className="flex flex-col gap-2">
+                            {item.links.map((link) => (
+                              <a
+                                key={link.label}
+                                href={link.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-xs text-brand-blue hover:text-[#E85D22] hover:underline transition-colors flex items-center gap-1 cursor-pointer"
                               >
-                                <td className="py-4.5 px-6 text-xs md:text-sm font-bold text-brand-navy w-1/3 border-r border-gray-100/50">
-                                  {info.label}
-                                </td>
-                                <td className="py-4.5 px-6 text-sm text-brand-gray font-medium">
-                                  {info.value}
-                                </td>
-                              </tr>
+                                <FileText className="w-3.5 h-3.5 shrink-0 text-brand-yellow" />
+                                <span className="break-all">{link.url}</span>
+                                <ExternalLink className="w-3 h-3 shrink-0 opacity-60" />
+                              </a>
                             ))}
-                          </tbody>
-                        </table>
-                      </div>
-
-                      {/* Teacher Breakdown Details */}
-                      <h3 className="text-lg font-bold text-brand-navy mb-4 flex items-center gap-2">
-                        <span className="w-1.5 h-4 bg-brand-yellow rounded-full"></span>
-                        Faculty Lists & Certifications
-                      </h3>
-                      
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {staffDetails.breakdown.map((item) => (
-                          <div 
-                            key={item.role} 
-                            className="p-5 border border-gray-100 rounded-2xl shadow-sm bg-white flex items-center justify-between gap-4"
-                          >
-                            <div>
-                              <h4 className="text-sm font-bold text-brand-navy">{item.role}</h4>
-                              <p className="text-xs text-brand-gray mt-1">Strength: <strong className="text-brand-navy">{item.count}</strong></p>
-                            </div>
-                            <a 
-                              href={item.link}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="px-3 py-2 bg-brand-navy hover:bg-brand-yellow hover:text-brand-navy text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 shrink-0 cursor-pointer"
-                            >
-                              <FileText className="w-3.5 h-3.5" />
-                              <span>View List</span>
-                            </a>
                           </div>
-                        ))}
-                      </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
 
-                    </div>
-                  )}
+              {/* Class X Results */}
+              <h4 className="text-base font-bold text-brand-navy mb-4 mt-8 flex items-center gap-2">
+                <span className="w-1.5 h-4 bg-[#E85D22] rounded-full"></span>
+                RESULT CLASS: X
+              </h4>
+              <div className="overflow-x-auto border border-gray-100 rounded-2xl mb-8">
+                <table className="w-full text-left border-collapse min-w-[600px]">
+                  <thead>
+                    <tr className="bg-brand-navy text-white text-xs font-bold uppercase tracking-wider">
+                      <th className="py-4 px-6 border-r border-white/10">S.NO.</th>
+                      <th className="py-4 px-6 border-r border-white/10">YEAR</th>
+                      <th className="py-4 px-6 border-r border-white/10">NO. OF REGISTERED STUDENTS</th>
+                      <th className="py-4 px-6 border-r border-white/10">NO. OF STUDENTS PASSED</th>
+                      <th className="py-4 px-6 border-r border-white/10">PASS PERCENTAGE</th>
+                      <th className="py-4 px-6">REMARKS</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-sm text-brand-gray font-medium">
+                    {classXResults.map((res, idx) => (
+                      <tr key={res.year} className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
+                        <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">{idx + 1}</td>
+                        <td className="py-4 px-6 border-r border-gray-100">{res.year}</td>
+                        <td className="py-4 px-6 border-r border-gray-100">{res.registered}</td>
+                        <td className="py-4 px-6 border-r border-gray-100">{res.passed}</td>
+                        <td className="py-4 px-6 border-r border-gray-100">
+                          <span className="inline-block px-2.5 py-1 bg-green-50 text-green-700 font-bold rounded-lg border border-green-100">
+                            {res.percentage}
+                          </span>
+                        </td>
+                        <td className="py-4 px-6 text-xs text-brand-gray">CBSE Board ({res.remarks})</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
 
-                  {/* Infrastructure Tab */}
-                  {activeTab === "infrastructure" && (
-                    <div>
-                      <div className="border-b border-gray-100 pb-6 mb-8">
-                        <h2 className="text-2xl font-extrabold text-brand-navy flex items-center gap-2">
-                          <Building2 className="w-6 h-6 text-brand-yellow" />
-                          School Infrastructure
-                        </h2>
-                        <p className="text-sm text-brand-gray mt-1">Section E: Classrooms, laboratories, safety systems, and virtual inspection tour.</p>
-                      </div>
+              {/* Class XII Results */}
+              <h4 className="text-base font-bold text-brand-navy mb-4 mt-8 flex items-center gap-2">
+                <span className="w-1.5 h-4 bg-[#E85D22] rounded-full"></span>
+                RESULT CLASS: XII
+              </h4>
+              <div className="overflow-x-auto border border-gray-100 rounded-2xl">
+                <table className="w-full text-left border-collapse min-w-[600px]">
+                  <thead>
+                    <tr className="bg-brand-navy text-white text-xs font-bold uppercase tracking-wider">
+                      <th className="py-4 px-6 border-r border-white/10">S.NO.</th>
+                      <th className="py-4 px-6 border-r border-white/10">YEAR</th>
+                      <th className="py-4 px-6 border-r border-white/10">NO. OF REGISTERED STUDENTS</th>
+                      <th className="py-4 px-6 border-r border-white/10">NO. OF STUDENTS PASSED</th>
+                      <th className="py-4 px-6 border-r border-white/10">PASS PERCENTAGE</th>
+                      <th className="py-4 px-6">REMARKS</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-sm text-brand-gray font-medium">
+                    {classXIILesults.map((res, idx) => (
+                      <tr key={res.year} className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
+                        <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">{idx + 1}</td>
+                        <td className="py-4 px-6 border-r border-gray-100">{res.year}</td>
+                        <td className="py-4 px-6 border-r border-gray-100">{res.registered}</td>
+                        <td className="py-4 px-6 border-r border-gray-100">{res.passed}</td>
+                        <td className="py-4 px-6 border-r border-gray-100">
+                          <span className="inline-block px-2.5 py-1 bg-green-50 text-green-700 font-bold rounded-lg border border-green-100">
+                            {res.percentage}
+                          </span>
+                        </td>
+                        <td className="py-4 px-6 text-xs text-brand-gray">CBSE Board ({res.remarks})</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
-                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                        {infrastructure.map((item) => {
-                          if (item.videoUrl) {
-                            return (
-                              <div 
-                                key={item.label}
-                                className="p-6 border border-brand-yellow/30 bg-brand-yellow/5 rounded-2xl shadow-sm md:col-span-2 flex flex-col md:flex-row md:items-center justify-between gap-4"
-                              >
-                                <div className="flex gap-4">
-                                  <div className="p-3.5 rounded-xl bg-brand-yellow/10 text-brand-yellow shrink-0">
-                                    <Video className="w-7 h-7" />
-                                  </div>
-                                  <div>
-                                    <h4 className="text-sm font-bold text-brand-navy uppercase tracking-wider block mb-1">
-                                      {item.label}
-                                    </h4>
-                                    <p className="text-xs text-brand-gray leading-snug">
-                                      Watch the inspection video covering all school labs, library, classrooms, and grounds.
-                                    </p>
-                                  </div>
-                                </div>
-                                <a 
-                                  href={item.videoUrl}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="inline-flex items-center justify-center gap-2 px-5 py-3.5 bg-[#E85D22] text-white rounded-2xl text-sm font-bold hover:scale-[1.03] transition-transform shadow-md cursor-pointer self-start md:self-auto shrink-0"
-                                >
-                                  <Video className="w-4.5 h-4.5" />
-                                  <span>Watch YouTube Tour</span>
-                                  <ExternalLink className="w-3.5 h-3.5 opacity-85" />
-                                </a>
-                              </div>
-                            );
-                          }
+            {/* Section D: STAFF (TEACHING) */}
+            <div className="bg-white rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-6 md:p-8 overflow-hidden">
+              <h3 className="text-lg md:text-xl font-bold text-brand-navy mb-6 pb-2 border-b border-gray-100 flex items-center gap-2">
+                <span className="w-1.5 h-5 bg-brand-yellow rounded-full inline-block"></span>
+                D. STAFF (TEACHING)
+              </h3>
+              <div className="overflow-x-auto border border-gray-100 rounded-2xl">
+                <table className="w-full text-left border-collapse min-w-[600px]">
+                  <thead>
+                    <tr className="bg-brand-navy text-white text-xs font-bold uppercase tracking-wider">
+                      <th className="py-4 px-6 w-[12%] border-r border-white/10">S.NO.</th>
+                      <th className="py-4 px-6 w-[38%] border-r border-white/10">INFORMATION</th>
+                      <th className="py-4 px-6 w-[15%] border-r border-white/10">DETAILS</th>
+                      <th className="py-4 px-6 w-[35%]">NAME AND QUALIFICATIONS</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-sm text-brand-gray font-medium">
+                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">1</td>
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold">PRINCIPAL</td>
+                      <td className="py-4 px-6 border-r border-gray-100">01</td>
+                      <td className="py-4 px-6 text-brand-gray">AVINASH KESHARWANI (M.Sc., B.Ed.)</td>
+                    </tr>
+                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">2</td>
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold">VICE PRINCIPAL</td>
+                      <td className="py-4 px-6 border-r border-gray-100">01</td>
+                      <td className="py-4 px-6 text-brand-gray">L.N.DHIMAR (MA, B.Ed.)</td>
+                    </tr>
+                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">3</td>
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold">HEADMISTRESS/HEADMASTER</td>
+                      <td className="py-4 px-6 border-r border-gray-100">01</td>
+                      <td className="py-4 px-6 text-brand-gray">MONA KESHARWANI (M.Sc., B.Ed.)</td>
+                    </tr>
+                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold" rowSpan={5}>4</td>
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold">TOTAL NO. OF TEACHERS</td>
+                      <td className="py-4 px-6 border-r border-gray-100">72</td>
+                      <td className="py-4 px-6 text-brand-gray"></td>
+                    </tr>
+                    {staffDetails.breakdown.map((item) => (
+                      <tr key={item.role} className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
+                        <td className="py-3 px-6 border-r border-gray-100 text-brand-navy pl-8 font-medium">* {item.role.split(' ')[0]}</td>
+                        <td className="py-3 px-6 border-r border-gray-100">{item.count < 10 ? `0${item.count}` : item.count}</td>
+                        <td className="py-3 px-6">
+                          <a
+                            href={item.link}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand-navy text-white rounded-lg text-[10px] font-bold hover:bg-brand-yellow hover:text-brand-navy transition-all cursor-pointer whitespace-nowrap"
+                          >
+                            <FileText className="w-3 h-3" />
+                            <span>Link</span>
+                          </a>
+                        </td>
+                      </tr>
+                    ))}
+                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">5</td>
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold">TEACHERS SECTION RATIO</td>
+                      <td className="py-4 px-6 border-r border-gray-100">01:01:05</td>
+                      <td className="py-4 px-6 text-brand-gray">NA</td>
+                    </tr>
+                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">6</td>
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold">DETAILS OF SPECIAL EDUCATOR</td>
+                      <td className="py-4 px-6 border-r border-gray-100">01</td>
+                      <td className="py-4 px-6 text-brand-gray">GEETU KESHARWANI (BA, B.Ed. in Special Education)</td>
+                    </tr>
+                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">7</td>
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold">DETAILS OF COUNSELLOR AND WELLNESS TEACHER</td>
+                      <td className="py-4 px-6 border-r border-gray-100">01</td>
+                      <td className="py-4 px-6 text-brand-gray">SHIVANI PANDA (M.A. Psychology)</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
-                          return (
-                            <div 
-                              key={item.label}
-                              className="p-5 border border-gray-150/50 bg-white rounded-2xl shadow-sm"
-                            >
-                              <span className="text-[10px] text-brand-gray uppercase tracking-wider block font-bold mb-1.5 leading-snug">
-                                {item.label}
-                              </span>
-                              <span className="text-base font-bold text-brand-navy block">
-                                {item.value}
-                              </span>
-                            </div>
-                          );
-                        })}
-                      </div>
-
-                    </div>
-                  )}
-
-                </motion.div>
-              </AnimatePresence>
-
+            {/* Section E: SCHOOL INFRASTRUCTURE */}
+            <div className="bg-white rounded-3xl border border-gray-100 shadow-[0_8px_30px_rgb(0,0,0,0.02)] p-6 md:p-8 overflow-hidden">
+              <h3 className="text-lg md:text-xl font-bold text-brand-navy mb-6 pb-2 border-b border-gray-100 flex items-center gap-2">
+                <span className="w-1.5 h-5 bg-brand-yellow rounded-full inline-block"></span>
+                E. SCHOOL INFRASTRUCTURE
+              </h3>
+              <div className="overflow-x-auto border border-gray-100 rounded-2xl">
+                <table className="w-full text-left border-collapse min-w-[600px]">
+                  <thead>
+                    <tr className="bg-brand-navy text-white text-xs font-bold uppercase tracking-wider">
+                      <th className="py-4 px-6 w-[12%] border-r border-white/10">S.NO.</th>
+                      <th className="py-4 px-6 w-[53%] border-r border-white/10">INFORMATION</th>
+                      <th className="py-4 px-6 w-[35%]">DETAILS</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-sm text-brand-gray font-medium">
+                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">1</td>
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold leading-relaxed">TOTAL CAMPUS AREA OF THE SCHOOL (IN SQUARE MTR)</td>
+                      <td className="py-4 px-6 text-brand-gray">8384 Sq. mtr</td>
+                    </tr>
+                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">2</td>
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold leading-relaxed">NO. AND SIZE OF THE CLASS ROOM (IN SQUARE MTR)</td>
+                      <td className="py-4 px-6 text-brand-gray">46 Rooms, 46.5 Sq. mtr each</td>
+                    </tr>
+                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">3</td>
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold leading-relaxed">NO. AND SIZE OF LABORATORIES INCLUDING COMPUTER LABS (IN SQ MTR)</td>
+                      <td className="py-4 px-6 text-brand-gray">55.75 Sq. mtr each</td>
+                    </tr>
+                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">4</td>
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold leading-relaxed">NO. AND SIZE OF LIBRARY (IN SQR MTR)</td>
+                      <td className="py-4 px-6 text-brand-gray">01 (ONE) 111.48 Sq. mtr</td>
+                    </tr>
+                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">5</td>
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold leading-relaxed">INTERNET FACILITY (Y/N)</td>
+                      <td className="py-4 px-6 text-brand-gray">Yes</td>
+                    </tr>
+                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">6</td>
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold leading-relaxed">NO. OF GIRLS TOILETS</td>
+                      <td className="py-4 px-6 text-brand-gray">20</td>
+                    </tr>
+                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">7</td>
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold leading-relaxed">NO. OF BOYS TOILETS</td>
+                      <td className="py-4 px-6 text-brand-gray">20</td>
+                    </tr>
+                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">8</td>
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold leading-relaxed">NO. OF CWSN TOILETS</td>
+                      <td className="py-4 px-6 text-brand-gray">(01) GIRLS ; (01) BOYS</td>
+                    </tr>
+                    <tr className="border-b border-gray-100 hover:bg-brand-navy/5 transition-colors">
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-bold">9</td>
+                      <td className="py-4 px-6 border-r border-gray-100 text-brand-navy font-semibold leading-relaxed">LINK OF YOUTUBE VIDEO OF THE INSPECTION OF SCHOOL COVERING THE INFRASTRUCTURE OF THE SCHOOL</td>
+                      <td className="py-4 px-6">
+                        <a
+                          href="https://www.youtube.com/watch?v=MY-pnvbka28"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#E85D22] text-white rounded-xl text-xs font-bold hover:scale-[1.03] transition-transform shadow-sm cursor-pointer whitespace-nowrap"
+                        >
+                          <Video className="w-3.5 h-3.5" />
+                          <span>View Video</span>
+                          <ExternalLink className="w-3 h-3 opacity-60" />
+                        </a>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
 
           </div>
