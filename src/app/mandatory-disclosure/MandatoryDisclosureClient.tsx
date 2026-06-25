@@ -9,6 +9,7 @@ import {
   ExternalLink, 
   Video
 } from "lucide-react";
+import Link from "next/link";
 
 export default function MandatoryDisclosureClient() {
 
@@ -195,6 +196,11 @@ export default function MandatoryDisclosureClient() {
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-4 tracking-tight">
               Mandatory Public Disclosure
             </h1>
+            <div className="flex items-center justify-center gap-2 text-sm md:text-base font-semibold mb-6 text-white/90">
+              <Link href="/" className="text-brand-yellow hover:text-brand-yellow/80 transition-colors">Home</Link>
+              <span className="text-white/60">»</span>
+              <span className="text-white">Mandatory Public Disclosure</span>
+            </div>
             <p className="text-white/80 max-w-2xl mx-auto text-lg md:text-xl font-light">
               Official records, registration documents, academic statistics, and infrastructure details for Manka Public School.
             </p>

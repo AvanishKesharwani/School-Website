@@ -94,7 +94,8 @@ export default function Navbar() {
         { name: "Medical Facility", href: "/medical-facility" },
         { name: "School Rules", href: "/school-rules" },
         { name: "Beyond Academics", href: "/beyond-academics" },
-        { name: "Book List", href: "/book-list" }
+        { name: "Book List", href: "/book-list" },
+        { name: "Transfer Certificate", href: "https://mankapublicschool.com/transfer-cerificate/index.html" }
       ]
     }
   ];
@@ -159,15 +160,20 @@ export default function Navbar() {
                     <div className={`bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100 p-2.5 gap-1 text-left ${
                       link.name === "More" ? "grid grid-cols-2 p-3.5" : "flex flex-col"
                     }`}>
-                      {link.dropdown.map((subLink) => (
-                        <Link
-                          key={subLink.name}
-                          href={subLink.href}
-                          className="px-4 py-2.5 rounded-xl text-sm font-semibold text-[#0F2747] hover:bg-[#F5FAFF] hover:text-[#E85D22] transition-all duration-200"
-                        >
-                          {subLink.name}
-                        </Link>
-                      ))}
+                      {link.dropdown.map((subLink) => {
+                        const isExternal = subLink.href.startsWith("http");
+                        return (
+                          <Link
+                            key={subLink.name}
+                            href={subLink.href}
+                            target={isExternal ? "_blank" : undefined}
+                            rel={isExternal ? "noopener noreferrer" : undefined}
+                            className="px-4 py-2.5 rounded-xl text-sm font-semibold text-[#0F2747] hover:bg-[#F5FAFF] hover:text-[#E85D22] transition-all duration-200"
+                          >
+                            {subLink.name}
+                          </Link>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
@@ -291,16 +297,21 @@ export default function Navbar() {
                             exit={{ opacity: 0, height: 0 }}
                             className="pl-4 flex flex-col gap-2 pb-3 pt-1"
                           >
-                            {link.dropdown.map((subLink) => (
-                              <Link
-                                key={subLink.name}
-                                href={subLink.href}
-                                onClick={() => setIsMobileMenuOpen(false)}
-                                className="text-sm font-semibold text-brand-gray py-2 hover:text-[#E85D22] transition-colors"
-                              >
-                                {subLink.name}
-                              </Link>
-                            ))}
+                            {link.dropdown.map((subLink) => {
+                              const isExternal = subLink.href.startsWith("http");
+                              return (
+                                <Link
+                                  key={subLink.name}
+                                  href={subLink.href}
+                                  target={isExternal ? "_blank" : undefined}
+                                  rel={isExternal ? "noopener noreferrer" : undefined}
+                                  onClick={() => setIsMobileMenuOpen(false)}
+                                  className="text-sm font-semibold text-brand-gray py-2 hover:text-[#E85D22] transition-colors"
+                                >
+                                  {subLink.name}
+                                </Link>
+                              );
+                            })}
                           </motion.div>
                         )}
                       </AnimatePresence>
