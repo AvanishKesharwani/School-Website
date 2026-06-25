@@ -214,11 +214,9 @@ export default function MandatoryDisclosureClient() {
               href="https://mankapublicschool.com/mandatory-public-disclousre.pdf"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-3 px-8 py-4.5 bg-[#E85D22] text-white font-extrabold rounded-2xl shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300 text-lg md:text-xl tracking-wide uppercase border border-[#E85D22] cursor-pointer"
+              className="text-xl md:text-2xl font-extrabold text-blue-600 hover:text-blue-800 underline uppercase tracking-wide cursor-pointer"
             >
-              <FileText className="w-6 h-6" />
-              <span>SARAS Mandatory Public Disclosure PDF</span>
-              <Download className="w-5 h-5 opacity-90" />
+              SARAS Mandatory Public Disclosure PDF
             </a>
           </motion.div>
         </div>
@@ -292,18 +290,16 @@ export default function MandatoryDisclosureClient() {
                         <td className="py-3 px-4 border border-gray-300 text-brand-navy font-bold text-center">{idx + 1}</td>
                         <td className="py-3 px-4 border border-gray-300 text-brand-navy font-semibold leading-relaxed">{doc.title}</td>
                         <td className="py-3 px-4 border border-gray-300">
-                          <div className="flex flex-wrap gap-2">
+                          <div className="flex flex-col gap-1.5">
                             {doc.links.map((link) => (
                               <a
                                 key={link.label}
                                 href={link.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#E85D22] text-white rounded-lg text-xs font-bold hover:bg-brand-navy hover:text-white transition-all shadow-sm cursor-pointer whitespace-nowrap"
+                                className="text-blue-600 hover:text-blue-800 underline text-sm font-semibold cursor-pointer"
                               >
-                                <FileText className="w-3.5 h-3.5" />
-                                <span>View</span>
-                                {doc.links.length > 1 && <span className="text-[10px] opacity-75">({link.label})</span>}
+                                View {doc.links.length > 1 ? `(${link.label})` : ""}
                               </a>
                             ))}
                           </div>
@@ -336,18 +332,16 @@ export default function MandatoryDisclosureClient() {
                         <td className="py-3 px-4 border border-gray-300 text-brand-navy font-bold text-center">{idx + 1}</td>
                         <td className="py-3 px-4 border border-gray-300 text-brand-navy font-semibold">{item.title}</td>
                         <td className="py-3 px-4 border border-gray-300">
-                          <div className="flex flex-wrap gap-2">
+                          <div className="flex flex-col gap-1.5">
                             {item.links.map((link) => (
                               <a
                                 key={link.label}
                                 href={link.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#E85D22] text-white rounded-lg text-xs font-bold hover:bg-brand-navy hover:text-white transition-all shadow-sm cursor-pointer whitespace-nowrap"
+                                className="text-blue-600 hover:text-blue-800 underline text-sm font-semibold cursor-pointer"
                               >
-                                <FileText className="w-3.5 h-3.5" />
-                                <span>View</span>
-                                {item.links.length > 1 && <span className="text-[10px] opacity-75">({link.label})</span>}
+                                View {item.links.length > 1 ? `(${link.label})` : ""}
                               </a>
                             ))}
                           </div>
@@ -481,10 +475,9 @@ export default function MandatoryDisclosureClient() {
                             href={item.link}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 px-3 py-1 bg-brand-navy text-white rounded-lg text-[10px] font-bold hover:bg-brand-yellow hover:text-brand-navy transition-all cursor-pointer whitespace-nowrap"
+                            className="text-blue-600 hover:text-blue-800 underline text-sm font-semibold cursor-pointer"
                           >
-                            <FileText className="w-3 h-3" />
-                            <span>Link</span>
+                            Link
                           </a>
                         </td>
                       </tr>
@@ -576,11 +569,9 @@ export default function MandatoryDisclosureClient() {
                           href="https://www.youtube.com/watch?v=MY-pnvbka28"
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#E85D22] text-white rounded-lg text-xs font-bold hover:scale-[1.03] transition-transform shadow-sm cursor-pointer whitespace-nowrap"
+                          className="text-blue-600 hover:text-blue-800 underline text-sm font-semibold cursor-pointer"
                         >
-                          <Video className="w-3.5 h-3.5" />
-                          <span>View Video</span>
-                          <ExternalLink className="w-3 h-3 opacity-60" />
+                          View
                         </a>
                       </td>
                     </tr>
