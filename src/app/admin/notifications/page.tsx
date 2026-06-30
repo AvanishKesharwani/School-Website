@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getAllAdminNotices, createNotification, deleteNotification, NoticeData } from "@/app/actions/notifications";
-import { Bell, Trash2, Calendar, Megaphone, Loader2 } from "lucide-react";
+import { getAllAdminNotices, createNotification, deleteNotification, publishNotification, NoticeData } from "@/app/actions/notifications";
+import { Bell, Trash2, Calendar, Megaphone, Loader2, Send } from "lucide-react";
 
 export default function NotificationsAdminPage() {
   const [notices, setNotices] = useState<NoticeData[]>([]);
@@ -85,6 +85,24 @@ export default function NotificationsAdminPage() {
       }
     } catch (err) {
       console.error("Delete error:", err);
+      setError("An unexpected error occurred.");
+    }
+  };
+
+  const handlePublish = async (id: string) => {
+    setError(null);
+    setSuccess(null);
+
+    try {
+      const result = await publishNotification(id);
+      if (result.success) {
+        setSuccess("Notification published successfully.");
+        await fetchNotices();
+      } else {
+        setError(result.error || "Failed to publish notification.");
+      }
+    } catch (err) {
+      console.error("Publish error:", err);
       setError("An unexpected error occurred.");
     }
   };
@@ -261,13 +279,25 @@ export default function NotificationsAdminPage() {
                     </p>
                   </div>
 
-                  <button
-                    onClick={() => handleDelete(notice.id)}
-                    className="p-2 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors shrink-0"
-                    title="Delete Notice"
-                  >
-                    <Trash2 className="w-5 h-5" />
-                  </button>
+                  <div className="flex items-center gap-2 shrink-0">
+                    {notice.isDraft && (
+                      <button
+                        onClick={() => handlePublish(notice.id)}
+                        className="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl transition-all shadow-sm flex items-center gap-1 hover:scale-105 active:scale-95 cursor-pointer"
+                        title="Publish Announcement"
+                      >
+                        <Send className="w-3.5 h-3.5" />
+                        Publish
+                      </button>
+                    )}
+                    <button
+                      onClick={() => handleDelete(notice.id)}
+                      className="p-2 text-gray-400 hover:text-red-650 rounded-lg hover:bg-red-50 transition-colors cursor-pointer"
+                      title="Delete Notice"
+                    >
+                      <Trash2 className="w-5 h-5" />
+                    </button>
+                  </div>
                 </div>
               ))}
             </div>

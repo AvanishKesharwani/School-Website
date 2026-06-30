@@ -180,3 +180,47 @@ export async function deleteNotification(id: string) {
     return { success: false, error: "Failed to delete notice. Please try again." };
   }
 }
+
+export async function publishNotification(id: string) {
+  try {
+    const user = await verifyAdmin();
+
+    if (!isDatabaseMode()) {
+      const notice = mockNotices.find(n => n.id === id);
+      if (notice) {
+        notice.isDraft = false;
+        notice.date = new Date();
+      }
+    } else {
+      const adminId = user.id;
+
+      await prisma.$transaction(async (tx) => {
+        const notice = await tx.notice.update({
+          where: { id },
+          data: {
+            isDraft: false,
+            date: new Date(),
+          },
+        });
+
+        if (adminId) {
+          await tx.auditLog.create({
+            data: {
+              adminId,
+              action: "PUBLISH_NOTICE",
+              section: "notifications",
+              details: `Published notice draft: ${notice.title}`
+            }
+          });
+        }
+      });
+    }
+
+    revalidatePath("/admin/notifications");
+    revalidatePath("/");
+    return { success: true };
+  } catch (error) {
+    console.error("Failed to publish notification:", error);
+    return { success: false, error: "Failed to publish notice. Please try again." };
+  }
+}
