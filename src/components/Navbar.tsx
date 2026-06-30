@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X, GraduationCap, Bell } from "lucide-react";
@@ -25,6 +25,9 @@ export default function Navbar() {
   const [notifications, setNotifications] = useState<NoticeData[]>([]);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [readNoticeIds, setReadNoticeIds] = useState<string[]>([]);
+
+  const desktopBellRef = useRef<HTMLDivElement>(null);
+  const mobileBellRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Load read notifications from localStorage
@@ -84,9 +87,18 @@ export default function Navbar() {
     };
     const handleBlur = () => setIsAdminShortcutActive(false);
 
-    const handleDocumentClick = () => {
+    const handleDocumentClick = (e: MouseEvent) => {
+      // Close nav menu dropdowns
       setOpenDropdown(null);
-      setIsNotificationsOpen(false);
+
+      // Only close notification dropdown if click was outside the bell containers
+      const target = e.target as Node;
+      const clickedInsideDesktop = desktopBellRef.current?.contains(target);
+      const clickedInsideMobile = mobileBellRef.current?.contains(target);
+
+      if (!clickedInsideDesktop && !clickedInsideMobile) {
+        setIsNotificationsOpen(false);
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -251,7 +263,7 @@ export default function Navbar() {
           })}
 
           {/* Desktop Notification Bell */}
-          <div className="relative">
+          <div ref={desktopBellRef} className="relative">
             <button
               onClick={(e) => {
                 e.stopPropagation();
@@ -397,7 +409,7 @@ export default function Navbar() {
         {/* Mobile Actions */}
         <div className="xl:hidden flex items-center gap-2">
           {/* Mobile Notification Bell */}
-          <div className="relative">
+          <div ref={mobileBellRef} className="relative">
             <button
               onClick={(e) => {
                 e.stopPropagation();
