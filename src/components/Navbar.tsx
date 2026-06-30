@@ -3,9 +3,10 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Menu, X, GraduationCap } from "lucide-react";
+import { Menu, X, GraduationCap, Bell } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEditMode } from "@/components/cms/EditModeProvider";
+import { getNotifications, NoticeData } from "@/app/actions/notifications";
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -20,6 +21,44 @@ export default function Navbar() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [isAdminShortcutActive, setIsAdminShortcutActive] = useState(false);
   const { isAdmin } = useEditMode();
+
+  const [notifications, setNotifications] = useState<NoticeData[]>([]);
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
+  const [readNoticeIds, setReadNoticeIds] = useState<string[]>([]);
+
+  useEffect(() => {
+    // Load read notifications from localStorage
+    const savedReadIds = localStorage.getItem("mps_read_notices");
+    if (savedReadIds) {
+      try {
+        setReadNoticeIds(JSON.parse(savedReadIds));
+      } catch (e) {
+        console.error("Error parsing read notices:", e);
+      }
+    }
+
+    // Fetch notifications
+    const fetchNotifications = async () => {
+      try {
+        const data = await getNotifications();
+        setNotifications(data);
+      } catch (e) {
+        console.error("Error fetching notifications:", e);
+      }
+    };
+    fetchNotifications();
+  }, []);
+
+  const unreadNotifications = notifications.filter(
+    (n) => !readNoticeIds.includes(n.id)
+  );
+  const hasUnread = unreadNotifications.length > 0;
+
+  const markAllAsRead = () => {
+    const allIds = notifications.map((n) => n.id);
+    setReadNoticeIds(allIds);
+    localStorage.setItem("mps_read_notices", JSON.stringify(allIds));
+  };
 
   useEffect(() => {
     if (!isMobileMenuOpen) {
@@ -47,6 +86,7 @@ export default function Navbar() {
 
     const handleDocumentClick = () => {
       setOpenDropdown(null);
+      setIsNotificationsOpen(false);
     };
 
     window.addEventListener("keydown", handleKeyDown);
@@ -209,6 +249,103 @@ export default function Navbar() {
               </Link>
             );
           })}
+
+          {/* Desktop Notification Bell */}
+          <div className="relative">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsNotificationsOpen(!isNotificationsOpen);
+                setOpenDropdown(null);
+              }}
+              className={`p-2 rounded-full transition-all cursor-pointer relative hover:scale-105 active:scale-95 flex items-center justify-center ${
+                navStyleActive
+                  ? "text-brand-navy hover:bg-brand-blue/10"
+                  : "text-brand-white hover:bg-white/10"
+              }`}
+              aria-label="Notifications"
+            >
+              <Bell className="w-5.5 h-5.5" />
+              {hasUnread && (
+                <span className="absolute top-1 right-1 flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500"></span>
+                </span>
+              )}
+            </button>
+
+            {/* Notification Dropdown */}
+            <AnimatePresence>
+              {isNotificationsOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  className="absolute right-0 mt-3 w-80 sm:w-96 bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-gray-100 p-4 z-50 text-[#0F2747]"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-3">
+                    <h3 className="font-bold text-base flex items-center gap-2">
+                      <Bell className="w-4.5 h-4.5 text-[#E85D22]" />
+                      Announcements
+                    </h3>
+                    {hasUnread && (
+                      <button
+                        onClick={markAllAsRead}
+                        className="text-xs font-semibold text-[#E85D22] hover:text-[#d04c13] transition-colors"
+                      >
+                        Mark all as read
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="max-h-72 overflow-y-auto space-y-3 pr-1">
+                    {notifications.length === 0 ? (
+                      <div className="text-center py-8 text-gray-400">
+                        <Bell className="w-8 h-8 mx-auto mb-2 opacity-30" />
+                        <p className="text-sm">No notifications yet</p>
+                      </div>
+                    ) : (
+                      notifications.map((notice) => {
+                        const isUnread = !readNoticeIds.includes(notice.id);
+                        return (
+                          <div
+                            key={notice.id}
+                            className={`p-3.5 rounded-xl border text-left transition-colors ${
+                              isUnread
+                                ? "bg-[#F5FAFF] border-brand-blue/30"
+                                : "bg-white border-gray-100"
+                            }`}
+                          >
+                            <div className="flex justify-between items-start gap-2 mb-1.5">
+                              <h4 className="font-bold text-sm leading-snug">
+                                {notice.title}
+                              </h4>
+                              {isUnread && (
+                                <span className="w-2.5 h-2.5 rounded-full bg-[#E85D22] shrink-0 mt-1" />
+                              )}
+                            </div>
+                            <p className="text-xs text-brand-gray leading-relaxed mb-2 whitespace-pre-wrap">
+                              {notice.content}
+                            </p>
+                            <span className="text-[10px] text-gray-400 font-semibold block">
+                              {new Date(notice.date).toLocaleDateString(undefined, {
+                                month: "short",
+                                day: "numeric",
+                                hour: "2-digit",
+                                minute: "2-digit"
+                              })}
+                            </span>
+                          </div>
+                        );
+                      })
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
           <div className="relative group">
             {isAdminShortcutActive ? (
               <a
@@ -257,17 +394,112 @@ export default function Navbar() {
           </div>
         </nav>
 
-        {/* Mobile Toggle */}
-        <button
-          className="xl:hidden p-2"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          {isMobileMenuOpen ? (
-            <X className={navStyleActive ? "text-brand-navy" : "text-brand-white"} />
-          ) : (
-            <Menu className={navStyleActive ? "text-brand-navy" : "text-brand-white"} />
-          )}
-        </button>
+        {/* Mobile Actions */}
+        <div className="xl:hidden flex items-center gap-2">
+          {/* Mobile Notification Bell */}
+          <div className="relative">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsNotificationsOpen(!isNotificationsOpen);
+              }}
+              className={`p-2 rounded-full transition-all cursor-pointer relative hover:scale-105 active:scale-95 flex items-center justify-center ${
+                navStyleActive ? "text-brand-navy" : "text-brand-white"
+              }`}
+              aria-label="Notifications"
+            >
+              <Bell className="w-5.5 h-5.5" />
+              {hasUnread && (
+                <span className="absolute top-1 right-1 flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
+                </span>
+              )}
+            </button>
+
+            {/* Mobile Dropdown */}
+            <AnimatePresence>
+              {isNotificationsOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  className="absolute right-0 mt-3 w-[85vw] max-w-sm bg-white rounded-2xl shadow-xl border border-gray-150 p-4 z-50 text-[#0F2747]"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <div className="flex items-center justify-between border-b border-gray-100 pb-3 mb-3">
+                    <h3 className="font-bold text-sm flex items-center gap-2">
+                      <Bell className="w-4 h-4 text-[#E85D22]" />
+                      Announcements
+                    </h3>
+                    {hasUnread && (
+                      <button
+                        onClick={markAllAsRead}
+                        className="text-xs font-semibold text-[#E85D22] hover:text-[#d04c13] transition-colors"
+                      >
+                        Mark all as read
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="max-h-60 overflow-y-auto space-y-3 pr-1">
+                    {notifications.length === 0 ? (
+                      <div className="text-center py-6 text-gray-400">
+                        <Bell className="w-7 h-7 mx-auto mb-2 opacity-30" />
+                        <p className="text-xs">No notifications yet</p>
+                      </div>
+                    ) : (
+                      notifications.map((notice) => {
+                        const isUnread = !readNoticeIds.includes(notice.id);
+                        return (
+                          <div
+                            key={notice.id}
+                            className={`p-3 rounded-xl border text-left transition-colors ${
+                              isUnread
+                                ? "bg-[#F5FAFF] border-brand-blue/30"
+                                : "bg-white border-gray-100"
+                            }`}
+                          >
+                            <div className="flex justify-between items-start gap-2 mb-1">
+                              <h4 className="font-bold text-xs leading-snug">
+                                {notice.title}
+                              </h4>
+                              {isUnread && (
+                                <span className="w-1.5 h-1.5 rounded-full bg-[#E85D22] shrink-0 mt-1" />
+                              )}
+                            </div>
+                            <p className="text-xs text-brand-gray leading-relaxed mb-2 whitespace-pre-wrap">
+                              {notice.content}
+                            </p>
+                            <span className="text-[9px] text-gray-400 font-semibold block">
+                              {new Date(notice.date).toLocaleDateString(undefined, {
+                                month: "short",
+                                day: "numeric",
+                                hour: "2-digit",
+                                minute: "2-digit"
+                              })}
+                            </span>
+                          </div>
+                        );
+                      })
+                    )}
+                  </div>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+
+          <button
+            className="p-2"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? (
+              <X className={navStyleActive ? "text-brand-navy" : "text-brand-white"} />
+            ) : (
+              <Menu className={navStyleActive ? "text-brand-navy" : "text-brand-white"} />
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
-import { LayoutDashboard, FileText, Image as ImageIcon, Users, Settings, LogOut, ArrowLeft, MessageSquare } from "lucide-react";
+import { LayoutDashboard, FileText, Image as ImageIcon, Users, Settings, LogOut, ArrowLeft, MessageSquare, Bell } from "lucide-react";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -15,6 +15,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const navItems = [
     { name: "Dashboard", href: "/admin", icon: LayoutDashboard },
     { name: "Messages", href: "/admin/messages", icon: MessageSquare },
+    { name: "Notifications", href: "/admin/notifications", icon: Bell },
     { name: "Content", href: "/admin/content", icon: FileText },
     { name: "Media", href: "/admin/media", icon: ImageIcon },
     { name: "Users", href: "/admin/users", icon: Users },
