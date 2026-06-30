@@ -76,6 +76,27 @@ export default function StudentLife({ content }: { content?: any }) {
     return () => ctx.revert();
   }, []);
 
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      // Only capture horizontal scroll on desktop screens (>= 768px) where GSAP scrolling runs
+      if (window.innerWidth >= 768 && Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+        e.preventDefault();
+        window.scrollBy({
+          top: e.deltaX * 0.8,
+          behavior: "auto"
+        });
+      }
+    };
+
+    container.addEventListener("wheel", handleWheel, { passive: false });
+    return () => {
+      container.removeEventListener("wheel", handleWheel);
+    };
+  }, []);
+
   return (
     <section ref={containerRef} className="bg-brand-white text-brand-navy overflow-hidden">
       <div className="md:h-screen w-full flex flex-col justify-center pt-16 md:pt-24 pb-12">

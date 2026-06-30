@@ -147,20 +147,20 @@ export default function Testimonials({ content }: { content?: any }) {
           </AnimatePresence>
 
           {/* Navigation */}
-          <div className="absolute top-1/2 -translate-y-1/2 left-0 right-0 flex justify-between px-2 md:-mx-16 z-20 pointer-events-none">
-            <button 
-              onClick={handlePrev}
-              className="w-12 h-12 rounded-full bg-brand-white/10 text-brand-white flex items-center justify-center hover:bg-brand-yellow hover:text-brand-navy transition-all pointer-events-auto backdrop-blur-md border border-brand-white/20"
-            >
-              <ChevronLeft className="w-6 h-6" />
-            </button>
-            <button 
-              onClick={handleNext}
-              className="w-12 h-12 rounded-full bg-brand-white/10 text-brand-white flex items-center justify-center hover:bg-brand-yellow hover:text-brand-navy transition-all pointer-events-auto backdrop-blur-md border border-brand-white/20"
-            >
-              <ChevronRight className="w-6 h-6" />
-            </button>
-          </div>
+          <button 
+            onClick={handlePrev}
+            className="absolute left-2 md:-left-16 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-brand-white/10 text-brand-white flex items-center justify-center hover:bg-brand-yellow hover:text-brand-navy transition-all z-20 backdrop-blur-md border border-brand-white/20 cursor-pointer"
+            aria-label="Previous testimonial"
+          >
+            <ChevronLeft className="w-6 h-6" />
+          </button>
+          <button 
+            onClick={handleNext}
+            className="absolute right-2 md:-right-16 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-brand-white/10 text-brand-white flex items-center justify-center hover:bg-brand-yellow hover:text-brand-navy transition-all z-20 backdrop-blur-md border border-brand-white/20 cursor-pointer"
+            aria-label="Next testimonial"
+          >
+            <ChevronRight className="w-6 h-6" />
+          </button>
         </div>
         
         {/* Indicators */}
