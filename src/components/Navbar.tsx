@@ -155,7 +155,7 @@ export default function Navbar() {
         { name: "School Rules", href: "/school-rules" },
         { name: "Beyond Academics", href: "/beyond-academics" },
         { name: "Book List", href: "/book-list" },
-        { name: "Transfer Certificate", href: "https://mankapublicschool.com/transfer-cerificate/index.html" }
+        { name: "Transfer Certificate", href: "/transfer-certificate" }
       ]
     }
   ];
