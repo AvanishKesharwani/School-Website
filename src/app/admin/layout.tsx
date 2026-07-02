@@ -3,10 +3,45 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
-import { LayoutDashboard, FileText, Image as ImageIcon, Users, Settings, LogOut, ArrowLeft, MessageSquare, Bell } from "lucide-react";
+import { useState, useEffect } from "react";
+import { LayoutDashboard, FileText, Image as ImageIcon, Settings, LogOut, ArrowLeft, MessageSquare, Bell } from "lucide-react";
+import { getMessageIds } from "@/app/actions/messages";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
+  const [unreadCount, setUnreadCount] = useState(0);
+
+  useEffect(() => {
+    if (pathname === "/admin/signin") return;
+
+    const checkUnreadMessages = async () => {
+      try {
+        const ids = await getMessageIds();
+        const savedReadIds = localStorage.getItem("mps_read_messages");
+        let readIds: string[] = [];
+        if (savedReadIds) {
+          try {
+            readIds = JSON.parse(savedReadIds);
+          } catch (e) {
+            console.error("Error parsing read messages:", e);
+          }
+        }
+
+        if (pathname === "/admin/messages") {
+          // Mark all current messages as read
+          localStorage.setItem("mps_read_messages", JSON.stringify(ids));
+          setUnreadCount(0);
+        } else {
+          const unread = ids.filter((id) => !readIds.includes(id));
+          setUnreadCount(unread.length);
+        }
+      } catch (e) {
+        console.error("Failed to check unread messages:", e);
+      }
+    };
+
+    checkUnreadMessages();
+  }, [pathname]);
 
   if (pathname === "/admin/signin") {
     return <>{children}</>;
@@ -18,7 +53,6 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: "Notifications", href: "/admin/notifications", icon: Bell },
     { name: "Content", href: "/admin/content", icon: FileText },
     { name: "Media", href: "/admin/media", icon: ImageIcon },
-    { name: "Users", href: "/admin/users", icon: Users },
     { name: "Settings", href: "/admin/settings", icon: Settings },
   ];
 
@@ -47,6 +81,11 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               >
                 <Icon className="w-5 h-5" />
                 <span className="font-medium">{item.name}</span>
+                {item.name === "Messages" && unreadCount > 0 && (
+                  <span className="ml-auto bg-red-500 text-white text-xs font-bold px-2 py-0.5 rounded-full min-w-5 h-5 flex items-center justify-center shadow-sm">
+                    {unreadCount}
+                  </span>
+                )}
               </Link>
             );
           })}
