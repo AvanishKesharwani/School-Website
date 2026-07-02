@@ -137,7 +137,7 @@ export default function Admission() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-brand-white/80 mb-2">Parent's Name</label>
-                  <input type="text" name="parentName" required className="w-full bg-brand-white/10 border border-brand-white/20 rounded-xl px-4 py-3 text-brand-white placeholder-brand-white/40 focus:outline-none focus:ring-2 focus:ring-brand-yellow transition-all" placeholder="John Doe" />
+                  <input type="text" name="parentName" required className="w-full bg-brand-white/10 border border-brand-white/20 rounded-xl px-4 py-3 text-brand-white placeholder-brand-white/40 focus:outline-none focus:ring-2 focus:ring-brand-yellow transition-all" placeholder="Rajesh Sharma" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-brand-white/80 mb-2">Phone Number</label>
@@ -147,13 +147,13 @@ export default function Admission() {
 
               <div>
                 <label className="block text-sm font-medium text-brand-white/80 mb-2">Email Address</label>
-                <input type="email" name="email" required className="w-full bg-brand-white/10 border border-brand-white/20 rounded-xl px-4 py-3 text-brand-white placeholder-brand-white/40 focus:outline-none focus:ring-2 focus:ring-brand-yellow transition-all" placeholder="john@example.com" />
+                <input type="email" name="email" required className="w-full bg-brand-white/10 border border-brand-white/20 rounded-xl px-4 py-3 text-brand-white placeholder-brand-white/40 focus:outline-none focus:ring-2 focus:ring-brand-yellow transition-all" placeholder="rajesh@example.com" />
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-brand-white/80 mb-2">Student's Name</label>
-                  <input type="text" name="studentName" required className="w-full bg-brand-white/10 border border-brand-white/20 rounded-xl px-4 py-3 text-brand-white placeholder-brand-white/40 focus:outline-none focus:ring-2 focus:ring-brand-yellow transition-all" placeholder="Student Name" />
+                  <input type="text" name="studentName" required className="w-full bg-brand-white/10 border border-brand-white/20 rounded-xl px-4 py-3 text-brand-white placeholder-brand-white/40 focus:outline-none focus:ring-2 focus:ring-brand-yellow transition-all" placeholder="Rohan Sharma" />
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-brand-white/80 mb-2">Grade Applying For</label>

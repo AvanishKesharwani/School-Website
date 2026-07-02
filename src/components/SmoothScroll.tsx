@@ -38,7 +38,30 @@ export default function SmoothScroll({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!isAdminRoute) {
-      window.scrollTo(0, 0);
+      const hash = window.location.hash;
+      if (hash) {
+        const id = hash.replace("#", "");
+        let attempts = 0;
+        
+        const interval = setInterval(() => {
+          const currentHash = window.location.hash;
+          const targetId = currentHash ? currentHash.replace("#", "") : id;
+          const isPreloaderActive = document.body.style.overflow === "hidden";
+          const el = document.getElementById(targetId);
+          
+          if (!isPreloaderActive && el) {
+            el.scrollIntoView({ behavior: "smooth" });
+            clearInterval(interval);
+          } else if (attempts > 30) {
+            clearInterval(interval);
+          }
+          attempts++;
+        }, 200);
+
+        return () => clearInterval(interval);
+      } else {
+        window.scrollTo(0, 0);
+      }
     }
   }, [pathname, isAdminRoute]);
 

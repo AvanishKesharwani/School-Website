@@ -142,7 +142,7 @@ export default function Contact({ content }: { content?: any }) {
                     type="text" 
                     name="firstName"
                     required
-                    placeholder="John" 
+                    placeholder="Rohan" 
                     className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#007BFF] focus:border-transparent transition-all"
                   />
                 </div>
@@ -152,7 +152,7 @@ export default function Contact({ content }: { content?: any }) {
                     type="text" 
                     name="lastName"
                     required
-                    placeholder="Doe" 
+                    placeholder="Sharma" 
                     className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#007BFF] focus:border-transparent transition-all"
                   />
                 </div>
@@ -164,7 +164,7 @@ export default function Contact({ content }: { content?: any }) {
                   type="email" 
                   name="email"
                   required
-                  placeholder="john@example.com" 
+                  placeholder="rohan@example.com" 
                   className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#007BFF] focus:border-transparent transition-all"
                 />
               </div>
