@@ -10,13 +10,13 @@ export default function BookListPage() {
     {
       title: "Official Book List (2023-24)",
       desc: "Download the complete recommended book list, publishers, and textbook details for montessori, primary, secondary, and senior secondary classes.",
-      url: "https://yfkdtcnipnnatackplvv.supabase.co/storage/v1/object/public/documents/Book%20List/BOOK%20LIST%202023-24.pdf",
+      url: "/Book List/BOOK LIST 2023-24.pdf",
       size: "PDF Document"
     },
     {
       title: "School Enquiry Form",
       desc: "Download the official paper enquiry form to apply offline. Print, fill out, and submit it directly to the school administrative desk.",
-      url: "https://yfkdtcnipnnatackplvv.supabase.co/storage/v1/object/public/documents/Book%20List/Enquiry.pdf",
+      url: "/Book List/Enquiry.pdf",
       size: "PDF Document"
     }
   ];
