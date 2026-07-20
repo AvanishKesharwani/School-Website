@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const class10Toppers = [
   { name: "Ayush Jaiswal", percentage: "95.2%", photo: "/hall-of-fame/PHOTO-2026-06-09-16-42-46.jpg" },
@@ -51,22 +50,12 @@ export default function HallOfFame({ content }: { content?: any }) {
   };
   const c = content || defaultContent;
 
-  const scrollRef10 = useRef<HTMLDivElement>(null);
-  const scrollRef12 = useRef<HTMLDivElement>(null);
-
-  const scroll = (ref: React.RefObject<HTMLDivElement | null>, direction: "left" | "right") => {
-    if (ref.current) {
-      const scrollAmount = 240; // width of one card + gap approx
-      ref.current.scrollBy({
-        left: direction === "left" ? -scrollAmount : scrollAmount,
-        behavior: "smooth"
-      });
-    }
-  };
-
   const [duration10, setDuration10] = useState(65);
   const [duration12, setDuration12] = useState(55);
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
+
+  const container10Ref = useRef<HTMLDivElement>(null);
+  const container12Ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleResize = () => {
@@ -83,6 +72,77 @@ export default function HallOfFame({ content }: { content?: any }) {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    if (!isMobileOrTablet) return;
+
+    const setupInfiniteScroll = (el: HTMLDivElement | null, duration: number) => {
+      if (!el) return null;
+
+      let requestRef: number;
+      let isInteracting = false;
+      let lastTime = performance.now();
+
+      const handleScroll = () => {
+        const halfScroll = el.scrollWidth / 2;
+        if (el.scrollLeft >= halfScroll) {
+          el.scrollLeft -= halfScroll;
+        } else if (el.scrollLeft <= 0) {
+          el.scrollLeft += halfScroll;
+        }
+      };
+
+      const step = (time: number) => {
+        const delta = time - lastTime;
+        lastTime = time;
+
+        if (!isInteracting && el) {
+          const halfScroll = el.scrollWidth / 2;
+          const speed = halfScroll / (duration * 1000); // pixels per millisecond
+          if (speed > 0) {
+            el.scrollLeft += speed * delta;
+          }
+        }
+        requestRef = requestAnimationFrame(step);
+      };
+
+      const startInteraction = () => {
+        isInteracting = true;
+      };
+
+      const endInteraction = () => {
+        isInteracting = false;
+        lastTime = performance.now();
+      };
+
+      el.addEventListener("scroll", handleScroll);
+      el.addEventListener("touchstart", startInteraction, { passive: true });
+      el.addEventListener("touchend", endInteraction, { passive: true });
+      el.addEventListener("mousedown", startInteraction);
+      el.addEventListener("mouseup", endInteraction);
+      el.addEventListener("mouseleave", endInteraction);
+
+      requestRef = requestAnimationFrame(step);
+
+      return () => {
+        cancelAnimationFrame(requestRef);
+        el.removeEventListener("scroll", handleScroll);
+        el.removeEventListener("touchstart", startInteraction);
+        el.removeEventListener("touchend", endInteraction);
+        el.removeEventListener("mousedown", startInteraction);
+        el.removeEventListener("mouseup", endInteraction);
+        el.removeEventListener("mouseleave", endInteraction);
+      };
+    };
+
+    const cleanup10 = setupInfiniteScroll(container10Ref.current, duration10);
+    const cleanup12 = setupInfiniteScroll(container12Ref.current, duration12);
+
+    return () => {
+      if (cleanup10) cleanup10();
+      if (cleanup12) cleanup12();
+    };
+  }, [isMobileOrTablet, duration10, duration12]);
 
   return (
     <section className="py-20 bg-white overflow-hidden relative">
@@ -110,32 +170,17 @@ export default function HallOfFame({ content }: { content?: any }) {
       <div className="space-y-16">
         {/* Class 10th Section */}
         <div>
-          <div className="container mx-auto px-6 md:px-12 mb-6 flex justify-between items-center">
+          <div className="container mx-auto px-6 md:px-12 mb-6">
             <h4 className="text-2xl font-bold text-[#0F2747] border-l-4 border-[#E85D22] pl-4">Class 10th Toppers</h4>
-            {isMobileOrTablet && (
-              <div className="flex gap-2">
-                <button 
-                  onClick={() => scroll(scrollRef10, "left")}
-                  className="p-2 rounded-full border border-gray-200 bg-white active:scale-90 text-[#0f2747] shadow-sm cursor-pointer flex items-center justify-center"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-                <button 
-                  onClick={() => scroll(scrollRef10, "right")}
-                  className="p-2 rounded-full border border-gray-200 bg-white active:scale-90 text-[#0f2747] shadow-sm cursor-pointer flex items-center justify-center"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              </div>
-            )}
           </div>
           
           {isMobileOrTablet ? (
-            <div ref={scrollRef10} className="flex gap-4 overflow-x-auto px-6 py-4 scrollbar-hide scroll-smooth snap-x snap-proximity">
-              {class10Toppers.map((topper, index) => {
-                const isRank1 = index === 0;
-                const isRank2 = index === 1;
-                const isRank3 = index === 2;
+            <div ref={container10Ref} className="flex gap-4 overflow-x-auto px-6 py-4 scrollbar-hide scroll-smooth snap-x snap-proximity">
+              {[...class10Toppers, ...class10Toppers].map((topper, index) => {
+                const originalIndex = index % class10Toppers.length;
+                const isRank1 = originalIndex === 0;
+                const isRank2 = originalIndex === 1;
+                const isRank3 = originalIndex === 2;
 
                 return (
                   <div 
@@ -252,34 +297,17 @@ export default function HallOfFame({ content }: { content?: any }) {
 
         {/* Class 12th Section */}
         <div>
-          <div className="container mx-auto px-6 md:px-12 mb-6 flex justify-between items-center">
-            {isMobileOrTablet ? (
-              <div className="flex gap-2">
-                <button 
-                  onClick={() => scroll(scrollRef12, "left")}
-                  className="p-2 rounded-full border border-gray-200 bg-white active:scale-90 text-[#0f2747] shadow-sm cursor-pointer flex items-center justify-center"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-                <button 
-                  onClick={() => scroll(scrollRef12, "right")}
-                  className="p-2 rounded-full border border-gray-200 bg-white active:scale-90 text-[#0f2747] shadow-sm cursor-pointer flex items-center justify-center"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              </div>
-            ) : (
-              <div />
-            )}
+          <div className="container mx-auto px-6 md:px-12 mb-6 text-right">
             <h4 className="text-2xl font-bold text-[#0F2747] border-r-4 border-[#E85D22] pr-4 inline-block">Class 12th Toppers</h4>
           </div>
           
           {isMobileOrTablet ? (
-            <div ref={scrollRef12} className="flex gap-4 overflow-x-auto px-6 py-4 scrollbar-hide scroll-smooth snap-x snap-proximity">
-              {class12Toppers.map((topper, index) => {
-                const isRank1 = index === 0;
-                const isRank2 = index === 1;
-                const isRank3 = index === 2;
+            <div ref={container12Ref} className="flex gap-4 overflow-x-auto px-6 py-4 scrollbar-hide scroll-smooth snap-x snap-proximity">
+              {[...class12Toppers, ...class12Toppers].map((topper, index) => {
+                const originalIndex = index % class12Toppers.length;
+                const isRank1 = originalIndex === 0;
+                const isRank2 = originalIndex === 1;
+                const isRank3 = originalIndex === 2;
 
                 return (
                   <div 
