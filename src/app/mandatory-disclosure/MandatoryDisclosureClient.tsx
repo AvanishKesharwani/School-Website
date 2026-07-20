@@ -63,8 +63,7 @@ export default function MandatoryDisclosureClient() {
       id: 6,
       title: "COPY OF VALID FIRE SAFETY CERTIFICATE ISSUED BY THE COMPETENT AUTHORITY",
       links: [
-        { label: "Fire NOC Certificate", url: "/Doc/FIRE NOC.pdf" },
-        { label: "Fire Executive Certificate", url: "/Doc/fire exe. certificate with sign.pdf" }
+        { label: "Fire NOC Certificate", url: "/Doc/FIRE NOC.pdf" }
       ]
     },
     {
@@ -93,16 +92,14 @@ export default function MandatoryDisclosureClient() {
       id: 2,
       title: "ANNUAL ACADEMIC CALENDAR",
       links: [
-        { label: "Academic Calendar (AAC)", url: "/Doc/AAC.pdf" },
-        { label: "Annual Calendar", url: "/Doc/annual calander.pdf" }
+        { label: "Academic Calendar (AAC)", url: "/Doc/AAC.pdf" }
       ]
     },
     {
       id: 3,
       title: "LIST OF SCHOOL MANAGEMENT COMMITTEE (SMC)",
       links: [
-        { label: "SMC List (LOSMC)", url: "/Doc/LOSMC.pdf" },
-        { label: "SMC Details", url: "/Doc/SMC.pdf" }
+        { label: "SMC List (LOSMC)", url: "/Doc/LOSMC.pdf" }
       ]
     },
     {
@@ -114,8 +111,7 @@ export default function MandatoryDisclosureClient() {
       id: 5,
       title: "LAST THREE-YEAR RESULT OF THE BOARD EXAMINATION AS PER APPLICABILITY",
       links: [
-        { label: "3-Year Results Details", url: "/Doc/LTYROTBE.pdf" },
-        { label: "Summary", url: "/Doc/three year result.pdf" }
+        { label: "3-Year Results Details", url: "/Doc/LTYROTBE.pdf" }
       ]
     }
   ];
