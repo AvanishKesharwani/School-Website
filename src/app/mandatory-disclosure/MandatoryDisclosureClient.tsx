@@ -114,8 +114,8 @@ export default function MandatoryDisclosureClient() {
       id: 5,
       title: "LAST THREE-YEAR RESULT OF THE BOARD EXAMINATION AS PER APPLICABILITY",
       links: [
-        { label: "3-Year Results Details", url: "https://mankapublicschool.com/Doc/LTYROTBE.pdf" },
-        { label: "Summary", url: "https://mankapublicschool.com/Doc/three%20year%20result.pdf" }
+        { label: "3-Year Results Details", url: "/Doc/LTYROTBE.pdf" },
+        { label: "Summary", url: "/Doc/three year result.pdf" }
       ]
     }
   ];
@@ -143,10 +143,10 @@ export default function MandatoryDisclosureClient() {
       { label: "DETAILS OF COUNSELLOR & WELLNESS TEACHER", value: "SHIVANI PANDA (M.A. Psychology)" },
     ],
     breakdown: [
-      { role: "PGT (Post Graduate Teachers)", count: 11, link: "https://mankapublicschool.com/Doc/MPD%20PGT%202026-27.pdf" },
-      { role: "TGT (Trained Graduate Teachers)", count: 24, link: "https://mankapublicschool.com/Doc/MPD%20TGT%202026-27.pdf" },
-      { role: "PRT (Primary Teachers)", count: 24, link: "https://mankapublicschool.com/Doc/MPD%20PRT%202026-27.pdf" },
-      { role: "PET (Physical Education Teachers)", count: 3, link: "https://mankapublicschool.com/Doc/MPD%20PET%202026-27.pdf" },
+      { role: "PGT (Post Graduate Teachers)", count: 11, link: "/Doc/MPD PGT 2026-27.pdf" },
+      { role: "TGT (Trained Graduate Teachers)", count: 24, link: "/Doc/MPD TGT 2026-27.pdf" },
+      { role: "PRT (Primary Teachers)", count: 24, link: "/Doc/MPD PRT 2026-27.pdf" },
+      { role: "PET (Physical Education Teachers)", count: 3, link: "/Doc/MPD PET 2026-27.pdf" },
     ]
   };
 
