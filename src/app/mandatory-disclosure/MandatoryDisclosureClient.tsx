@@ -78,7 +78,7 @@ export default function MandatoryDisclosureClient() {
       id: 8,
       title: "COPIES OF VALID WATER, HEALTH AND SANITATION CERTIFICATES",
       links: [
-        { label: "Water & Sanitation Report", url: "https://mankapublicschool.com/Doc/WATER%20HEALTH%20SANITATION%20REPORT.pdf" }
+        { label: "Water & Sanitation Report", url: "/Doc/WATER HEALTH SANITATION REPORT.pdf" }
       ]
     }
   ];
@@ -87,28 +87,28 @@ export default function MandatoryDisclosureClient() {
     {
       id: 1,
       title: "FEE STRUCTURE OF THE SCHOOL",
-      links: [{ label: "Fee Structure", url: "https://mankapublicschool.com/Doc/Fees%20Strcuture%20of%20The%20School.pdf" }]
+      links: [{ label: "Fee Structure", url: "/Doc/Fees Strcuture of The School.pdf" }]
     },
     {
       id: 2,
       title: "ANNUAL ACADEMIC CALENDAR",
       links: [
-        { label: "Academic Calendar (AAC)", url: "https://mankapublicschool.com/Doc/AAC.pdf" },
-        { label: "Annual Calendar", url: "https://mankapublicschool.com/Doc/annual%20calander.pdf" }
+        { label: "Academic Calendar (AAC)", url: "/Doc/AAC.pdf" },
+        { label: "Annual Calendar", url: "/Doc/annual calander.pdf" }
       ]
     },
     {
       id: 3,
       title: "LIST OF SCHOOL MANAGEMENT COMMITTEE (SMC)",
       links: [
-        { label: "SMC List (LOSMC)", url: "https://mankapublicschool.com/Doc/LOSMC.pdf" },
-        { label: "SMC Details", url: "https://mankapublicschool.com/Doc/SMC.pdf" }
+        { label: "SMC List (LOSMC)", url: "/Doc/LOSMC.pdf" },
+        { label: "SMC Details", url: "/Doc/SMC.pdf" }
       ]
     },
     {
       id: 4,
       title: "LIST OF PARENTS TEACHERS ASSOCIATION (PTA) MEMBERS",
-      links: [{ label: "PTA Members List", url: "https://mankapublicschool.com/Doc/PTA2023.pdf" }]
+      links: [{ label: "PTA Members List", url: "/Doc/PTA2023.pdf" }]
     },
     {
       id: 5,
