@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
 const class10Toppers = [
@@ -54,6 +54,9 @@ export default function HallOfFame({ content }: { content?: any }) {
   const [duration12, setDuration12] = useState(55);
   const [isMobileOrTablet, setIsMobileOrTablet] = useState(false);
 
+  const container10Ref = useRef<HTMLDivElement>(null);
+  const container12Ref = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobileOrTablet(window.innerWidth < 1024);
@@ -69,6 +72,77 @@ export default function HallOfFame({ content }: { content?: any }) {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  useEffect(() => {
+    if (!isMobileOrTablet) return;
+
+    const setupInfiniteScroll = (el: HTMLDivElement | null, duration: number) => {
+      if (!el) return null;
+
+      let requestRef: number;
+      let isInteracting = false;
+      let lastTime = performance.now();
+
+      const handleScroll = () => {
+        const halfScroll = el.scrollWidth / 2;
+        if (el.scrollLeft >= halfScroll) {
+          el.scrollLeft -= halfScroll;
+        } else if (el.scrollLeft <= 0) {
+          el.scrollLeft += halfScroll;
+        }
+      };
+
+      const step = (time: number) => {
+        const delta = time - lastTime;
+        lastTime = time;
+
+        if (!isInteracting && el) {
+          const halfScroll = el.scrollWidth / 2;
+          const speed = halfScroll / (duration * 1000); // pixels per millisecond
+          if (speed > 0) {
+            el.scrollLeft += speed * delta;
+          }
+        }
+        requestRef = requestAnimationFrame(step);
+      };
+
+      const startInteraction = () => {
+        isInteracting = true;
+      };
+
+      const endInteraction = () => {
+        isInteracting = false;
+        lastTime = performance.now();
+      };
+
+      el.addEventListener("scroll", handleScroll);
+      el.addEventListener("touchstart", startInteraction, { passive: true });
+      el.addEventListener("touchend", endInteraction, { passive: true });
+      el.addEventListener("mousedown", startInteraction);
+      el.addEventListener("mouseup", endInteraction);
+      el.addEventListener("mouseleave", endInteraction);
+
+      requestRef = requestAnimationFrame(step);
+
+      return () => {
+        cancelAnimationFrame(requestRef);
+        el.removeEventListener("scroll", handleScroll);
+        el.removeEventListener("touchstart", startInteraction);
+        el.removeEventListener("touchend", endInteraction);
+        el.removeEventListener("mousedown", startInteraction);
+        el.removeEventListener("mouseup", endInteraction);
+        el.removeEventListener("mouseleave", endInteraction);
+      };
+    };
+
+    const cleanup10 = setupInfiniteScroll(container10Ref.current, duration10);
+    const cleanup12 = setupInfiniteScroll(container12Ref.current, duration12);
+
+    return () => {
+      if (cleanup10) cleanup10();
+      if (cleanup12) cleanup12();
+    };
+  }, [isMobileOrTablet, duration10, duration12]);
 
   return (
     <section className="py-20 bg-white overflow-hidden relative">
@@ -101,11 +175,12 @@ export default function HallOfFame({ content }: { content?: any }) {
           </div>
           
           {isMobileOrTablet ? (
-            <div className="flex gap-4 overflow-x-auto px-6 py-4 scrollbar-hide scroll-smooth snap-x snap-proximity">
-              {class10Toppers.map((topper, index) => {
-                const isRank1 = index === 0;
-                const isRank2 = index === 1;
-                const isRank3 = index === 2;
+            <div ref={container10Ref} className="flex gap-4 overflow-x-auto px-6 py-4 scrollbar-hide scroll-smooth snap-x snap-proximity">
+              {[...class10Toppers, ...class10Toppers].map((topper, index) => {
+                const originalIndex = index % class10Toppers.length;
+                const isRank1 = originalIndex === 0;
+                const isRank2 = originalIndex === 1;
+                const isRank3 = originalIndex === 2;
 
                 return (
                   <div 
@@ -227,11 +302,12 @@ export default function HallOfFame({ content }: { content?: any }) {
           </div>
           
           {isMobileOrTablet ? (
-            <div className="flex gap-4 overflow-x-auto px-6 py-4 scrollbar-hide scroll-smooth snap-x snap-proximity">
-              {class12Toppers.map((topper, index) => {
-                const isRank1 = index === 0;
-                const isRank2 = index === 1;
-                const isRank3 = index === 2;
+            <div ref={container12Ref} className="flex gap-4 overflow-x-auto px-6 py-4 scrollbar-hide scroll-smooth snap-x snap-proximity">
+              {[...class12Toppers, ...class12Toppers].map((topper, index) => {
+                const originalIndex = index % class12Toppers.length;
+                const isRank1 = originalIndex === 0;
+                const isRank2 = originalIndex === 1;
+                const isRank3 = originalIndex === 2;
 
                 return (
                   <div 
