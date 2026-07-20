@@ -28,21 +28,21 @@ export default function MandatoryDisclosureClient() {
       id: 1,
       title: "COPIES OF AFFILIATION/UPGRADATION LETTER AND RECENT EXTENSION OF AFFILIATION",
       links: [
-        { label: "Affiliation Letter", url: "https://mankapublicschool.com/PDF/CBSE%20AFFILIATION.pdf" }
+        { label: "Affiliation Letter", url: "/PDF/CBSE AFFILIATION.pdf" }
       ]
     },
     {
       id: 2,
       title: "COPIES OF SOCIETIES/TRUST/COMPANY REGISTRATION/RENEWAL CERTIFICATE",
       links: [
-        { label: "Society Registration", url: "https://mankapublicschool.com/PDF/2copies%20of%20society.jpeg" }
+        { label: "Society Registration", url: "/PDF/2copies of society.jpeg" }
       ]
     },
     {
       id: 3,
       title: "COPY OF NO OBJECTION CERTIFICATE (NOC) ISSUED BY THE STATE GOVT./UT",
       links: [
-        { label: "NOC Certificate", url: "https://mankapublicschool.com/PDF/3%20copies%20of%20noc.pdf" }
+        { label: "NOC Certificate", url: "/PDF/3 copies of noc.pdf" }
       ]
     },
     {
@@ -71,7 +71,7 @@ export default function MandatoryDisclosureClient() {
       id: 7,
       title: "COPY OF THE DEO CERTIFICATE FOR AFFILIATION/UPGRADATION/EXTENSION OR SELF CERTIFICATION",
       links: [
-        { label: "DEO Certificate", url: "https://mankapublicschool.com/PDF/7%20copy%20of%20deo%20certi..pdf" }
+        { label: "DEO Certificate", url: "/PDF/7 copy of deo certi..pdf" }
       ]
     },
     {
