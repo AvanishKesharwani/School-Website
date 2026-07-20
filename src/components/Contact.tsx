@@ -16,13 +16,13 @@ export default function Contact({ content }: { content?: any }) {
   const c = content || defaultContent;
 
   return (
-    <section id="contact" className="py-24 bg-[#F5FAFF] relative overflow-hidden">
+    <section id="contact" className="py-12 sm:py-16 md:py-24 bg-[#F5FAFF] relative overflow-hidden">
       
       {/* Decorative Background */}
       <div className="absolute top-0 right-0 w-1/3 h-full bg-[#0F2747] transform skew-x-[-15deg] translate-x-16 pointer-events-none hidden lg:block" />
 
       <div className="container mx-auto px-6 md:px-12 relative z-10">
-        <div className="text-center max-w-3xl mx-auto mb-16 lg:mb-20">
+        <div className="text-center max-w-3xl mx-auto mb-10 lg:mb-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

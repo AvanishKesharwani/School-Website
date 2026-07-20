@@ -21,15 +21,15 @@ export default function WhyChooseUs({ content }: { content?: any }) {
   };
 
   return (
-    <section className="py-24 bg-white text-[#0F2747] relative overflow-hidden">
+    <section className="py-12 sm:py-16 md:py-24 bg-white text-[#0F2747] relative overflow-hidden">
       
       {/* Decorative Background Element */}
-      <div className="absolute top-0 right-0 w-1/2 h-full bg-[#F5FAFF] rounded-l-[100px] pointer-events-none -z-10" />
+      <div className="hidden lg:block absolute top-0 right-0 w-1/2 h-full bg-[#F5FAFF] rounded-l-[100px] pointer-events-none -z-10" />
 
       <div className="container mx-auto px-6 md:px-12 relative z-10">
         
         {/* Section Header */}
-        <div className="max-w-4xl mb-20">
+        <div className="max-w-4xl mb-10 md:mb-20">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

@@ -50,9 +50,9 @@ export default function Achievements({ content }: { content?: any }) {
   };
 
   return (
-    <section className="py-16 md:py-24 bg-[#F5FAFF] text-[#0F2747]">
+    <section className="py-12 sm:py-16 md:py-24 bg-[#F5FAFF] text-[#0F2747]">
       <div className="container mx-auto px-6 md:px-12">
-        <div className="text-center max-w-3xl mx-auto mb-12 md:mb-16">
+        <div className="text-center max-w-3xl mx-auto mb-10 md:mb-16">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -119,14 +119,10 @@ export default function Achievements({ content }: { content?: any }) {
 
                   {/* Content Box (Alternating Sides) */}
                   <motion.div 
-                    initial={{ 
-                      opacity: 0, 
-                      x: typeof window !== 'undefined' && window.innerWidth < 768 ? 0 : (isEven ? 40 : -40), 
-                      y: typeof window !== 'undefined' && window.innerWidth < 768 ? 20 : 0 
-                    }}
+                    initial={{ opacity: 0, y: 25 }}
                     whileInView={{ opacity: 1, x: 0, y: 0 }}
                     viewport={{ once: true, margin: "-100px" }}
-                    transition={{ delay: 0.2, duration: 0.6 }}
+                    transition={{ delay: 0.1, duration: 0.5 }}
                     className={`pl-12 md:pl-0 w-full md:w-1/2 ${isEven ? 'md:pr-12 md:text-right md:ml-auto' : 'md:pl-12'}`}
                   >
                     <div className="bg-white p-5 sm:p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl transition-shadow duration-300 relative group-hover:-translate-y-1">

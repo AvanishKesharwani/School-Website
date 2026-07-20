@@ -25,7 +25,7 @@ export default function Hero({ title, subtitle }: HeroProps) {
   return (
     <section 
       ref={containerRef}
-      className="relative h-screen flex items-center justify-center bg-brand-navy overflow-hidden"
+      className="relative min-h-[550px] h-[100dvh] flex items-center justify-center bg-brand-navy overflow-hidden pt-16 sm:pt-0"
     >
       {/* Background with Parallax */}
       <motion.div 
@@ -45,7 +45,7 @@ export default function Hero({ title, subtitle }: HeroProps) {
 
       {/* Content */}
       <motion.div 
-        className="relative z-20 text-center px-6 w-full max-w-6xl mx-auto"
+        className="relative z-20 text-center px-4 sm:px-6 w-full max-w-6xl mx-auto"
         style={{ opacity: opacityText, y: yText }}
       >
         <motion.div
@@ -55,7 +55,7 @@ export default function Hero({ title, subtitle }: HeroProps) {
         >
           <EditableText
             as="h1"
-            className="text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-extrabold text-white mb-6 tracking-tight drop-shadow-2xl leading-[1.1]"
+            className="text-3xl xs:text-4xl sm:text-6xl md:text-7xl lg:text-[5.5rem] font-extrabold text-white mb-4 sm:mb-6 tracking-tight drop-shadow-2xl leading-[1.15] sm:leading-[1.1]"
             sectionSlug="homepage-hero"
             field="title"
             initialValue={title || "Building Futures.<br />Inspiring Excellence."}
@@ -70,7 +70,7 @@ export default function Hero({ title, subtitle }: HeroProps) {
         >
           <EditableText
             as="p"
-            className="text-lg sm:text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-8 md:mb-12 drop-shadow-lg font-medium leading-relaxed"
+            className="text-base sm:text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mb-6 sm:mb-8 md:mb-12 drop-shadow-lg font-medium leading-relaxed px-2 sm:px-0"
             sectionSlug="homepage-hero"
             field="subtitle"
             initialValue={subtitle || "Empowering students with knowledge, character, creativity, and confidence."}
@@ -79,12 +79,12 @@ export default function Hero({ title, subtitle }: HeroProps) {
         </motion.div>
 
         <motion.div 
-          className="flex flex-col sm:flex-row gap-4 justify-center"
+          className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center px-4 sm:px-0"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.6, ease: "easeOut" }}
         >
-          <Link href="/admissions" className="px-8 py-4 bg-brand-yellow text-brand-navy rounded-full font-bold text-lg transition-transform hover:scale-105 shadow-xl inline-block text-center">
+          <Link href="/admissions" className="px-6 py-3.5 sm:px-8 sm:py-4 bg-brand-yellow text-brand-navy rounded-full font-bold text-base sm:text-lg transition-transform hover:scale-105 shadow-xl inline-block text-center">
             Apply for Admission
           </Link>
           <Link 
@@ -96,7 +96,7 @@ export default function Hero({ title, subtitle }: HeroProps) {
                 el.scrollIntoView({ behavior: "smooth" });
               }
             }}
-            className="px-8 py-4 bg-brand-white/10 text-brand-white border border-brand-white/30 backdrop-blur-md rounded-full font-bold text-lg transition-all hover:bg-brand-white/20 hover:scale-105 shadow-xl inline-block text-center"
+            className="px-6 py-3.5 sm:px-8 sm:py-4 bg-brand-white/10 text-brand-white border border-brand-white/30 backdrop-blur-md rounded-full font-bold text-base sm:text-lg transition-all hover:bg-brand-white/20 hover:scale-105 shadow-xl inline-block text-center"
           >
             Get In Touch
           </Link>

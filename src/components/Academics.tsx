@@ -55,10 +55,10 @@ export default function Academics({ content }: { content?: any }) {
   const programs = c.programs && c.programs.length === 5 ? c.programs : defaultPrograms;
 
   return (
-    <section id="academics" className="py-20 bg-white">
+    <section id="academics" className="py-12 sm:py-16 md:py-20 bg-white">
       <div className="w-full">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center mb-10 md:mb-16">
           <h2 className="text-2xl md:text-3xl font-extrabold tracking-[0.2em] text-[#E85D22] uppercase mb-4">
             Our Curriculum
           </h2>
@@ -66,7 +66,7 @@ export default function Academics({ content }: { content?: any }) {
 
         {/* 5 Column Grid */}
         <div 
-          className="overflow-x-auto md:overflow-x-visible snap-x snap-mandatory flex flex-row w-full py-4 gap-4 px-6 md:px-0"
+          className="overflow-x-auto md:overflow-x-visible snap-x snap-mandatory flex flex-row w-full py-4 gap-4 px-4 sm:px-6 md:px-0 scroll-smooth [webkit-overflow-scrolling:touch]"
           style={{ scrollbarWidth: 'none' }}
         >
           {programs.map((program: any, index: number) => {

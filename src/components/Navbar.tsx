@@ -68,7 +68,12 @@ export default function Navbar() {
       setIsMobileAcademicsOpen(false);
       setIsMobileSchoolOpen(false);
       setIsMobileMoreOpen(false);
+    } else {
+      document.body.style.overflow = "hidden";
     }
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [isMobileMenuOpen]);
 
   useEffect(() => {
@@ -179,11 +184,11 @@ export default function Navbar() {
           : "bg-transparent py-6"
       }`}
     >
-      <div className="container mx-auto px-6 md:px-12 flex justify-between items-center">
-        <Link href="/" className="flex items-center gap-3 group">
-           <img src="/logo.png" alt="Manka Public School Logo" className="h-12 w-auto" />
+      <div className="container mx-auto px-4 sm:px-6 md:px-12 flex justify-between items-center">
+        <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group shrink-0">
+           <img src="/logo.png" alt="Manka Public School Logo" className="h-9 sm:h-12 w-auto shrink-0 transition-transform duration-300 group-hover:scale-105" />
           <span
-            className={`font-bold text-xl md:text-2xl tracking-tight transition-colors whitespace-nowrap ${
+            className={`font-bold text-base sm:text-xl md:text-2xl tracking-tight transition-colors whitespace-nowrap ${
               navStyleActive ? "text-brand-navy" : "text-brand-white"
             }`}
           >
@@ -523,7 +528,7 @@ export default function Navbar() {
             exit={{ opacity: 0, height: 0 }}
             className="xl:hidden bg-brand-white border-t border-brand-gray/10 max-h-[calc(100vh-80px)] overflow-y-auto"
           >
-            <nav className="flex flex-col py-4 px-6 gap-4">
+            <nav className="flex flex-col py-5 px-5 gap-2">
               {navLinks.map((link) => {
                 if (link.dropdown) {
                   const isDropdownOpen = 
@@ -543,10 +548,10 @@ export default function Navbar() {
                     <div key={link.name} className="border-b border-brand-gray/10 py-1">
                       <button
                         onClick={toggleDropdown}
-                        className="w-full text-left text-brand-navy font-medium py-2 flex justify-between items-center cursor-pointer"
+                        className="w-full text-left text-brand-navy font-semibold py-3 px-1 flex justify-between items-center cursor-pointer hover:text-[#E85D22] transition-colors"
                       >
-                        <span>{link.name}</span>
-                        <svg className={`w-4 h-4 transition-transform duration-250 ${isDropdownOpen ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <span className="text-base">{link.name}</span>
+                        <svg className={`w-4 h-4 transition-transform duration-250 ${isDropdownOpen ? "rotate-180 text-[#E85D22]" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 9l-7 7-7-7" />
                         </svg>
                       </button>
@@ -556,7 +561,7 @@ export default function Navbar() {
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: "auto" }}
                             exit={{ opacity: 0, height: 0 }}
-                            className="pl-4 flex flex-col gap-2 pb-3 pt-1"
+                            className="pl-3 flex flex-col gap-1 pb-3 pt-1"
                           >
                             {link.dropdown.map((subLink) => {
                               const isExternal = subLink.href.startsWith("http");
@@ -567,7 +572,7 @@ export default function Navbar() {
                                   target={isExternal ? "_blank" : undefined}
                                   rel={isExternal ? "noopener noreferrer" : undefined}
                                   onClick={() => setIsMobileMenuOpen(false)}
-                                  className="text-sm font-semibold text-brand-gray py-2 hover:text-[#E85D22] transition-colors"
+                                  className="text-sm font-semibold text-brand-gray py-2.5 px-3 rounded-xl hover:bg-brand-blue/20 hover:text-[#E85D22] transition-all flex items-center min-h-[44px]"
                                 >
                                   {subLink.name}
                                 </Link>
@@ -583,7 +588,7 @@ export default function Navbar() {
                   <Link
                     key={link.name}
                     href={link.href}
-                    className="text-brand-navy font-medium py-2 border-b border-brand-gray/10"
+                    className="text-brand-navy font-semibold py-3 px-1 border-b border-brand-gray/10 text-base hover:text-[#E85D22] transition-colors flex items-center min-h-[44px]"
                     onClick={(e) => {
                       setIsMobileMenuOpen(false);
                       handleAnchorClick(e, link.href);

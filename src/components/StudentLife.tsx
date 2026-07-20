@@ -121,7 +121,7 @@ export default function StudentLife({ content }: { content?: any }) {
           />
         </div>
         <div 
-          className="relative w-full overflow-x-auto md:overflow-hidden flex-grow flex items-center snap-x snap-mandatory py-4"
+          className="relative w-full overflow-x-auto md:overflow-hidden flex-grow flex items-center snap-x snap-mandatory py-4 [webkit-overflow-scrolling:touch]"
           style={{ scrollbarWidth: 'none' }}
         >
           <div 
