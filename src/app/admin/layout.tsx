@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { useState, useEffect } from "react";
-import { LayoutDashboard, FileText, Image as ImageIcon, Settings, LogOut, ArrowLeft, MessageSquare, Bell } from "lucide-react";
+import { LayoutDashboard, FileText, Image as ImageIcon, Settings, LogOut, ArrowLeft, MessageSquare, Bell, FolderOpen } from "lucide-react";
 import { getMessageIds } from "@/app/actions/messages";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -53,6 +53,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
     { name: "Notifications", href: "/admin/notifications", icon: Bell },
     { name: "Content", href: "/admin/content", icon: FileText },
     { name: "Media", href: "/admin/media", icon: ImageIcon },
+    { name: "Documents", href: "/admin/documents", icon: FolderOpen },
     { name: "Settings", href: "/admin/settings", icon: Settings },
   ];
 
