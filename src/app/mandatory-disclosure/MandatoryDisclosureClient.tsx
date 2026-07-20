@@ -49,22 +49,22 @@ export default function MandatoryDisclosureClient() {
       id: 4,
       title: "COPIES OF RECOGNITION CERTIFICATE UNDER RTE ACT, 2009, AND ITS RENEWAL",
       links: [
-        { label: "RTE Recognition", url: "https://mankapublicschool.com/Doc/CORCURA.pdf" }
+        { label: "RTE Recognition", url: "/Doc/CORCURA.pdf" }
       ]
     },
     {
       id: 5,
       title: "COPY OF VALID BUILDING SAFETY CERTIFICATE AS PER THE NATIONAL BUILDING CODE",
       links: [
-        { label: "Building Safety", url: "https://mankapublicschool.com/Doc/building%20safety.pdf" }
+        { label: "Building Safety", url: "/Doc/building safety.pdf" }
       ]
     },
     {
       id: 6,
       title: "COPY OF VALID FIRE SAFETY CERTIFICATE ISSUED BY THE COMPETENT AUTHORITY",
       links: [
-        { label: "Fire NOC Certificate", url: "https://mankapublicschool.com/Doc/FIRE%20NOC.pdf" },
-        { label: "Fire Executive Certificate", url: "https://mankapublicschool.com/Doc/fire%20exe.%20certificate%20with%20sign.pdf" }
+        { label: "Fire NOC Certificate", url: "/Doc/FIRE NOC.pdf" },
+        { label: "Fire Executive Certificate", url: "/Doc/fire exe. certificate with sign.pdf" }
       ]
     },
     {
