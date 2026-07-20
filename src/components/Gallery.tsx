@@ -1,15 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ZoomIn, Plus, Trash2, Loader2 } from "lucide-react";
+import { X, ZoomIn, Plus, Trash2, Loader2, ChevronLeft, ChevronRight } from "lucide-react";
 import { useEditMode } from "./cms/EditModeProvider";
 import { addGalleryImage, deleteGalleryImage } from "@/lib/media-actions";
 import { uploadImageToSupabase } from "@/lib/visual-cms-actions";
 
 export default function Gallery({ initialImages }: { initialImages?: any[] }) {
   const [activeCategory, setActiveCategory] = useState("All");
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
   const { isEditMode } = useEditMode();
   const [isUploading, setIsUploading] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
@@ -24,6 +25,45 @@ export default function Gallery({ initialImages }: { initialImages?: any[] }) {
   const filteredImages = activeCategory === "All" 
     ? images 
     : images.filter((img: any) => img.category === activeCategory);
+
+  const handlePrev = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (selectedIndex === null) return;
+    setSelectedIndex((prev) => (prev !== null ? (prev - 1 + filteredImages.length) % filteredImages.length : null));
+  };
+
+  const handleNext = (e?: React.MouseEvent) => {
+    e?.stopPropagation();
+    if (selectedIndex === null) return;
+    setSelectedIndex((prev) => (prev !== null ? (prev + 1) % filteredImages.length : null));
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (selectedIndex === null) return;
+      if (e.key === "ArrowLeft") handlePrev();
+      if (e.key === "ArrowRight") handleNext();
+      if (e.key === "Escape") setSelectedIndex(null);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [selectedIndex, filteredImages.length]);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchStartX(e.touches[0].clientX);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const diffX = touchStartX - touchEndX;
+    if (diffX > 40) {
+      handleNext();
+    } else if (diffX < -40) {
+      handlePrev();
+    }
+    setTouchStartX(null);
+  };
 
   const handleDelete = async (e: React.MouseEvent, id: string) => {
     e.stopPropagation();
@@ -82,7 +122,10 @@ export default function Gallery({ initialImages }: { initialImages?: any[] }) {
           {categories.map((category) => (
             <button
               key={category}
-              onClick={() => setActiveCategory(category)}
+              onClick={() => {
+                setActiveCategory(category);
+                setSelectedIndex(null);
+              }}
               className={`px-6 py-2 rounded-full font-medium transition-all duration-300 ${
                 activeCategory === category
                   ? "bg-brand-navy text-brand-white shadow-md scale-105"
@@ -106,7 +149,7 @@ export default function Gallery({ initialImages }: { initialImages?: any[] }) {
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.3 }}
                 className="relative group overflow-hidden rounded-2xl cursor-pointer break-inside-avoid"
-                onClick={() => setSelectedImage(img.src)}
+                onClick={() => setSelectedIndex(index)}
               >
                 <div className={`w-full ${img.aspect} relative`}>
                   <img 
@@ -169,32 +212,63 @@ export default function Gallery({ initialImages }: { initialImages?: any[] }) {
         </div>
       </div>
 
-      {/* Lightbox Modal */}
+      {/* Lightbox Modal with Next/Previous & Touch Swipe */}
       <AnimatePresence>
-        {selectedImage && (
+        {selectedIndex !== null && filteredImages[selectedIndex] && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[100] flex items-center justify-center bg-brand-navy/95 backdrop-blur-md p-4"
-            onClick={() => setSelectedImage(null)}
+            className="fixed inset-0 z-[100] flex items-center justify-center bg-brand-navy/95 backdrop-blur-md p-4 select-none"
+            onClick={() => setSelectedIndex(null)}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
           >
+            {/* Counter Badge */}
+            <div className="absolute top-6 left-6 px-4 py-1.5 rounded-full bg-brand-white/10 text-brand-white text-xs font-bold tracking-wider border border-white/10">
+              {selectedIndex + 1} / {filteredImages.length}
+            </div>
+
+            {/* Close Button */}
             <button 
-              className="absolute top-6 right-6 p-2 rounded-full bg-brand-white/10 text-brand-white hover:bg-brand-yellow hover:text-brand-navy transition-colors"
+              className="absolute top-6 right-6 p-2.5 rounded-full bg-brand-white/10 text-brand-white hover:bg-brand-yellow hover:text-brand-navy transition-colors z-20 cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation();
-                setSelectedImage(null);
+                setSelectedIndex(null);
               }}
+              aria-label="Close modal"
             >
               <X className="w-6 h-6" />
             </button>
+
+            {/* Previous Button */}
+            <button
+              className="absolute left-3 sm:left-6 top-1/2 -translate-y-1/2 p-3 rounded-full bg-brand-white/10 text-brand-white hover:bg-brand-yellow hover:text-brand-navy transition-colors z-20 cursor-pointer backdrop-blur-sm border border-white/10"
+              onClick={handlePrev}
+              aria-label="Previous image"
+            >
+              <ChevronLeft className="w-6 h-6 sm:w-8 sm:h-8" />
+            </button>
+
+            {/* Next Button */}
+            <button
+              className="absolute right-3 sm:right-6 top-1/2 -translate-y-1/2 p-3 rounded-full bg-brand-white/10 text-brand-white hover:bg-brand-yellow hover:text-brand-navy transition-colors z-20 cursor-pointer backdrop-blur-sm border border-white/10"
+              onClick={handleNext}
+              aria-label="Next image"
+            >
+              <ChevronRight className="w-6 h-6 sm:w-8 sm:h-8" />
+            </button>
+
+            {/* Main Image */}
             <motion.img
+              key={filteredImages[selectedIndex].src}
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              src={selectedImage}
-              alt="Expanded view"
-              className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl"
+              transition={{ duration: 0.2 }}
+              src={filteredImages[selectedIndex].src}
+              alt={filteredImages[selectedIndex].category || "Gallery view"}
+              className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             />
           </motion.div>
