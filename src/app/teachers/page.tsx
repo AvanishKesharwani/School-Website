@@ -110,7 +110,7 @@ export default function TeachersPage() {
                 </p>
 
                 <a 
-                  href="https://mankapublicschool.com/images/TeacherList202627.pdf" 
+                  href="/Teachers/TeacherList202627.pdf" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="w-full py-4 bg-brand-yellow hover:bg-white text-brand-navy font-bold rounded-xl transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer text-center"

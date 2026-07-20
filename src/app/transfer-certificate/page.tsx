@@ -216,7 +216,7 @@ export default function TransferCertificatePage() {
               </p>
             </div>
             <a 
-              href="/transfer-certificates.pdf" 
+              href="/Transfer Certificate/transfer-certificates.pdf" 
               target="_blank" 
               rel="noopener noreferrer"
               className="px-6 py-3 bg-[#E85D22] text-white hover:bg-[#d04c13] font-bold rounded-xl transition-all shadow-md hover:shadow-lg active:scale-95 inline-flex items-center gap-2 shrink-0 cursor-pointer text-sm"
@@ -493,7 +493,7 @@ export default function TransferCertificatePage() {
                     Close Preview
                   </button>
                   <a
-                    href="/transfer-certificates.pdf"
+                    href="/Transfer Certificate/transfer-certificates.pdf"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-6 py-2.5 bg-brand-navy text-white hover:bg-brand-navy/90 font-bold rounded-xl transition-all shadow-md flex items-center gap-2 cursor-pointer text-sm"
