@@ -217,7 +217,7 @@ export default function MandatoryDisclosureClient() {
             transition={{ delay: 0.2 }}
           >
             <a
-              href="https://mankapublicschool.com/mandatory-public-disclousre.pdf"
+              href="/Mandatory Disclosure/saras-mandatory-disclosure.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="text-xl md:text-2xl font-extrabold text-blue-600 hover:text-blue-800 underline uppercase tracking-wide cursor-pointer"
