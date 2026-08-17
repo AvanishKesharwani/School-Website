@@ -194,11 +194,12 @@ export async function uploadDisclosureFile(formData: FormData) {
       .replace(/[^a-zA-Z0-9.\-_]/g, "");
     const uniqueFilename = `${Date.now()}-${safeName}`;
 
-    // 1. Attempt to upload to Supabase Storage
+    // 1. Attempt to upload to Supabase Storage under 'Mandatory Disclosure' folder
     try {
+      const storagePath = `Mandatory Disclosure/${uniqueFilename}`;
       const { data, error } = await supabase.storage
         .from("documents")
-        .upload(uniqueFilename, buffer, {
+        .upload(storagePath, buffer, {
           contentType: file.type,
           duplex: "half",
         });
@@ -206,7 +207,7 @@ export async function uploadDisclosureFile(formData: FormData) {
       if (!error) {
         const { data: urlData } = supabase.storage
           .from("documents")
-          .getPublicUrl(uniqueFilename);
+          .getPublicUrl(storagePath);
 
         if (urlData?.publicUrl) {
           return { success: true, url: urlData.publicUrl };
