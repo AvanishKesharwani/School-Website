@@ -16,7 +16,7 @@ import {
   CheckCircle2
 } from "lucide-react";
 import Link from "next/link";
-import { getSectionContent, updateSectionContent, uploadDisclosureFile } from "@/lib/cms-actions";
+import { getSectionContent, updateSectionContent } from "@/lib/cms-actions";
 
 export default function MandatoryDisclosureClient({ isAdmin = false }: { isAdmin?: boolean }) {
   const [sarasLink, setSarasLink] = useState("/mandatory-public-disclousre.pdf");
@@ -158,22 +158,9 @@ export default function MandatoryDisclosureClient({ isAdmin = false }: { isAdmin
     if (!editingTarget) return;
 
     setIsSaving(true);
-    let finalUrl = inputUrl;
+    const finalUrl = inputUrl;
 
     try {
-      if (selectedFile) {
-        const formData = new FormData();
-        formData.append("file", selectedFile);
-        const uploadResult = await uploadDisclosureFile(formData);
-        if (uploadResult.success && uploadResult.url) {
-          finalUrl = uploadResult.url;
-        } else {
-          alert(uploadResult.error || "File upload failed.");
-          setIsSaving(false);
-          return;
-        }
-      }
-
       // Create new updated objects
       let updatedSarasLink = sarasLink;
       let updatedDocuments = [...documents];
@@ -245,6 +232,34 @@ export default function MandatoryDisclosureClient({ isAdmin = false }: { isAdmin
     }
   };
 
+  const handleViewLink = (e: React.MouseEvent, url: string, label: string) => {
+    if (url.startsWith("data:")) {
+      e.preventDefault();
+      try {
+        const parts = url.split(";base64,");
+        const contentType = parts[0].split(":")[1];
+        const raw = window.atob(parts[1]);
+        const rawLength = raw.length;
+        const uInt8Array = new Uint8Array(rawLength);
+        for (let i = 0; i < rawLength; ++i) {
+          uInt8Array[i] = raw.charCodeAt(i);
+        }
+        const blob = new Blob([uInt8Array], { type: contentType });
+        const blobUrl = URL.createObjectURL(blob);
+        window.open(blobUrl, "_blank");
+      } catch (err) {
+        console.error("Failed to open data URL in new tab:", err);
+        // Fallback: trigger download
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `${label.replace(/\s+/g, "_")}.pdf`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+    }
+  };
+
   const generalInfo = [
     { label: "NAME OF THE SCHOOL", value: "Manka Public School" },
     { label: "AFFILIATION NO", value: "3330393", highlight: true },
@@ -278,22 +293,6 @@ export default function MandatoryDisclosureClient({ isAdmin = false }: { isAdmin
       { label: "DETAILS OF COUNSELLOR & WELLNESS TEACHER", value: "SHIVANI PANDA (M.A. Psychology)" },
     ]
   };
-
-  const infrastructure = [
-    { label: "TOTAL CAMPUS AREA OF THE SCHOOL (IN SQ MTR)", value: "8384 Sq. mtr" },
-    { label: "NO. AND SIZE OF THE CLASS ROOMS (IN SQ MTR)", value: "46 Rooms, 46.5 Sq. mtr each" },
-    { label: "NO. AND SIZE OF LABORATORIES INCLUDING COMPUTER LABS (IN SQ MTR)", value: "55.75 Sq. mtr each" },
-    { label: "NO. AND SIZE OF LIBRARY (IN SQ MTR)", value: "01 Library, 111.48 Sq. mtr" },
-    { label: "INTERNET FACILITY (Y/N)", value: "Yes" },
-    { label: "NO. OF GIRLS TOILETS", value: "20" },
-    { label: "NO. OF BOYS TOILETS", value: "20" },
-    { label: "NO. OF CWSN TOILETS (SPECIAL TOILETS)", value: "01 for Girls, 01 for Boys" },
-    { 
-      label: "YOUTUBE VIDEO OF THE INSPECTION OF SCHOOL INFRASTRUCTURE", 
-      value: "Watch Video Tour", 
-      videoUrl: "https://www.youtube.com/watch?v=MY-pnvbka28" 
-    },
-  ];
 
   return (
     <main className="flex flex-col min-h-screen bg-brand-white">
@@ -348,6 +347,7 @@ export default function MandatoryDisclosureClient({ isAdmin = false }: { isAdmin
           >
             <a
               href={sarasLink}
+              onClick={(e) => handleViewLink(e, sarasLink, "SARAS Mandatory Public Disclosure")}
               target="_blank"
               rel="noopener noreferrer"
               className="text-xl md:text-2xl font-extrabold text-blue-600 hover:text-blue-800 underline uppercase tracking-wide cursor-pointer"
@@ -447,6 +447,7 @@ export default function MandatoryDisclosureClient({ isAdmin = false }: { isAdmin
                               <div key={link.label} className="flex items-center justify-between gap-4">
                                 <a
                                   href={link.url}
+                                  onClick={(e) => handleViewLink(e, link.url, link.label)}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="text-blue-600 hover:text-blue-800 underline text-sm font-semibold cursor-pointer"
@@ -508,6 +509,7 @@ export default function MandatoryDisclosureClient({ isAdmin = false }: { isAdmin
                               <div key={link.label} className="flex items-center justify-between gap-4">
                                 <a
                                   href={link.url}
+                                  onClick={(e) => handleViewLink(e, link.url, link.label)}
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className="text-blue-600 hover:text-blue-800 underline text-sm font-semibold cursor-pointer"
@@ -664,6 +666,7 @@ export default function MandatoryDisclosureClient({ isAdmin = false }: { isAdmin
                           <div className="flex items-center justify-between gap-4">
                             <a
                               href={item.link}
+                              onClick={(e) => handleViewLink(e, item.link, item.role)}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="text-blue-600 hover:text-blue-800 underline text-sm font-semibold cursor-pointer"
@@ -827,13 +830,13 @@ export default function MandatoryDisclosureClient({ isAdmin = false }: { isAdmin
                   </label>
                   <input
                     type="text"
-                    value={inputUrl}
+                    value={inputUrl.startsWith("data:") ? "[Local File Selected]" : inputUrl}
                     onChange={(e) => setInputUrl(e.target.value)}
                     placeholder="https://... or /PDF/filename.pdf"
                     className="w-full px-4 py-2.5 bg-gray-50 border border-gray-250 rounded-xl focus:ring-2 focus:ring-[#E85D22]/20 focus:border-[#E85D22] text-sm text-[#0f2747] outline-none transition-all"
                   />
                   <p className="text-[11px] text-gray-400 mt-1.5 leading-relaxed">
-                    Provide a link directly, or upload a new file below to overwrite the path automatically.
+                    Provide a link directly, or upload a new file below to embed the document/image.
                   </p>
                 </div>
 
@@ -858,7 +861,15 @@ export default function MandatoryDisclosureClient({ isAdmin = false }: { isAdmin
                         const file = e.target.files?.[0];
                         if (file) {
                           setSelectedFile(file);
-                          setInputUrl(file.name);
+                          
+                          // Convert to base64 immediately for DB storage
+                          const reader = new FileReader();
+                          reader.onload = (event) => {
+                            if (event.target?.result) {
+                              setInputUrl(event.target.result as string);
+                            }
+                          };
+                          reader.readAsDataURL(file);
                         }
                       }}
                       className="hidden"
