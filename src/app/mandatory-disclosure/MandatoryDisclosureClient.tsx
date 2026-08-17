@@ -1,29 +1,26 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState, useEffect, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { 
   FileText, 
   Download, 
   ExternalLink, 
-  Video
+  Video,
+  Edit2,
+  Loader2,
+  X,
+  Upload,
+  CheckCircle2
 } from "lucide-react";
 import Link from "next/link";
+import { getSectionContent, updateSectionContent, uploadDisclosureFile } from "@/lib/cms-actions";
 
-export default function MandatoryDisclosureClient() {
-
-  const generalInfo = [
-    { label: "NAME OF THE SCHOOL", value: "Manka Public School" },
-    { label: "AFFILIATION NO", value: "3330393", highlight: true },
-    { label: "SCHOOL CODE", value: "15943", highlight: true },
-    { label: "COMPLETE ADDRESS WITH PIN CODE", value: "Tahsil Road, Aadarsh nagar Champa, Dist. - Janjgir-Champa (C.G.), PIN 495671" },
-    { label: "PRINCIPAL NAME & QUALIFICATION", value: "AVINASH KESHARWANI, M.Sc. (Physics), B.Ed." },
-    { label: "SCHOOL EMAIL ID", value: "mankaschool2008@gmail.com" },
-    { label: "CONTACT DETAILS (LANDLINE/MOBILE)", value: "+91 99816 72985" },
-  ];
-
-  const documents = [
+export default function MandatoryDisclosureClient({ isAdmin = false }: { isAdmin?: boolean }) {
+  const [sarasLink, setSarasLink] = useState("/mandatory-public-disclousre.pdf");
+  const [documents, setDocuments] = useState([
     {
       id: 1,
       title: "COPIES OF AFFILIATION/UPGRADATION LETTER AND RECENT EXTENSION OF AFFILIATION",
@@ -80,9 +77,9 @@ export default function MandatoryDisclosureClient() {
         { label: "Water & Sanitation Report", url: "/Doc/WATER HEALTH SANITATION REPORT.pdf" }
       ]
     }
-  ];
+  ]);
 
-  const academics = [
+  const [academics, setAcademics] = useState([
     {
       id: 1,
       title: "FEE STRUCTURE OF THE SCHOOL",
@@ -114,6 +111,148 @@ export default function MandatoryDisclosureClient() {
         { label: "3-Year Results Details", url: "/Doc/LTYROTBE.pdf" }
       ]
     }
+  ]);
+
+  const [staffBreakdown, setStaffBreakdown] = useState([
+    { role: "PGT (Post Graduate Teachers)", count: 11, link: "/Doc/MPD PGT 2026-27.pdf" },
+    { role: "TGT (Trained Graduate Teachers)", count: 24, link: "/Doc/MPD TGT 2026-27.pdf" },
+    { role: "PRT (Primary Teachers)", count: 24, link: "/Doc/MPD PRT 2026-27.pdf" },
+    { role: "PET (Physical Education Teachers)", count: 3, link: "/Doc/MPD PET 2026-27.pdf" },
+  ]);
+
+  // Modal Editing States
+  const [editingTarget, setEditingTarget] = useState<{
+    section: "saras" | "documents" | "academics" | "staff";
+    id?: number;
+    role?: string;
+    linkIndex?: number;
+    label: string;
+    url: string;
+  } | null>(null);
+
+  const [inputUrl, setInputUrl] = useState("");
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    const loadCustomLinks = async () => {
+      try {
+        const contentStr = await getSectionContent("mandatory-disclosure-links", "");
+        if (contentStr) {
+          const parsed = JSON.parse(contentStr);
+          if (parsed.sarasLink) setSarasLink(parsed.sarasLink);
+          if (parsed.documents) setDocuments(parsed.documents);
+          if (parsed.academics) setAcademics(parsed.academics);
+          if (parsed.staffBreakdown) setStaffBreakdown(parsed.staffBreakdown);
+        }
+      } catch (e) {
+        console.error("Failed to load custom disclosure links:", e);
+      }
+    };
+    loadCustomLinks();
+  }, []);
+
+  const handleSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingTarget) return;
+
+    setIsSaving(true);
+    let finalUrl = inputUrl;
+
+    try {
+      if (selectedFile) {
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+        const uploadResult = await uploadDisclosureFile(formData);
+        if (uploadResult.success && uploadResult.url) {
+          finalUrl = uploadResult.url;
+        } else {
+          alert(uploadResult.error || "File upload failed.");
+          setIsSaving(false);
+          return;
+        }
+      }
+
+      // Create new updated objects
+      let updatedSarasLink = sarasLink;
+      let updatedDocuments = [...documents];
+      let updatedAcademics = [...academics];
+      let updatedStaffBreakdown = [...staffBreakdown];
+
+      if (editingTarget.section === "saras") {
+        updatedSarasLink = finalUrl;
+        setSarasLink(finalUrl);
+      } else if (editingTarget.section === "documents") {
+        updatedDocuments = documents.map((doc) => {
+          if (doc.id === editingTarget.id) {
+            const updatedLinks = doc.links.map((link, idx) => {
+              if (idx === editingTarget.linkIndex) {
+                return { ...link, url: finalUrl };
+              }
+              return link;
+            });
+            return { ...doc, links: updatedLinks };
+          }
+          return doc;
+        });
+        setDocuments(updatedDocuments);
+      } else if (editingTarget.section === "academics") {
+        updatedAcademics = academics.map((item) => {
+          if (item.id === editingTarget.id) {
+            const updatedLinks = item.links.map((link, idx) => {
+              if (idx === editingTarget.linkIndex) {
+                return { ...link, url: finalUrl };
+              }
+              return link;
+            });
+            return { ...item, links: updatedLinks };
+          }
+          return item;
+        });
+        setAcademics(updatedAcademics);
+      } else if (editingTarget.section === "staff") {
+        updatedStaffBreakdown = staffBreakdown.map((item) => {
+          if (item.role === editingTarget.role) {
+            return { ...item, link: finalUrl };
+          }
+          return item;
+        });
+        setStaffBreakdown(updatedStaffBreakdown);
+      }
+
+      // Save to database/CMS mock section
+      const dataToSave = {
+        sarasLink: updatedSarasLink,
+        documents: updatedDocuments,
+        academics: updatedAcademics,
+        staffBreakdown: updatedStaffBreakdown,
+      };
+
+      await updateSectionContent(
+        "mandatory-disclosure-links",
+        "Mandatory Disclosure Links",
+        JSON.stringify(dataToSave)
+      );
+
+      setEditingTarget(null);
+      setSelectedFile(null);
+    } catch (err) {
+      console.error("Failed to save link:", err);
+      alert("An unexpected error occurred while saving.");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const generalInfo = [
+    { label: "NAME OF THE SCHOOL", value: "Manka Public School" },
+    { label: "AFFILIATION NO", value: "3330393", highlight: true },
+    { label: "SCHOOL CODE", value: "15943", highlight: true },
+    { label: "COMPLETE ADDRESS WITH PIN CODE", value: "Tahsil Road, Aadarsh nagar Champa, Dist. - Janjgir-Champa (C.G.), PIN 495671" },
+    { label: "PRINCIPAL NAME & QUALIFICATION", value: "AVINASH KESHARWANI, M.Sc. (Physics), B.Ed." },
+    { label: "SCHOOL EMAIL ID", value: "mankaschool2008@gmail.com" },
+    { label: "CONTACT DETAILS (LANDLINE/MOBILE)", value: "+91 99816 72985" },
   ];
 
   const classXResults = [
@@ -137,12 +276,6 @@ export default function MandatoryDisclosureClient() {
       { label: "TEACHERS SECTION RATIO", value: "1 : 1.5" },
       { label: "DETAILS OF SPECIAL EDUCATOR", value: "GEETU KESHARWANI (BA, B.Ed. in Special Education)" },
       { label: "DETAILS OF COUNSELLOR & WELLNESS TEACHER", value: "SHIVANI PANDA (M.A. Psychology)" },
-    ],
-    breakdown: [
-      { role: "PGT (Post Graduate Teachers)", count: 11, link: "/Doc/MPD PGT 2026-27.pdf" },
-      { role: "TGT (Trained Graduate Teachers)", count: 24, link: "/Doc/MPD TGT 2026-27.pdf" },
-      { role: "PRT (Primary Teachers)", count: 24, link: "/Doc/MPD PRT 2026-27.pdf" },
-      { role: "PET (Physical Education Teachers)", count: 3, link: "/Doc/MPD PET 2026-27.pdf" },
     ]
   };
 
@@ -211,15 +344,32 @@ export default function MandatoryDisclosureClient() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
+            className="inline-flex items-center gap-3 justify-center"
           >
             <a
-              href="/mandatory-public-disclousre.pdf"
+              href={sarasLink}
               target="_blank"
               rel="noopener noreferrer"
               className="text-xl md:text-2xl font-extrabold text-blue-600 hover:text-blue-800 underline uppercase tracking-wide cursor-pointer"
             >
               SARAS Mandatory Public Disclosure PDF
             </a>
+            {isAdmin && (
+              <button
+                onClick={() => {
+                  setEditingTarget({
+                    section: "saras",
+                    label: "SARAS Disclosure PDF",
+                    url: sarasLink
+                  });
+                  setInputUrl(sarasLink);
+                }}
+                className="p-1.5 bg-gray-100 hover:bg-gray-200 text-[#E85D22] transition-all rounded-lg cursor-pointer"
+                title="Edit Document"
+              >
+                <Edit2 className="w-4 h-4" />
+              </button>
+            )}
           </motion.div>
         </div>
       </section>
@@ -293,16 +443,35 @@ export default function MandatoryDisclosureClient() {
                         <td className="py-3 px-4 border border-gray-300 text-brand-navy font-semibold leading-relaxed">{doc.title}</td>
                         <td className="py-3 px-4 border border-gray-300">
                           <div className="flex flex-col gap-1.5">
-                            {doc.links.map((link) => (
-                              <a
-                                key={link.label}
-                                href={link.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-blue-600 hover:text-blue-800 underline text-sm font-semibold cursor-pointer"
-                              >
-                                View {doc.links.length > 1 ? `(${link.label})` : ""}
-                              </a>
+                            {doc.links.map((link, lIdx) => (
+                              <div key={link.label} className="flex items-center justify-between gap-4">
+                                <a
+                                  href={link.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-blue-600 hover:text-blue-800 underline text-sm font-semibold cursor-pointer"
+                                >
+                                  View {doc.links.length > 1 ? `(${link.label})` : ""}
+                                </a>
+                                {isAdmin && (
+                                  <button
+                                    onClick={() => {
+                                      setEditingTarget({
+                                        section: "documents",
+                                        id: doc.id,
+                                        linkIndex: lIdx,
+                                        label: link.label,
+                                        url: link.url
+                                      });
+                                      setInputUrl(link.url);
+                                    }}
+                                    className="p-1 bg-gray-100 hover:bg-gray-200 text-[#E85D22] transition-all rounded-md cursor-pointer"
+                                    title="Edit Document"
+                                  >
+                                    <Edit2 className="w-3.5 h-3.5" />
+                                  </button>
+                                )}
+                              </div>
                             ))}
                           </div>
                         </td>
@@ -335,16 +504,35 @@ export default function MandatoryDisclosureClient() {
                         <td className="py-3 px-4 border border-gray-300 text-brand-navy font-semibold">{item.title}</td>
                         <td className="py-3 px-4 border border-gray-300">
                           <div className="flex flex-col gap-1.5">
-                            {item.links.map((link) => (
-                              <a
-                                key={link.label}
-                                href={link.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="text-blue-600 hover:text-blue-800 underline text-sm font-semibold cursor-pointer"
-                              >
-                                View {item.links.length > 1 ? `(${link.label})` : ""}
-                              </a>
+                            {item.links.map((link, lIdx) => (
+                              <div key={link.label} className="flex items-center justify-between gap-4">
+                                <a
+                                  href={link.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="text-blue-600 hover:text-blue-800 underline text-sm font-semibold cursor-pointer"
+                                >
+                                  View {item.links.length > 1 ? `(${link.label})` : ""}
+                                </a>
+                                {isAdmin && (
+                                  <button
+                                    onClick={() => {
+                                      setEditingTarget({
+                                        section: "academics",
+                                        id: item.id,
+                                        linkIndex: lIdx,
+                                        label: link.label,
+                                        url: link.url
+                                      });
+                                      setInputUrl(link.url);
+                                    }}
+                                    className="p-1 bg-gray-100 hover:bg-gray-200 text-[#E85D22] transition-all rounded-md cursor-pointer"
+                                    title="Edit Document"
+                                  >
+                                    <Edit2 className="w-3.5 h-3.5" />
+                                  </button>
+                                )}
+                              </div>
                             ))}
                           </div>
                         </td>
@@ -468,19 +656,38 @@ export default function MandatoryDisclosureClient() {
                       <td className="py-3 px-4 border border-gray-300">72</td>
                       <td className="py-3 px-4 border border-gray-300 text-brand-gray"></td>
                     </tr>
-                    {staffDetails.breakdown.map((item) => (
+                    {staffBreakdown.map((item) => (
                       <tr key={item.role} className="hover:bg-brand-navy/5 transition-colors">
                         <td className="py-2.5 px-4 border border-gray-300 text-brand-navy pl-8 font-medium">* {item.role.split(' ')[0]}</td>
                         <td className="py-2.5 px-4 border border-gray-300">{item.count < 10 ? `0${item.count}` : item.count}</td>
                         <td className="py-2.5 px-4 border border-gray-300">
-                          <a
-                            href={item.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-600 hover:text-blue-800 underline text-sm font-semibold cursor-pointer"
-                          >
-                            Link
-                          </a>
+                          <div className="flex items-center justify-between gap-4">
+                            <a
+                              href={item.link}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-blue-600 hover:text-blue-800 underline text-sm font-semibold cursor-pointer"
+                            >
+                              Link
+                            </a>
+                            {isAdmin && (
+                              <button
+                                onClick={() => {
+                                  setEditingTarget({
+                                    section: "staff",
+                                    role: item.role,
+                                    label: item.role,
+                                    url: item.link
+                                  });
+                                  setInputUrl(item.link);
+                                }}
+                                className="p-1 bg-gray-100 hover:bg-gray-200 text-[#E85D22] transition-all rounded-md cursor-pointer"
+                                title="Edit Document"
+                              >
+                                <Edit2 className="w-3.5 h-3.5" />
+                              </button>
+                            )}
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -585,6 +792,112 @@ export default function MandatoryDisclosureClient() {
           </div>
         </div>
       </section>
+
+      {/* Edit Link Modal (Admin Only) */}
+      <AnimatePresence>
+        {editingTarget && (
+          <div className="fixed inset-0 bg-brand-navy/60 backdrop-blur-sm z-[9999] flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 15 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 15 }}
+              className="bg-white rounded-3xl p-6 md:p-8 max-w-lg w-full border border-gray-200 shadow-2xl relative"
+            >
+              <button
+                onClick={() => {
+                  setEditingTarget(null);
+                  setSelectedFile(null);
+                }}
+                className="absolute top-4 right-4 text-gray-400 hover:text-red-500 p-1.5 hover:bg-gray-100 rounded-full transition-colors cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+
+              <h3 className="text-xl font-bold text-brand-navy mb-1.5 flex items-center gap-2">
+                <Edit2 className="w-5 h-5 text-[#E85D22]" /> Edit Document Link
+              </h3>
+              <p className="text-sm text-gray-500 mb-6 uppercase tracking-wider font-semibold text-[10px]">
+                Target: {editingTarget.label}
+              </p>
+
+              <form onSubmit={handleSave} className="space-y-6">
+                <div>
+                  <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
+                    Document / Image URL
+                  </label>
+                  <input
+                    type="text"
+                    value={inputUrl}
+                    onChange={(e) => setInputUrl(e.target.value)}
+                    placeholder="https://... or /PDF/filename.pdf"
+                    className="w-full px-4 py-2.5 bg-gray-50 border border-gray-250 rounded-xl focus:ring-2 focus:ring-[#E85D22]/20 focus:border-[#E85D22] text-sm text-[#0f2747] outline-none transition-all"
+                  />
+                  <p className="text-[11px] text-gray-400 mt-1.5 leading-relaxed">
+                    Provide a link directly, or upload a new file below to overwrite the path automatically.
+                  </p>
+                </div>
+
+                <div className="border-t border-gray-150 pt-4">
+                  <label className="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">
+                    Or Upload File (.pdf, .jpg, .png, .jpeg)
+                  </label>
+                  <div className="flex gap-2">
+                    <button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-[#0F2747] text-xs font-bold rounded-xl transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
+                    >
+                      <Upload className="w-4 h-4 text-gray-500" />
+                      Select File
+                    </button>
+                    <input
+                      ref={fileInputRef}
+                      type="file"
+                      accept=".pdf,.jpg,.jpeg,.png"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          setSelectedFile(file);
+                          setInputUrl(file.name);
+                        }
+                      }}
+                      className="hidden"
+                    />
+                    {selectedFile && (
+                      <span className="text-xs text-brand-navy font-bold flex items-center gap-1 bg-green-50 text-green-700 border border-green-200 px-3 py-1 rounded-xl truncate max-w-[200px]">
+                        <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
+                        {selectedFile.name}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <div className="flex justify-end gap-3 border-t border-gray-150 pt-4 mt-6">
+                  <button
+                    type="button"
+                    disabled={isSaving}
+                    onClick={() => {
+                      setEditingTarget(null);
+                      setSelectedFile(null);
+                    }}
+                    className="px-5 py-2.5 rounded-xl border border-gray-200 hover:bg-gray-50 text-brand-gray text-xs font-bold transition-all disabled:opacity-50 cursor-pointer"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isSaving}
+                    className="px-5 py-2.5 bg-[#E85D22] text-white hover:bg-[#d04c13] text-xs font-bold rounded-xl transition-all shadow-md flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                  >
+                    {isSaving && <Loader2 className="w-3.5 h-3.5 animate-spin" />}
+                    {isSaving ? "Saving..." : "Save Changes"}
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       <Footer />
     </main>

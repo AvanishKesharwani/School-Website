@@ -1,3 +1,4 @@
+import { auth } from "@/auth";
 import MandatoryDisclosureClient from "./MandatoryDisclosureClient";
 
 export const metadata = {
@@ -5,6 +6,8 @@ export const metadata = {
   description: "CBSE Mandatory Public Disclosure details, certificates, results, staff and infrastructure details for Manka Public School.",
 };
 
-export default function MandatoryDisclosurePage() {
-  return <MandatoryDisclosureClient />;
+export default async function MandatoryDisclosurePage() {
+  const session = await auth();
+  const isAdmin = !!session?.user;
+  return <MandatoryDisclosureClient isAdmin={isAdmin} />;
 }

@@ -3,6 +3,8 @@
 import { auth } from "@/auth";
 import { prisma } from "./prisma";
 import { revalidatePath } from "next/cache";
+import fs from "fs/promises";
+import path from "path";
 
 // Verify admin permissions
 async function verifyAdmin() {
@@ -171,5 +173,39 @@ export async function updateAdmissionsInfo(data: any) {
   } catch (error) {
     console.error("Error updating admission info", error);
     return { success: false, error: "Failed to update" };
+  }
+}
+
+export async function uploadDisclosureFile(formData: FormData) {
+  try {
+    await verifyAdmin();
+    const file = formData.get("file") as File;
+    if (!file) {
+      return { success: false, error: "No file provided" };
+    }
+
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
+    // Ensure upload directory exists
+    const uploadDir = path.join(process.cwd(), "public", "uploads");
+    await fs.mkdir(uploadDir, { recursive: true });
+
+    // Sanitize filename to avoid filesystem issues
+    const safeName = file.name
+      .replace(/\s+/g, "-")
+      .replace(/[^a-zA-Z0-9.\-_]/g, "");
+    
+    // Add unique prefix to avoid naming collisions
+    const uniqueFilename = `${Date.now()}-${safeName}`;
+    const filePath = path.join(uploadDir, uniqueFilename);
+    
+    await fs.writeFile(filePath, buffer);
+    const fileUrl = `/uploads/${uniqueFilename}`;
+
+    return { success: true, url: fileUrl };
+  } catch (error: any) {
+    console.error("File upload error:", error);
+    return { success: false, error: error.message || "Failed to upload file." };
   }
 }
