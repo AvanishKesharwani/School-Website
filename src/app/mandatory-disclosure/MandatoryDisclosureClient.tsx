@@ -16,7 +16,7 @@ import {
   CheckCircle2
 } from "lucide-react";
 import Link from "next/link";
-import { getSectionContent, updateSectionContent } from "@/lib/cms-actions";
+import { getSectionContent, updateSectionContent, uploadDisclosureFile } from "@/lib/cms-actions";
 
 export default function MandatoryDisclosureClient({ isAdmin = false }: { isAdmin?: boolean }) {
   const [sarasLink, setSarasLink] = useState("/mandatory-public-disclousre.pdf");
@@ -158,9 +158,21 @@ export default function MandatoryDisclosureClient({ isAdmin = false }: { isAdmin
     if (!editingTarget) return;
 
     setIsSaving(true);
-    const finalUrl = inputUrl;
+    let finalUrl = inputUrl;
 
     try {
+      if (selectedFile) {
+        const formData = new FormData();
+        formData.append("file", selectedFile);
+        const uploadResult = await uploadDisclosureFile(formData);
+        if (uploadResult.success && uploadResult.url) {
+          finalUrl = uploadResult.url;
+        } else {
+          alert(uploadResult.error || "File upload failed.");
+          setIsSaving(false);
+          return;
+        }
+      }
       // Create new updated objects
       let updatedSarasLink = sarasLink;
       let updatedDocuments = [...documents];
@@ -830,7 +842,7 @@ export default function MandatoryDisclosureClient({ isAdmin = false }: { isAdmin
                   </label>
                   <input
                     type="text"
-                    value={inputUrl.startsWith("data:") ? "[Local File Selected]" : inputUrl}
+                    value={inputUrl}
                     onChange={(e) => setInputUrl(e.target.value)}
                     placeholder="https://... or /PDF/filename.pdf"
                     className="w-full px-4 py-2.5 bg-gray-50 border border-gray-250 rounded-xl focus:ring-2 focus:ring-[#E85D22]/20 focus:border-[#E85D22] text-sm text-[#0f2747] outline-none transition-all"
@@ -861,15 +873,7 @@ export default function MandatoryDisclosureClient({ isAdmin = false }: { isAdmin
                         const file = e.target.files?.[0];
                         if (file) {
                           setSelectedFile(file);
-                          
-                          // Convert to base64 immediately for DB storage
-                          const reader = new FileReader();
-                          reader.onload = (event) => {
-                            if (event.target?.result) {
-                              setInputUrl(event.target.result as string);
-                            }
-                          };
-                          reader.readAsDataURL(file);
+                          setInputUrl(file.name);
                         }
                       }}
                       className="hidden"

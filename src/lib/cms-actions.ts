@@ -5,6 +5,7 @@ import { prisma } from "./prisma";
 import { revalidatePath } from "next/cache";
 import fs from "fs/promises";
 import path from "path";
+import { supabase } from "./supabase";
 
 // Verify admin permissions
 async function verifyAdmin() {
@@ -187,23 +188,51 @@ export async function uploadDisclosureFile(formData: FormData) {
     const arrayBuffer = await file.arrayBuffer();
     const buffer = Buffer.from(arrayBuffer);
 
-    // Ensure upload directory exists
-    const uploadDir = path.join(process.cwd(), "public", "uploads");
-    await fs.mkdir(uploadDir, { recursive: true });
-
-    // Sanitize filename to avoid filesystem issues
+    // Sanitize filename to avoid filesystem/URL issues
     const safeName = file.name
       .replace(/\s+/g, "-")
       .replace(/[^a-zA-Z0-9.\-_]/g, "");
-    
-    // Add unique prefix to avoid naming collisions
     const uniqueFilename = `${Date.now()}-${safeName}`;
-    const filePath = path.join(uploadDir, uniqueFilename);
-    
-    await fs.writeFile(filePath, buffer);
-    const fileUrl = `/uploads/${uniqueFilename}`;
 
-    return { success: true, url: fileUrl };
+    // 1. Attempt to upload to Supabase Storage
+    try {
+      const { data, error } = await supabase.storage
+        .from("documents")
+        .upload(uniqueFilename, buffer, {
+          contentType: file.type,
+          duplex: "half",
+        });
+
+      if (!error) {
+        const { data: urlData } = supabase.storage
+          .from("documents")
+          .getPublicUrl(uniqueFilename);
+
+        if (urlData?.publicUrl) {
+          return { success: true, url: urlData.publicUrl };
+        }
+      } else {
+        console.warn("Supabase storage upload failed, trying fallback:", error.message);
+      }
+    } catch (sbError) {
+      console.warn("Supabase upload exception, trying fallback:", sbError);
+    }
+
+    // 2. Fallback: Write locally (works in local dev, but not in Vercel prod)
+    try {
+      const uploadDir = path.join(process.cwd(), "public", "uploads");
+      await fs.mkdir(uploadDir, { recursive: true });
+      const filePath = path.join(uploadDir, uniqueFilename);
+      await fs.writeFile(filePath, buffer);
+      const fileUrl = `/uploads/${uniqueFilename}`;
+      return { success: true, url: fileUrl };
+    } catch (fsError: any) {
+      console.error("Local filesystem write failed:", fsError);
+      return { 
+        success: false, 
+        error: "Supabase upload failed, and server filesystem is read-only. Please create a public bucket named 'documents' in your Supabase Dashboard." 
+      };
+    }
   } catch (error: any) {
     console.error("File upload error:", error);
     return { success: false, error: error.message || "Failed to upload file." };
